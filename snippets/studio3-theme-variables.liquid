@@ -1,0 +1,77 @@
+{% comment %}
+  Tokens de design centralizados do projeto Studio3 (playbook seção 4.4).
+  Fontes e cores extraídas do CSS real do site de referência (Protótipo Referências/).
+  Renderizado uma única vez em layout/theme.liquid, depois de base.css, pra sobrescrever
+  --font-body-family/--font-heading-family nativos do Dawn com as fontes self-hosted do
+  projeto. Nenhuma seção deve usar hex de cor ou nome de fonte direto — sempre via estas
+  custom properties.
+{% endcomment %}
+<style>
+  @font-face {
+    font-family: 'Studio3 Arsenal';
+    src: url({{ 'studio3-arsenal-400.woff2' | asset_url }}) format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Studio3 Arsenal';
+    src: url({{ 'studio3-arsenal-700.woff2' | asset_url }}) format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Studio3 Open Sans';
+    src: url({{ 'studio3-open-sans-400.woff2' | asset_url }}) format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Studio3 Open Sans';
+    src: url({{ 'studio3-open-sans-600.woff2' | asset_url }}) format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Studio3 Open Sans';
+    src: url({{ 'studio3-open-sans-700.woff2' | asset_url }}) format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    /* Tipografia — sobrescreve as variáveis nativas do Dawn (font_picker) para usar as
+       fontes reais do site de referência em vez da fonte padrão do tema. */
+    --font-heading-family: 'Studio3 Arsenal', serif;
+    --font-heading-style: normal;
+    --font-heading-weight: 400;
+    --font-body-family: 'Studio3 Open Sans', sans-serif;
+    --font-body-style: normal;
+    --font-body-weight: 400;
+    --font-body-weight-bold: 700;
+
+    /* Cor de tinta principal (texto/ícones) — usada em quase todo o site de referência */
+    --studio3-color-ink: #4c5154;
+    --studio3-color-ink-muted: rgba(76, 81, 84, 0.85);
+
+    /* Verde de ação (CTA sólido, "compra rápida", finalizar compra) */
+    --studio3-color-accent: #2d8019;
+    --studio3-color-accent-strong: #1d9001;
+
+    /* Dourado/taupe usado em selos "exclusivo" */
+    --studio3-color-gold: #ae9570;
+
+    /* Barra de frete grátis */
+    --studio3-shipping-bar-bg: #e4d3bc;
+    --studio3-shipping-bar-text: #3a3a3a;
+    --studio3-shipping-bar-gradient: linear-gradient(90deg, #91f25f 1%, #00c6ab);
+
+    /* Bordas/sombras sutis recorrentes no site de referência */
+    --studio3-border-subtle: rgba(223, 223, 228, 0.25);
+    --studio3-shadow-soft: 1px 1px 4px rgba(0, 0, 0, 0.1);
+  }
+</style>

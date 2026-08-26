@@ -1,0 +1,72 @@
+/* Ajustes de header do projeto Studio3 sobre o header.liquid nativo do Dawn.
+   Cor de tinta e fontes já vêm das custom properties globais (studio3-theme-variables) —
+   aqui só o que é específico do header: links de cadastro/login, título de coluna do
+   mega menu em Arsenal, grid de 2 colunas pra listas longas, e o tile promocional. */
+
+.studio3-header__text-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.3rem;
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0 1rem;
+}
+
+.studio3-header__text-link .svg-wrapper svg {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+.mega-menu__link--level-2 {
+  font-family: var(--font-heading-family);
+  font-size: 1.6rem;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid var(--studio3-border-subtle);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.studio3-mega-menu__sublist--grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 1.5rem;
+}
+
+.studio3-mega-menu__list {
+  align-items: start;
+}
+
+.studio3-mega-menu__promo {
+  list-style: none;
+}
+
+.studio3-mega-menu__promo-link {
+  display: block;
+  border-radius: 0.8rem;
+  overflow: hidden;
+}
+
+.studio3-mega-menu__promo-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.studio3-mega-menu__footer {
+  border-top: 1px solid var(--studio3-border-subtle);
+  padding: 1.2rem 0;
+  text-align: right;
+}
+
+.studio3-mega-menu__see-all {
+  font-family: var(--font-body-family);
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.85);
+  text-decoration: none;
+}
+
+.studio3-mega-menu__see-all:hover {
+  text-decoration: underline;
+}

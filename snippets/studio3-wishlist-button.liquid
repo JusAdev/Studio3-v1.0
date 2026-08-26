@@ -1,0 +1,31 @@
+{% comment %}
+  Botão de favoritar (wishlist) sobre a imagem do card de produto.
+
+  Accepts:
+  - product: {Object} Product Liquid object
+
+  Persistência: localStorage no navegador do visitante (client-side, ver
+  assets/studio3-wishlist.js). Não existe conceito nativo de wishlist na Shopify — isso
+  NÃO sincroniza entre dispositivos nem fica associado à conta do cliente. Se o projeto
+  precisar de wishlist real (sincronizada), avaliar um app ou customer metafield.
+
+  Usage:
+  {% render 'studio3-wishlist-button', product: product %}
+{% endcomment %}
+<button
+  type="button"
+  class="studio3-wishlist-btn"
+  data-studio3-wishlist-toggle
+  data-product-id="{{ product.id }}"
+  aria-pressed="false"
+  aria-label="{{ 'studio3.card.wishlist_add' | t }}"
+>
+  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+    <path
+      d="M12 21s-6.7-4.35-9.33-8.11C.9 10.35 1.7 6.6 4.9 5.4c2-.75 4.1-.05 5.6 1.5l1.5 1.55 1.5-1.55c1.5-1.55 3.6-2.25 5.6-1.5 3.2 1.2 4 4.95 2.23 7.49C18.7 16.65 12 21 12 21z"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    ></path>
+  </svg>
+</button>

@@ -1,0 +1,29 @@
+{% comment %}
+  Linha de subtítulo + tamanho do card de produto.
+
+  Accepts:
+  - product: {Object} Product Liquid object
+
+  Convenção do projeto (ver CLAUDE.md): "nome" = product.title, "subtítulo" = campo
+  customizado product.metafields.custom.subtitle (criar em Admin > Configurações >
+  Dados personalizados > Produtos), "tamanho" = título da variante selecionada/primeira
+  disponível (assume produto com uma única option tipo "Tamanho" — se o produto tiver
+  mais de uma option, isso mostra a combinação completa da variante).
+
+  Usage:
+  {% render 'studio3-card-meta', product: product %}
+{% endcomment %}
+{%- liquid
+  assign subtitle = product.metafields.custom.subtitle
+  assign variant_title = product.selected_or_first_available_variant.title
+-%}
+{%- if subtitle != blank or variant_title != 'Default Title' -%}
+  <div class="studio3-card__meta">
+    {%- if subtitle != blank -%}
+      <p class="studio3-card__subtitle">{{ subtitle }}</p>
+    {%- endif -%}
+    {%- if variant_title != 'Default Title' -%}
+      <span class="studio3-card__size">{{ variant_title }}</span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

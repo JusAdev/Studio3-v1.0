@@ -1,0 +1,72 @@
+/* Restilo do card de produto nativo do Dawn (snippets/card-product.liquid) pro visual
+   do projeto Studio3. Cor/fonte vêm das custom properties globais; aqui só o que é
+   específico do card: botão de wishlist, linha de subtítulo/tamanho, mensagem de
+   exclusividade e o link de login. */
+
+.card__media {
+  position: relative;
+}
+
+.studio3-wishlist-btn {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  padding: 0;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  color: var(--studio3-color-ink);
+  cursor: pointer;
+}
+
+.studio3-wishlist-btn.is-active {
+  color: var(--studio3-color-accent);
+}
+
+.studio3-wishlist-btn.is-active svg path {
+  fill: currentColor;
+}
+
+.studio3-card__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-top: 0.2rem;
+}
+
+.studio3-card__subtitle {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 1.3rem;
+  color: var(--studio3-color-ink-muted);
+}
+
+.studio3-card__size {
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
+  color: var(--studio3-color-ink-muted);
+}
+
+.studio3-card__exclusive-msg {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 1.3rem;
+  color: var(--studio3-color-gold);
+}
+
+.studio3-card__login-link {
+  font-family: var(--font-body-family);
+  text-decoration: none;
+}
+
+.card__heading a,
+.card__heading {
+  font-family: var(--font-body-family);
+  color: var(--studio3-color-ink);
+}

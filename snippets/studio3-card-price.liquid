@@ -1,0 +1,18 @@
+{% comment %}
+  Preço do card, ou mensagem "exclusivo para profissionais" no lugar do preço quando
+  aplicável (produto com a tag `exclusivo-profissional` e visitante sem sessão logada).
+
+  Accepts:
+  - product: {Object} Product Liquid object
+  - exclusive: {Boolean} Se true, mostra a mensagem de exclusividade em vez do preço
+    (calculado uma única vez em card-product.liquid e passado pra cá pra não duplicar a
+    lógica em dois arquivos).
+
+  Usage:
+  {% render 'studio3-card-price', product: product, exclusive: studio3_exclusive %}
+{% endcomment %}
+{%- if exclusive -%}
+  <p class="studio3-card__exclusive-msg">{{ 'studio3.card.exclusive_message' | t }}</p>
+{%- else -%}
+  {% render 'price', product: product, price_class: '', show_compare_at_price: true %}
+{%- endif -%}

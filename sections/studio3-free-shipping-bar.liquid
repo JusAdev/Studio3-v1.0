@@ -1,0 +1,128 @@
+{% comment %}
+  Barra de progresso de frete grátis. Lê o total real do carrinho via /cart.js (client-side)
+  porque o valor exibido no schema/preview do Theme Editor não reflete o carrinho do
+  visitante. Ver assets/studio3-free-shipping-bar.js.
+{% endcomment %}
+{%- style -%}
+  .studio3-shipping-bar {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    height: 2.8rem;
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+    font-family: var(--font-body-family);
+    overflow: hidden;
+  }
+
+  .studio3-shipping-bar__progress {
+    position: absolute;
+    inset: 0;
+    width: 0%;
+    background: linear-gradient(90deg, {{ section.settings.progress_start_color }} 1%, {{ section.settings.progress_end_color }});
+    transition: width 0.4s ease;
+  }
+
+  .studio3-shipping-bar__text {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    height: 100%;
+    padding: 0 1.5rem;
+    font-size: 1.3rem;
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  .studio3-shipping-bar__text strong {
+    font-weight: 700;
+  }
+
+  .studio3-shipping-bar__icon {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+  }
+{%- endstyle -%}
+
+<div
+  class="studio3-shipping-bar color-{{ section.settings.color_scheme }}"
+  data-studio3-shipping-bar
+  data-threshold-cents="{{ section.settings.threshold | times: 100 }}"
+  data-text-incomplete="{{ section.settings.text_incomplete | escape }}"
+  data-text-complete="{{ section.settings.text_complete | escape }}"
+>
+  <div class="studio3-shipping-bar__progress" data-studio3-shipping-bar-progress></div>
+  <div class="studio3-shipping-bar__text">
+    <svg class="studio3-shipping-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M16 3H1v13h15V3z"></path>
+      <path d="M16 8h4l3 3v5h-7V8z"></path>
+      <circle cx="5.5" cy="18.5" r="2.5"></circle>
+      <circle cx="18.5" cy="18.5" r="2.5"></circle>
+    </svg>
+    <span data-studio3-shipping-bar-text>{{ section.settings.text_incomplete }}</span>
+  </div>
+</div>
+
+<script src="{{ 'studio3-free-shipping-bar.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Barra de frete grátis",
+  "settings": [
+    {
+      "type": "number",
+      "id": "threshold",
+      "label": "Valor mínimo para frete grátis",
+      "info": "Em reais (ex.: 500 para R$ 500,00). Sem casas decimais.",
+      "default": 500
+    },
+    {
+      "type": "text",
+      "id": "text_incomplete",
+      "label": "Texto (faltando valor)",
+      "info": "Use [valor] no lugar do valor restante formatado.",
+      "default": "Faltam [valor] para o frete grátis"
+    },
+    {
+      "type": "text",
+      "id": "text_complete",
+      "label": "Texto (frete grátis liberado)",
+      "default": "Você ganhou frete grátis!"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de cor",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Cor de fundo",
+      "default": "#E4D3BC"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Cor do texto",
+      "default": "#3A3A3A"
+    },
+    {
+      "type": "color",
+      "id": "progress_start_color",
+      "label": "Barra de progresso — início do gradiente",
+      "default": "#91F25F"
+    },
+    {
+      "type": "color",
+      "id": "progress_end_color",
+      "label": "Barra de progresso — fim do gradiente",
+      "default": "#00C6AB"
+    }
+  ]
+}
+{% endschema %}
