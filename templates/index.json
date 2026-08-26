@@ -132,7 +132,7 @@
             "product": "calmskin"
           }
         },
-        "p2": {
+        "product_UKTbTe": {
           "type": "product",
           "settings": {
             "product": "floraty"
@@ -153,7 +153,7 @@
       },
       "block_order": [
         "p1",
-        "p2",
+        "product_UKTbTe",
         "p3",
         "p4"
       ],
