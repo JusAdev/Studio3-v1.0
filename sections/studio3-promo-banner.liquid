@@ -32,7 +32,8 @@
 {%- endstyle -%}
 
 {%- liquid
-  assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840' | split: ', '
+  assign widths_string = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+  assign widths = widths_string | split: ', '
   assign alt_text = section.settings.alt_text
 -%}
 
@@ -61,13 +62,13 @@
           {{
             section.settings.image
             | image_url: width: 3840
-            | image_tag: widths: widths, sizes: '100vw', loading: 'lazy', alt: alt_text
+            | image_tag: widths: widths_string, sizes: '100vw', loading: 'lazy', alt: alt_text
           }}
         {%- else -%}
           {{
             section.settings.image
             | image_url: width: 3840
-            | image_tag: widths: widths, sizes: '100vw', loading: 'lazy'
+            | image_tag: widths: widths_string, sizes: '100vw', loading: 'lazy'
           }}
         {%- endif -%}
       </picture>
