@@ -1,0 +1,285 @@
+{% comment %}
+  "Tipos de Peles" (home). Header (título + subtítulo) seguido de um grid de tiles
+  (imagem + rótulo em pill sobreposto + link para categoria filtrada). Baseado em
+  Home-layout.html, linhas ~1126-1176 (home2026-section-header / home2026-skin-types /
+  home2026-skin-tile).
+{% endcomment %}
+
+{%- style -%}
+  .studio3-skin-types-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 2rem 0 1.5rem;
+  }
+
+  .studio3-skin-types-header__title {
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-size: 2.25rem;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0.045em;
+    color: var(--studio3-color-ink);
+  }
+
+  .studio3-skin-types-header__subtitle {
+    display: none;
+    margin: 0;
+    font-family: var(--font-body-family);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--studio3-color-ink);
+  }
+
+  @media screen and (min-width: 768px) {
+    .studio3-skin-types-header__subtitle {
+      display: block;
+    }
+  }
+
+  .studio3-skin-types {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .studio3-skin-types {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .studio3-skin-tile {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 640 / 472;
+    text-decoration: none;
+  }
+
+  .studio3-skin-tile__img,
+  .studio3-skin-tile__img.placeholder-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.4s;
+  }
+
+  .studio3-skin-tile:hover .studio3-skin-tile__img {
+    transform: scale(1.04);
+  }
+
+  .studio3-skin-tile__label {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    padding: 0.3rem 0.9rem;
+    border-radius: 7px;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    font-family: var(--font-body-family);
+    font-size: 0.6rem;
+    font-weight: 700;
+    background-color: {{ section.settings.label_bg_color }};
+    color: {{ section.settings.label_text_color }};
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .studio3-skin-tile:hover .studio3-skin-tile__label {
+    background-color: var(--studio3-color-gold);
+    color: {{ section.settings.label_bg_color }};
+  }
+
+  .studio3-skin-types__empty {
+    padding: 2rem;
+    text-align: center;
+    font-family: var(--font-body-family);
+    color: var(--studio3-color-ink-muted);
+  }
+
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- if section.settings.heading != blank or section.settings.subtitle != blank -%}
+      <div class="studio3-skin-types-header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="studio3-skin-types-header__title">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="studio3-skin-types-header__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- liquid
+      assign studio3_placeholders = 'hero-apparel-1,hero-apparel-2,hero-apparel-3,lifestyle-1,lifestyle-2,detailed-apparel-1,hero-apparel-1,hero-apparel-2' | split: ','
+    -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="studio3-skin-types">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign tile_url = block.settings.link
+            assign placeholder_index = forloop.index0 | modulo: 8
+            assign placeholder_name = studio3_placeholders[placeholder_index]
+          -%}
+          <a
+            {% if tile_url != blank %}
+              href="{{ tile_url }}"
+            {% else %}
+              role="link"
+              aria-disabled="true"
+            {% endif %}
+            class="studio3-skin-tile"
+            {% if block.settings.label != blank %}
+              aria-label="{{ block.settings.label | strip_html | escape }}"
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 900
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '275, 400, 550, 750, 900',
+                  sizes: '(min-width: 769px) 33vw, 50vw',
+                  class: 'studio3-skin-tile__img',
+                  alt: block.settings.label
+              }}
+            {%- else -%}
+              {{ placeholder_name | placeholder_svg_tag: 'placeholder-svg studio3-skin-tile__img' }}
+            {%- endif -%}
+            {%- if block.settings.label != blank -%}
+              <span class="studio3-skin-tile__label">{{ block.settings.label }}</span>
+            {%- endif -%}
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="studio3-skin-types__empty">
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Studio3 - Tipos de Peles",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Tipos de Peles"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Encontre os ativos e as formulações certos para cada tipo de pele."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de cor",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "label_bg_color",
+      "label": "Rótulo do tile — cor de fundo",
+      "default": "rgba(255, 255, 255, 0.85)"
+    },
+    {
+      "type": "color",
+      "id": "label_text_color",
+      "label": "Rótulo do tile — cor do texto",
+      "default": "#4C5154"
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaçamento superior",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaçamento inferior",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "skin-type",
+      "name": "Tipo de pele",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Rótulo",
+          "default": "Tipo de Pele"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Studio3 - Tipos de Peles",
+      "blocks": [
+        { "type": "skin-type" },
+        { "type": "skin-type" },
+        { "type": "skin-type" },
+        { "type": "skin-type" },
+        { "type": "skin-type" },
+        { "type": "skin-type" }
+      ]
+    }
+  ]
+}
+{% endschema %}

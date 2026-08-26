@@ -1,0 +1,102 @@
+{% comment %}
+  Seção "Dermocosméticos Profissionais" — vitrine da home com cabeçalho, um
+  banner de imagem e a maior grade de produtos da home (até 24 produtos).
+  Referência: Home-layout.html, linhas 1178-1559.
+
+  Conferido no HTML de referência: essa seção NÃO tem link "ver todos" (a
+  próxima seção depois dela é o Blog, sem nenhum
+  `home2026-section-header__cta` entre as duas) — diferente das seções de
+  Queridinhos e Lançamentos. Os settings cta_text/cta_url ficam disponíveis
+  mesmo assim (mesmo padrão das outras 2 seções, o snippet compartilhado já
+  esconde o CTA sozinho quando algum dos dois estiver em branco — ver
+  studio3-product-grid-section.liquid), mas SEM valor default, pra bater com
+  a referência (nenhum CTA visível até alguém preencher os 2 campos).
+
+  Todo o markup/CSS do padrão cabeçalho + banner + grid + CTA vem de
+  snippets/studio3-product-grid-section.liquid (não duplicar aqui — só passar
+  os settings certos pro snippet compartilhado, que também chama
+  snippets/card-product.liquid pra cada bloco de produto).
+{% endcomment %}
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  {%- render 'studio3-product-grid-section',
+    section: section,
+    heading: section.settings.heading,
+    subtitle: section.settings.subtitle,
+    banner_image: section.settings.banner_image,
+    banner_url: section.settings.banner_url,
+    cta_text: section.settings.cta_text,
+    cta_url: section.settings.cta_url
+  -%}
+</div>
+
+{% schema %}
+{
+  "name": "Studio3 - Dermocosméticos",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 24,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Dermocosméticos Profissionais"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Imagem do banner"
+    },
+    {
+      "type": "url",
+      "id": "banner_url",
+      "label": "Link do banner"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Texto do link para ver todos (opcional)"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Link do ver todos (opcional)"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de cor",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Produto",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produto"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Studio3 - Dermocosméticos",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

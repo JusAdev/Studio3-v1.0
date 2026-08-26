@@ -1,0 +1,89 @@
+{% comment %}
+  Seção "Os queridinhos das esteticistas" — vitrine da home com cabeçalho, um
+  produto em destaque (card maior, 2 colunas/2 linhas) e uma grade regular de
+  até 4 produtos, seguida de um link "ver todos". Referência:
+  Home-layout.html, linhas 490-722.
+
+  Todo o markup/CSS do padrão cabeçalho + grid + CTA vem de
+  snippets/studio3-product-grid-section.liquid (não duplicar aqui — só passar
+  os settings certos pro snippet compartilhado, que também chama
+  snippets/card-product.liquid pra cada bloco de produto).
+{% endcomment %}
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  {%- render 'studio3-product-grid-section',
+    section: section,
+    heading: section.settings.heading,
+    subtitle: section.settings.subtitle,
+    featured_product: section.settings.featured_product,
+    cta_text: section.settings.cta_text,
+    cta_url: section.settings.cta_url
+  -%}
+</div>
+
+{% schema %}
+{
+  "name": "Studio3 - Queridinhos",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Os queridinhos das esteticistas"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Produto em destaque"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Texto do link para ver todos",
+      "default": "Ver todos os Queridinhos"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Link do ver todos"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de cor",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Produto",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produto"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Studio3 - Queridinhos",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

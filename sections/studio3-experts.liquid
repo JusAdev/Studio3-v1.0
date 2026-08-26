@@ -1,0 +1,311 @@
+{% comment %}
+  Seção "Favoritos das Experts" — cabeçalho de seção + fileira de cards de pessoa
+  (foto retrato + nome + CTA "Ver produtos") linkando pra página de categoria de cada
+  expert. Baseado em Protótipo Referências/Home-layout.html linhas 1014-1124
+  (.home2026-experts / .home2026-expert-card): grid de 6 colunas no desktop, 3 no
+  tablet — breakpoints do próprio CSS de referência (992px / 576px). Abaixo de 576px,
+  em vez do grid de 2 colunas do original, vira fileira com scroll horizontal
+  (scroll-snap) — melhor pra toque em tela pequena, conforme especificado pra esta
+  seção.
+{% endcomment %}
+{%- style -%}
+  .studio3-experts-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .studio3-experts-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .studio3-experts__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 2rem 0 1.5rem;
+  }
+
+  .studio3-experts__title {
+    margin: 0;
+    color: var(--studio3-color-ink);
+    font-family: var(--font-heading-family);
+    font-size: 2.25rem;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0.045em;
+  }
+
+  .studio3-experts__subtitle {
+    margin: 0;
+    color: var(--studio3-color-ink-muted);
+    font-family: var(--font-body-family);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+
+  .studio3-experts__row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .studio3-experts__item {
+    margin: 0;
+  }
+
+  .studio3-expert-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .studio3-expert-card__figure {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    aspect-ratio: 360 / 606;
+    border-radius: 14px;
+    background: var(--color-background);
+  }
+
+  .studio3-expert-card__img,
+  .studio3-expert-card__figure .placeholder-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.4s;
+  }
+
+  .studio3-expert-card:hover .studio3-expert-card__img {
+    transform: scale(1.03);
+  }
+
+  .studio3-expert-card__body {
+    display: block;
+    padding: 0.7rem 0.15rem 0;
+    text-align: center;
+  }
+
+  .studio3-expert-card__name {
+    display: block;
+    margin: 0 0 0.4rem;
+    color: var(--studio3-color-ink);
+    font-family: var(--font-heading-family);
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  .studio3-expert-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--studio3-color-accent);
+    font-family: var(--font-body-family);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: gap 0.2s;
+  }
+
+  .studio3-expert-card:hover .studio3-expert-card__cta {
+    gap: 0.55rem;
+  }
+
+  @media screen and (max-width: 992px) {
+    .studio3-experts__row {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .studio3-experts__row {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 0.5rem;
+    }
+
+    .studio3-experts__row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .studio3-experts__item {
+      flex: 0 0 42%;
+      scroll-snap-align: start;
+    }
+  }
+{%- endstyle -%}
+
+<div class="studio3-experts color-{{ section.settings.color_scheme }} gradient studio3-experts-{{ section.id }}-padding">
+  <div class="studio3-experts__inner page-width">
+    <div class="studio3-experts__header">
+      <h2 class="studio3-experts__title">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="studio3-experts__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      {%- assign widths = '180, 270, 360, 450, 540, 720' -%}
+      {%- assign sizes = '(min-width: 992px) 15vw, (min-width: 577px) 30vw, 42vw' -%}
+      <ul class="studio3-experts__row" role="list">
+        {%- for block in section.blocks -%}
+          {%- assign photo = block.settings.photo -%}
+          {%- assign expert_alt = block.settings.name | escape -%}
+          <li class="studio3-experts__item" {{ block.shopify_attributes }}>
+            <a
+              class="studio3-expert-card"
+              {%- if block.settings.link != blank -%}
+                href="{{ block.settings.link }}"
+              {%- else -%}
+                role="link" aria-disabled="true"
+              {%- endif -%}
+              aria-label="{{ section.settings.card_cta_label }} de {{ expert_alt }}"
+            >
+              <figure class="studio3-expert-card__figure">
+                {%- if photo -%}
+                  {%- assign photo_height = photo.width | divided_by: photo.aspect_ratio -%}
+                  {{
+                    photo
+                    | image_url: width: 1500
+                    | image_tag:
+                      width: photo.width,
+                      height: photo_height,
+                      class: 'studio3-expert-card__img',
+                      alt: expert_alt,
+                      loading: 'lazy',
+                      sizes: sizes,
+                      widths: widths
+                  }}
+                {%- else -%}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'studio3-expert-card__img placeholder-svg' }}
+                {%- endif -%}
+              </figure>
+              <span class="studio3-expert-card__body">
+                <span class="studio3-expert-card__name">{{ block.settings.name }}</span>
+                <span class="studio3-expert-card__cta">
+                  {{ section.settings.card_cta_label }}
+                  <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M1 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </span>
+              </span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Favoritos das Experts",
+  "tag": "section",
+  "class": "section section-studio3-experts",
+  "max_blocks": 8,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Favoritos das Experts"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Os dermocosméticos que as profissionais da estética mais indicam nos seus protocolos."
+    },
+    {
+      "type": "text",
+      "id": "card_cta_label",
+      "label": "Texto do botão dos cards (CTA)",
+      "default": "Ver produtos"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de cor",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaçamento acima",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaçamento abaixo",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "expert",
+      "name": "Expert",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "photo",
+          "label": "Foto"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nome",
+          "default": "Nome da Expert"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (página de categoria da expert)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Favoritos das Experts",
+      "blocks": [
+        { "type": "expert" },
+        { "type": "expert" },
+        { "type": "expert" },
+        { "type": "expert" },
+        { "type": "expert" },
+        { "type": "expert" }
+      ]
+    }
+  ]
+}
+{% endschema %}

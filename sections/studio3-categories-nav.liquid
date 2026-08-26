@@ -1,0 +1,181 @@
+{% comment %}
+  Navegação de categorias por ícone — linha de ícone+rótulo, scroll horizontal no
+  mobile, espaçados uniformemente no desktop. Referência: Home-layout.html linhas
+  446-489 (.home2026-categories-nav / .home2026-cat-icon), 10 itens no site real.
+  Ícones enviados via image_picker são <img> — não é possível recolorir via
+  currentColor, então só padronizamos tamanho/espaçamento (ver briefing).
+{% endcomment %}
+{%- style -%}
+  .studio3-categories-nav {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .studio3-categories-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .studio3-cat-icon {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .studio3-cat-icon__img {
+    display: block;
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    opacity: 0.82;
+    transition:
+      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity 0.3s;
+  }
+
+  .studio3-cat-icon:hover .studio3-cat-icon__img {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  .studio3-cat-icon:active .studio3-cat-icon__img {
+    transition-duration: 0.12s;
+    transform: translateY(0) scale(0.97);
+  }
+
+  .studio3-cat-icon__label {
+    font-family: var(--font-body-family);
+    color: var(--studio3-color-ink);
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+
+  .studio3-cat-icon:hover .studio3-cat-icon__label {
+    color: var(--studio3-color-gold);
+  }
+
+  #studio3-categories-nav-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #studio3-categories-nav-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div id="studio3-categories-nav-{{ section.id }}" class="page-width">
+  <nav class="studio3-categories-nav" aria-label="Categorias de produtos">
+    {%- for block in section.blocks -%}
+      <a
+        {%- if block.settings.link != blank %}
+          href="{{ block.settings.link }}"
+        {%- else %}
+          role="link" aria-disabled="true"
+        {%- endif %}
+        class="studio3-cat-icon"
+        {%- if block.settings.label != blank %}
+          aria-label="Acesse {{ block.settings.label | escape }}"
+        {%- endif %}
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.icon != blank -%}
+          {{
+            block.settings.icon
+            | image_url: width: 128
+            | image_tag: width: 64, height: 64, loading: 'lazy', class: 'studio3-cat-icon__img'
+          }}
+        {%- else -%}
+          {{ 'collection-1' | placeholder_svg_tag: 'studio3-cat-icon__img' }}
+        {%- endif -%}
+        {%- if block.settings.label != blank -%}
+          <span class="studio3-cat-icon__label">{{ block.settings.label | escape }}</span>
+        {%- endif -%}
+      </a>
+    {%- endfor -%}
+  </nav>
+</div>
+
+{% schema %}
+{
+  "name": "Studio3 Categorias",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 16,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaço acima",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaço abaixo",
+      "default": 28
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoria",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Ícone"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Rótulo"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Studio3 Categorias",
+      "blocks": [
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" }
+      ]
+    }
+  ]
+}
+{% endschema %}

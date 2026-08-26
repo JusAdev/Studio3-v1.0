@@ -1,0 +1,80 @@
+{% comment %}
+  Padrão compartilhado "cabeçalho + banner opcional + grid de produtos + CTA opcional",
+  usado pelas seções de vitrine de produto da home (queridinhos, lançamentos,
+  dermocosméticos profissionais) — ver playbook seção 4.10 (utilitário decidido antes
+  de montar a primeira seção que precisa dele, pra não duplicar em 3 arquivos).
+
+  Accepts:
+  - section: {Object} a seção que está chamando este snippet (pra ler section.blocks)
+  - heading: {String}
+  - subtitle: {String} (opcional)
+  - banner_image: {Object Image} (opcional) — banner entre o cabeçalho e o grid
+  - banner_url: {String} (opcional)
+  - banner_alt: {String} (opcional)
+  - featured_product: {Object Product} (opcional) — se presente, renderiza um card
+    maior ocupando 2 colunas antes do grid normal (layout "queridinhos")
+  - cta_text: {String} (opcional)
+  - cta_url: {String} (opcional)
+  - columns_desktop: {Number} (opcional, default 4)
+
+  Usage:
+  {% render 'studio3-product-grid-section',
+    section: section,
+    heading: section.settings.heading,
+    subtitle: section.settings.subtitle,
+    banner_image: section.settings.banner_image,
+    banner_url: section.settings.banner_url,
+    cta_text: section.settings.cta_text,
+    cta_url: section.settings.cta_url
+  %}
+{% endcomment %}
+{{ 'studio3-product-grid-section.css' | asset_url | stylesheet_tag }}
+
+<div class="studio3-grid-section page-width">
+  <div class="studio3-grid-section__header">
+    <h2 class="studio3-grid-section__title">{{ heading | escape }}</h2>
+    {%- if subtitle != blank -%}
+      <p class="studio3-grid-section__subtitle">{{ subtitle | escape }}</p>
+    {%- endif -%}
+  </div>
+
+  {%- if banner_image != blank -%}
+    <a
+      {% if banner_url != blank %}href="{{ banner_url }}"{% else %}role="presentation"{% endif %}
+      class="studio3-grid-section__banner"
+    >
+      {{ banner_image | image_url: width: 1600 | image_tag: loading: 'lazy', alt: banner_alt | default: heading }}
+    </a>
+  {%- endif -%}
+
+  <div
+    class="studio3-grid-section__grid"
+    style="--studio3-grid-columns: {{ columns_desktop | default: 4 }};"
+  >
+    {%- if featured_product != blank -%}
+      <div class="studio3-grid-section__featured">
+        {%- render 'card-product', card_product: featured_product, section_id: section.id, media_aspect_ratio: 'square' -%}
+      </div>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'product' -%}
+        <div class="studio3-grid-section__item" {{ block.shopify_attributes }}>
+          {%- render 'card-product',
+            card_product: block.settings.product,
+            section_id: section.id,
+            media_aspect_ratio: 'square',
+            show_secondary_image: true,
+            quick_add: 'standard'
+          -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if cta_text != blank and cta_url != blank -%}
+    <div class="studio3-grid-section__cta-row">
+      <a href="{{ cta_url }}" class="studio3-grid-section__cta">{{ cta_text | escape }}</a>
+    </div>
+  {%- endif -%}
+</div>

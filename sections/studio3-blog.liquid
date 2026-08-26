@@ -1,0 +1,342 @@
+{% comment %}
+  Seção "Blog" da home — puxa artigos reais de um blog nativo do Shopify (setting
+  type "blog" + "blog.articles"), não content blocks, porque posts de blog são
+  conteúdo genuinamente dinâmico (ver CLAUDE.md/tarefa). Baseado no mecanismo nativo
+  do Dawn em sections/featured-blog.liquid (setting "blog" + "blog.articles" +
+  "post_limit"/"posts_to_show") e snippets/article-card.liquid (acesso a
+  article.image/.excerpt/.content, srcset responsivo, fallback excerpt → content).
+  Alguém mais cria o recurso Blog + Articles reais via Admin API depois — esta seção
+  só precisa renderizar corretamente o que existir.
+{% endcomment %}
+{%- style -%}
+  .studio3-blog {
+    padding: 3rem 0;
+  }
+
+  .studio3-blog__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .studio3-blog__title {
+    margin: 0;
+    color: var(--studio3-color-ink);
+    font-family: var(--font-heading-family);
+    font-size: 2.25rem;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0.045em;
+  }
+
+  .studio3-blog__subtitle {
+    display: none;
+    margin: 0;
+    color: var(--studio3-color-ink);
+    font-family: var(--font-body-family);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+
+  @media screen and (min-width: 750px) {
+    .studio3-blog__subtitle {
+      display: block;
+    }
+  }
+
+  .studio3-blog__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .studio3-blog__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .studio3-blog__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .studio3-blog-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .studio3-blog-card__image-wrapper {
+    aspect-ratio: 16 / 10;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 15px;
+    background: rgba(76, 81, 84, 0.06);
+  }
+
+  .studio3-blog-card__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+
+  .studio3-blog-card:hover .studio3-blog-card__image {
+    transform: scale(1.03);
+  }
+
+  .studio3-blog-card__category {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--studio3-color-ink);
+    opacity: 0.6;
+    font-family: var(--font-body-family);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+  }
+
+  .studio3-blog-card__title {
+    margin: 0 0 0.4rem;
+    color: var(--studio3-color-ink);
+    font-family: var(--font-heading-family);
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  .studio3-blog-card__excerpt {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0 0 0.5rem;
+    color: var(--studio3-color-ink-muted);
+    font-family: var(--font-body-family);
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .studio3-blog-card__meta {
+    display: block;
+    color: var(--studio3-color-ink);
+    opacity: 0.6;
+    font-family: var(--font-body-family);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  .studio3-blog__cta-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+  }
+
+  .studio3-blog__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--studio3-color-ink);
+    font-family: var(--font-body-family);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .studio3-blog__cta:after {
+    content: '\203A';
+    font-size: 1.2rem;
+  }
+
+  .studio3-blog__cta:hover {
+    opacity: 0.7;
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign blog = section.settings.blog
+  assign has_articles = false
+  if blog != blank and blog.articles_count > 0
+    assign has_articles = true
+  endif
+-%}
+
+<div class="studio3-blog color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    {%- if section.settings.heading != blank or section.settings.subtitle != blank -%}
+      <div class="studio3-blog__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="studio3-blog__title">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="studio3-blog__subtitle">{{ section.settings.subtitle | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="studio3-blog__grid">
+      {%- if has_articles -%}
+        {%- for article in blog.articles limit: section.settings.posts_to_show -%}
+          {%- liquid
+            assign card_category = blog.title
+            if article.tags.size > 0
+              assign card_category = article.tags | first
+            endif
+
+            assign now_ts = 'now' | date: '%s'
+            assign published_ts = article.published_at | date: '%s'
+            assign diff_seconds = now_ts | minus: published_ts
+            assign diff_days = diff_seconds | divided_by: 86400
+
+            assign relative_date = 'hoje'
+            if diff_days >= 365
+              assign relative_unit_count = diff_days | divided_by: 365
+              assign relative_date = 'há ' | append: relative_unit_count | append: ' anos'
+              if relative_unit_count == 1
+                assign relative_date = 'há 1 ano'
+              endif
+            elsif diff_days >= 30
+              assign relative_unit_count = diff_days | divided_by: 30
+              assign relative_date = 'há ' | append: relative_unit_count | append: ' meses'
+              if relative_unit_count == 1
+                assign relative_date = 'há 1 mês'
+              endif
+            elsif diff_days >= 7
+              assign relative_unit_count = diff_days | divided_by: 7
+              assign relative_date = 'há ' | append: relative_unit_count | append: ' semanas'
+              if relative_unit_count == 1
+                assign relative_date = 'há 1 semana'
+              endif
+            elsif diff_days >= 1
+              assign relative_date = 'há ' | append: diff_days | append: ' dias'
+              if diff_days == 1
+                assign relative_date = 'há 1 dia'
+              endif
+            endif
+          -%}
+          <a href="{{ article.url }}" class="studio3-blog-card">
+            <div class="studio3-blog-card__image-wrapper">
+              {%- if article.image -%}
+                {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
+                <img
+                  srcset="
+                    {%- if article.image.src.width >= 480 -%}{{ article.image.src | image_url: width: 480 }} 480w,{%- endif -%}
+                    {%- if article.image.src.width >= 720 -%}{{ article.image.src | image_url: width: 720 }} 720w,{%- endif -%}
+                    {%- if article.image.src.width >= 960 -%}{{ article.image.src | image_url: width: 960 }} 960w,{%- endif -%}
+                    {{ article.image.src | image_url }} {{ article.image.src.width }}w
+                  "
+                  src="{{ article.image.src | image_url: width: 480 }}"
+                  sizes="(min-width: 990px) calc((100vw - 100px) / 4), (min-width: 750px) calc((100vw - 60px) / 2), calc(100vw - 40px)"
+                  alt="{{ article.image.src.alt | escape }}"
+                  loading="lazy"
+                  width="{{ article.image.width }}"
+                  height="{{ article.image.height }}"
+                  class="studio3-blog-card__image"
+                >
+                {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
+              {%- else -%}
+                {{ 'blog-apparel-1' | placeholder_svg_tag: 'studio3-blog-card__image' }}
+              {%- endif -%}
+            </div>
+            {%- if card_category != blank -%}
+              <span class="studio3-blog-card__category">{{ card_category | escape }}</span>
+            {%- endif -%}
+            <h3 class="studio3-blog-card__title">{{ article.title | escape }}</h3>
+            {%- if article.excerpt.size > 0 or article.content.size > 0 -%}
+              <p class="studio3-blog-card__excerpt">
+                {%- if article.excerpt.size > 0 -%}
+                  {{ article.excerpt | strip_html | truncatewords: 30 }}
+                {%- else -%}
+                  {{ article.content | strip_html | truncatewords: 30 }}
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+            <span class="studio3-blog-card__meta">Atualizado {{ relative_date }}</span>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..section.settings.posts_to_show) -%}
+          <div class="studio3-blog-card">
+            <div class="studio3-blog-card__image-wrapper">
+              {{ 'blog-apparel-1' | placeholder_svg_tag: 'studio3-blog-card__image' }}
+            </div>
+            <span class="studio3-blog-card__category">Categoria</span>
+            <h3 class="studio3-blog-card__title">Título do post do blog</h3>
+            <p class="studio3-blog-card__excerpt">Selecione um blog nas configurações desta seção para exibir posts reais aqui.</p>
+            <span class="studio3-blog-card__meta">Atualizado há 1 dia</span>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if blog != blank and section.settings.cta_text != blank -%}
+      <div class="studio3-blog__cta-row">
+        <a href="{{ blog.url }}" class="studio3-blog__cta">{{ section.settings.cta_text | escape }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Blog"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog",
+      "info": "Selecione o blog do Shopify de onde os posts serão exibidos."
+    },
+    {
+      "type": "range",
+      "id": "posts_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 2,
+      "default": 4,
+      "label": "Número de posts"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Texto do link \"ver todos\"",
+      "default": "Ver todos os Blogs"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de cor",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog"
+    }
+  ]
+}
+{% endschema %}
