@@ -516,6 +516,76 @@
         "cta_text": "Ver todos os Blogs",
         "color_scheme": "scheme-1"
       }
+    },
+    "featured_product_hGT7Bg": {
+      "type": "featured-product",
+      "blocks": {
+        "text_FgFyiW": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_fkG8xB": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_zKzVJw": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_FhmUQU": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_K3tNxp": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons_hQKBPM": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_9Nn9dx": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_FgFyiW",
+        "title_fkG8xB",
+        "price_zKzVJw",
+        "variant_picker_FhmUQU",
+        "quantity_selector_K3tNxp",
+        "buy_buttons_hQKBPM",
+        "share_9Nn9dx"
+      ],
+      "name": "t:sections.featured-product.presets.name",
+      "settings": {
+        "product": "calmskin",
+        "color_scheme": "",
+        "secondary_background": false,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
@@ -528,6 +598,7 @@
     "experts",
     "skin-types",
     "catalog-showcase",
-    "blog"
+    "blog",
+    "featured_product_hGT7Bg"
   ]
 }
