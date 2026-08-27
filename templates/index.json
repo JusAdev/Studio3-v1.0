@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
@@ -14,149 +5,35 @@
       "settings": {
         "image": "shopify://shop_images/Home_-_Banner_Principal_2720_x_1186px_-_PROFISSIONAL-desktop_1x_dfafe241-ddd0-488a-bb28-dc7250d49a54.jpg",
         "link": "shopify://collections/all",
-        "heading": "",
-        "subtitle": "",
-        "button_label": "",
-        "color_scheme": "scheme-1",
-        "padding_top": 24,
-        "padding_bottom": 24
+        "color_scheme": "scheme-1"
       }
     },
     "categories-nav": {
       "type": "studio3-categories-nav",
       "blocks": {
-        "cat-1": {
-          "type": "category",
-          "settings": {
-            "icon": "shopify://shop_images/mais-vendidos.svg",
-            "label": "Mais Vendidos",
-            "link": "shopify://collections/all"
-          }
-        },
-        "cat-2": {
-          "type": "category",
-          "settings": {
-            "icon": "shopify://shop_images/ofertas-mes.svg",
-            "label": "Ofertas do mês",
-            "link": "shopify://collections/all"
-          }
-        },
-        "cat-3": {
-          "type": "category",
-          "settings": {
-            "icon": "shopify://shop_images/sensoriais.svg",
-            "label": "Sensoriais",
-            "link": "shopify://collections/all"
-          }
-        },
-        "cat-4": {
-          "type": "category",
-          "settings": {
-            "icon": "shopify://shop_images/alta-tecnologia.svg",
-            "label": "Alta Tecnologia",
-            "link": "shopify://collections/all"
-          }
-        },
-        "cat-5": {
-          "type": "category",
-          "settings": {
-            "icon": "shopify://shop_images/mascaras.svg",
-            "label": "Máscaras",
-            "link": "shopify://collections/mascaras"
-          }
-        },
-        "cat-6": {
-          "type": "category",
-          "settings": {
-            "icon": "shopify://shop_images/seruns.svg",
-            "label": "Séruns",
-            "link": "shopify://collections/seruns"
-          }
-        },
-        "cat-7": {
-          "type": "category",
-          "settings": {
-            "icon": "shopify://shop_images/sabonetes.svg",
-            "label": "Sabonetes",
-            "link": "shopify://collections/limpeza"
-          }
-        },
-        "cat-8": {
-          "type": "category",
-          "settings": {
-            "icon": "shopify://shop_images/protocolos.svg",
-            "label": "Protocolos",
-            "link": "shopify://collections/kits"
-          }
-        },
-        "cat-9": {
-          "type": "category",
-          "settings": {
-            "icon": "shopify://shop_images/top-skincare.svg",
-            "label": "Top Skincare",
-            "link": "shopify://collections/all"
-          }
-        },
-        "cat-10": {
-          "type": "category",
-          "settings": {
-            "icon": "shopify://shop_images/vitamina-c.svg",
-            "label": "Vitamina C",
-            "link": "shopify://collections/vitamina-c"
-          }
-        }
+        "cat-1": { "type": "category", "settings": { "icon": "shopify://shop_images/mais-vendidos.svg", "label": "Mais Vendidos", "link": "shopify://collections/all" } },
+        "cat-2": { "type": "category", "settings": { "icon": "shopify://shop_images/ofertas-mes.svg", "label": "Ofertas do mês", "link": "shopify://collections/all" } },
+        "cat-3": { "type": "category", "settings": { "icon": "shopify://shop_images/sensoriais.svg", "label": "Sensoriais", "link": "shopify://collections/all" } },
+        "cat-4": { "type": "category", "settings": { "icon": "shopify://shop_images/alta-tecnologia.svg", "label": "Alta Tecnologia", "link": "shopify://collections/all" } },
+        "cat-5": { "type": "category", "settings": { "icon": "shopify://shop_images/mascaras.svg", "label": "Máscaras", "link": "shopify://collections/mascaras" } },
+        "cat-6": { "type": "category", "settings": { "icon": "shopify://shop_images/seruns.svg", "label": "Séruns", "link": "shopify://collections/seruns" } },
+        "cat-7": { "type": "category", "settings": { "icon": "shopify://shop_images/sabonetes.svg", "label": "Sabonetes", "link": "shopify://collections/limpeza" } },
+        "cat-8": { "type": "category", "settings": { "icon": "shopify://shop_images/protocolos.svg", "label": "Protocolos", "link": "shopify://collections/kits" } },
+        "cat-9": { "type": "category", "settings": { "icon": "shopify://shop_images/top-skincare.svg", "label": "Top Skincare", "link": "shopify://collections/all" } },
+        "cat-10": { "type": "category", "settings": { "icon": "shopify://shop_images/vitamina-c.svg", "label": "Vitamina C", "link": "shopify://collections/vitamina-c" } }
       },
-      "block_order": [
-        "cat-1",
-        "cat-2",
-        "cat-3",
-        "cat-4",
-        "cat-5",
-        "cat-6",
-        "cat-7",
-        "cat-8",
-        "cat-9",
-        "cat-10"
-      ],
-      "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
-      }
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4", "cat-5", "cat-6", "cat-7", "cat-8", "cat-9", "cat-10"],
+      "settings": {}
     },
     "bestsellers": {
       "type": "studio3-bestsellers",
       "blocks": {
-        "p1": {
-          "type": "product",
-          "settings": {
-            "product": "calmskin"
-          }
-        },
-        "product_UKTbTe": {
-          "type": "product",
-          "settings": {
-            "product": "floraty"
-          }
-        },
-        "p3": {
-          "type": "product",
-          "settings": {
-            "product": "skin-molecular"
-          }
-        },
-        "p4": {
-          "type": "product",
-          "settings": {
-            "product": "firm-flaccid"
-          }
-        }
+        "p1": { "type": "product", "settings": { "product": "calmskin" } },
+        "p2": { "type": "product", "settings": { "product": "floraty" } },
+        "p3": { "type": "product", "settings": { "product": "skin-molecular" } },
+        "p4": { "type": "product", "settings": { "product": "firm-flaccid" } }
       },
-      "block_order": [
-        "p1",
-        "product_UKTbTe",
-        "p3",
-        "p4"
-      ],
+      "block_order": ["p1", "p2", "p3", "p4"],
       "settings": {
         "heading": "Os queridinhos das esteticistas",
         "subtitle": "Os dermocosméticos profissionais mais vendidos da Tulípia, formulados para protocolos de estética e skincare.",
@@ -171,45 +48,18 @@
       "settings": {
         "image": "shopify://shop_images/faixa-promo-immortalite-desk-desktop_1x_59d1e9e7-23c9-43f3-9774-16cce0ca892d.jpg",
         "link": "shopify://collections/all",
-        "alt_text": "Sérum de Vitamina C com textura leve e rápida absorção",
-        "padding_top": 24,
-        "padding_bottom": 24
+        "alt_text": "Sérum de Vitamina C com textura leve e rápida absorção"
       }
     },
     "new-arrivals": {
       "type": "studio3-new-arrivals",
       "blocks": {
-        "p1": {
-          "type": "product",
-          "settings": {
-            "product": "rotina-proskin-ultra-hidratante"
-          }
-        },
-        "p2": {
-          "type": "product",
-          "settings": {
-            "product": "niacine"
-          }
-        },
-        "p3": {
-          "type": "product",
-          "settings": {
-            "product": "linha-dermo-estetic"
-          }
-        },
-        "p4": {
-          "type": "product",
-          "settings": {
-            "product": "skin-molecular"
-          }
-        }
+        "p1": { "type": "product", "settings": { "product": "rotina-proskin-ultra-hidratante" } },
+        "p2": { "type": "product", "settings": { "product": "niacine" } },
+        "p3": { "type": "product", "settings": { "product": "linha-dermo-estetic" } },
+        "p4": { "type": "product", "settings": { "product": "skin-molecular" } }
       },
-      "block_order": [
-        "p1",
-        "p2",
-        "p3",
-        "p4"
-      ],
+      "block_order": ["p1", "p2", "p3", "p4"],
       "settings": {
         "heading": "Últimos Lançamentos",
         "subtitle": "As formulações mais recentes da Tulípia, prontas para entrar no seu protocolo.",
@@ -223,286 +73,72 @@
     "editorial-mosaic": {
       "type": "studio3-editorial-mosaic",
       "blocks": {
-        "tile-1": {
-          "type": "tile",
-          "settings": {
-            "image": "shopify://shop_images/home-grid_ProSkin-sem-botao.jpg",
-            "link": "shopify://collections/all",
-            "button_label": "Ver Produto",
-            "alt_text": "ProSkin Repair - Onde a pele reencontra sua força",
-            "wide": true
-          }
-        },
-        "tile-2": {
-          "type": "tile",
-          "settings": {
-            "image": "shopify://shop_images/home-grid_dermo-estetic_desk.jpg",
-            "link": "shopify://products/linha-dermo-estetic",
-            "button_label": "Ver Produto",
-            "alt_text": "Linha Dermo Estetic para Limpeza de pele",
-            "wide": false
-          }
-        },
-        "tile-3": {
-          "type": "tile",
-          "settings": {
-            "image": "shopify://shop_images/ampolas-microagulhamento.jpg",
-            "link": "shopify://collections/ampolas",
-            "button_label": "Ver Produto",
-            "alt_text": "Ampolas para uso de microagulhamento",
-            "wide": false
-          }
-        }
+        "tile-1": { "type": "tile", "settings": { "image": "shopify://shop_images/home-grid_ProSkin-sem-botao.jpg", "link": "shopify://collections/all", "button_label": "Ver Produto", "alt_text": "ProSkin Repair - Onde a pele reencontra sua força", "wide": true } },
+        "tile-2": { "type": "tile", "settings": { "image": "shopify://shop_images/home-grid_dermo-estetic_desk.jpg", "link": "shopify://products/linha-dermo-estetic", "button_label": "Ver Produto", "alt_text": "Linha Dermo Estetic para Limpeza de pele" } },
+        "tile-3": { "type": "tile", "settings": { "image": "shopify://shop_images/ampolas-microagulhamento.jpg", "link": "shopify://collections/ampolas", "button_label": "Ver Produto", "alt_text": "Ampolas para uso de microagulhamento" } }
       },
-      "block_order": [
-        "tile-1",
-        "tile-2",
-        "tile-3"
-      ],
+      "block_order": ["tile-1", "tile-2", "tile-3"],
       "settings": {
-        "color_scheme": "scheme-1",
-        "button_bg_color": "#ffffffd9",
-        "button_text_color": "#4c5154",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "color_scheme": "scheme-1"
       }
     },
     "experts": {
       "type": "studio3-experts",
       "blocks": {
-        "e1": {
-          "type": "expert",
-          "settings": {
-            "photo": "shopify://shop_images/amanda-dantas_1-expert_1x_34d8dcd5-1d52-4b98-9558-17a271ac09bb.jpg",
-            "name": "Amanda Dantas",
-            "link": "shopify://collections/all"
-          }
-        },
-        "e2": {
-          "type": "expert",
-          "settings": {
-            "photo": "shopify://shop_images/juliana-gorreri-expert_1x_4a54738e-503d-4ed7-934e-b1663875c014.jpg",
-            "name": "Juliana Gorreri",
-            "link": "shopify://collections/all"
-          }
-        },
-        "e3": {
-          "type": "expert",
-          "settings": {
-            "photo": "shopify://shop_images/leticia-regina-expert_1x_3fb1da64-e33c-4f31-ab50-ff207121b602.jpg",
-            "name": "Letícia Regina",
-            "link": "shopify://collections/all"
-          }
-        },
-        "e4": {
-          "type": "expert",
-          "settings": {
-            "photo": "shopify://shop_images/simone-coelho-expert_1x_ee08102d-e45b-4737-b91f-5188ed7a6945.jpg",
-            "name": "Simone Coelho",
-            "link": "shopify://collections/all"
-          }
-        },
-        "e5": {
-          "type": "expert",
-          "settings": {
-            "photo": "shopify://shop_images/tainara-yamasaki-expert_1x_765647d2-1ef7-46f5-8312-ff752f19e548.jpg",
-            "name": "Tainara Yamasaki",
-            "link": "shopify://collections/all"
-          }
-        },
-        "e6": {
-          "type": "expert",
-          "settings": {
-            "photo": "shopify://shop_images/thais-coelho-expert_1x_b5cc3c91-02d9-4894-8120-9142b708288e.jpg",
-            "name": "Thais Coelho",
-            "link": "shopify://collections/all"
-          }
-        }
+        "e1": { "type": "expert", "settings": { "photo": "shopify://shop_images/amanda-dantas_1-expert_1x_34d8dcd5-1d52-4b98-9558-17a271ac09bb.jpg", "name": "Amanda Dantas", "link": "shopify://collections/all" } },
+        "e2": { "type": "expert", "settings": { "photo": "shopify://shop_images/juliana-gorreri-expert_1x_4a54738e-503d-4ed7-934e-b1663875c014.jpg", "name": "Juliana Gorreri", "link": "shopify://collections/all" } },
+        "e3": { "type": "expert", "settings": { "photo": "shopify://shop_images/leticia-regina-expert_1x_3fb1da64-e33c-4f31-ab50-ff207121b602.jpg", "name": "Letícia Regina", "link": "shopify://collections/all" } },
+        "e4": { "type": "expert", "settings": { "photo": "shopify://shop_images/simone-coelho-expert_1x_ee08102d-e45b-4737-b91f-5188ed7a6945.jpg", "name": "Simone Coelho", "link": "shopify://collections/all" } },
+        "e5": { "type": "expert", "settings": { "photo": "shopify://shop_images/tainara-yamasaki-expert_1x_765647d2-1ef7-46f5-8312-ff752f19e548.jpg", "name": "Tainara Yamasaki", "link": "shopify://collections/all" } },
+        "e6": { "type": "expert", "settings": { "photo": "shopify://shop_images/thais-coelho-expert_1x_b5cc3c91-02d9-4894-8120-9142b708288e.jpg", "name": "Thais Coelho", "link": "shopify://collections/all" } }
       },
-      "block_order": [
-        "e1",
-        "e2",
-        "e3",
-        "e4",
-        "e5",
-        "e6"
-      ],
+      "block_order": ["e1", "e2", "e3", "e4", "e5", "e6"],
       "settings": {
         "title": "Favoritos das Experts",
         "subtitle": "Os dermocosméticos que as profissionais da estética mais indicam nos seus protocolos.",
         "card_cta_label": "Ver produtos",
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "color_scheme": "scheme-1"
       }
     },
     "skin-types": {
       "type": "studio3-skin-types",
       "blocks": {
-        "s1": {
-          "type": "skin-type",
-          "settings": {
-            "image": "shopify://shop_images/peles-maduras.jpg",
-            "label": "Peles Maduras",
-            "link": "shopify://collections/all"
-          }
-        },
-        "s2": {
-          "type": "skin-type",
-          "settings": {
-            "image": "shopify://shop_images/peles-acneicas.jpg",
-            "label": "Peles Acneicas",
-            "link": "shopify://collections/all"
-          }
-        },
-        "s3": {
-          "type": "skin-type",
-          "settings": {
-            "image": "shopify://shop_images/peles-mistas.jpg",
-            "label": "Peles Mistas",
-            "link": "shopify://collections/all"
-          }
-        },
-        "s4": {
-          "type": "skin-type",
-          "settings": {
-            "image": "shopify://shop_images/peles-oleosas.jpg",
-            "label": "Peles Oleosas",
-            "link": "shopify://collections/all"
-          }
-        },
-        "s5": {
-          "type": "skin-type",
-          "settings": {
-            "image": "shopify://shop_images/peles-secas.jpg",
-            "label": "Peles Secas",
-            "link": "shopify://collections/all"
-          }
-        },
-        "s6": {
-          "type": "skin-type",
-          "settings": {
-            "image": "shopify://shop_images/peles-sensiveis.jpg",
-            "label": "Peles Sensíveis",
-            "link": "shopify://collections/all"
-          }
-        }
+        "s1": { "type": "skin-type", "settings": { "image": "shopify://shop_images/peles-maduras.jpg", "label": "Peles Maduras", "link": "shopify://collections/all" } },
+        "s2": { "type": "skin-type", "settings": { "image": "shopify://shop_images/peles-acneicas.jpg", "label": "Peles Acneicas", "link": "shopify://collections/all" } },
+        "s3": { "type": "skin-type", "settings": { "image": "shopify://shop_images/peles-mistas.jpg", "label": "Peles Mistas", "link": "shopify://collections/all" } },
+        "s4": { "type": "skin-type", "settings": { "image": "shopify://shop_images/peles-oleosas.jpg", "label": "Peles Oleosas", "link": "shopify://collections/all" } },
+        "s5": { "type": "skin-type", "settings": { "image": "shopify://shop_images/peles-secas.jpg", "label": "Peles Secas", "link": "shopify://collections/all" } },
+        "s6": { "type": "skin-type", "settings": { "image": "shopify://shop_images/peles-sensiveis.jpg", "label": "Peles Sensíveis", "link": "shopify://collections/all" } }
       },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3",
-        "s4",
-        "s5",
-        "s6"
-      ],
+      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6"],
       "settings": {
         "heading": "Tipos de Peles",
         "subtitle": "Encontre os ativos e as formulações certos para cada tipo de pele.",
-        "color_scheme": "scheme-1",
-        "label_bg_color": "#ffffffd9",
-        "label_text_color": "#4c5154",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "color_scheme": "scheme-1"
       }
     },
     "catalog-showcase": {
       "type": "studio3-catalog-showcase",
       "blocks": {
-        "p1": {
-          "type": "product",
-          "settings": {
-            "product": "firm-flaccid-1"
-          }
-        },
-        "p2": {
-          "type": "product",
-          "settings": {
-            "product": "hidrasol-fps-60"
-          }
-        },
-        "p3": {
-          "type": "product",
-          "settings": {
-            "product": "floraty-1"
-          }
-        },
-        "p4": {
-          "type": "product",
-          "settings": {
-            "product": "dermo-estetic"
-          }
-        },
-        "p5": {
-          "type": "product",
-          "settings": {
-            "product": "minerals-24k"
-          }
-        },
-        "p6": {
-          "type": "product",
-          "settings": {
-            "product": "primavera-mask"
-          }
-        },
-        "p7": {
-          "type": "product",
-          "settings": {
-            "product": "hidrasol-fps-30"
-          }
-        },
-        "p8": {
-          "type": "product",
-          "settings": {
-            "product": "marezi"
-          }
-        },
-        "p9": {
-          "type": "product",
-          "settings": {
-            "product": "calmskin"
-          }
-        },
-        "p10": {
-          "type": "product",
-          "settings": {
-            "product": "skin-molecular"
-          }
-        },
-        "p11": {
-          "type": "product",
-          "settings": {
-            "product": "niacine"
-          }
-        },
-        "p12": {
-          "type": "product",
-          "settings": {
-            "product": "rotina-proskin-ultra-hidratante"
-          }
-        }
+        "p1": { "type": "product", "settings": { "product": "firm-flaccid-1" } },
+        "p2": { "type": "product", "settings": { "product": "hidrasol-fps-60" } },
+        "p3": { "type": "product", "settings": { "product": "floraty-1" } },
+        "p4": { "type": "product", "settings": { "product": "dermo-estetic" } },
+        "p5": { "type": "product", "settings": { "product": "minerals-24k" } },
+        "p6": { "type": "product", "settings": { "product": "primavera-mask" } },
+        "p7": { "type": "product", "settings": { "product": "hidrasol-fps-30" } },
+        "p8": { "type": "product", "settings": { "product": "marezi" } },
+        "p9": { "type": "product", "settings": { "product": "calmskin" } },
+        "p10": { "type": "product", "settings": { "product": "skin-molecular" } },
+        "p11": { "type": "product", "settings": { "product": "niacine" } },
+        "p12": { "type": "product", "settings": { "product": "rotina-proskin-ultra-hidratante" } }
       },
-      "block_order": [
-        "p1",
-        "p2",
-        "p3",
-        "p4",
-        "p5",
-        "p6",
-        "p7",
-        "p8",
-        "p9",
-        "p10",
-        "p11",
-        "p12"
-      ],
+      "block_order": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "p10", "p11", "p12"],
       "settings": {
         "heading": "Dermocosméticos Profissionais",
         "subtitle": "Dermocosméticos escolhidos por esteticistas, biomédicos e fisioterapeutas em todo o Brasil",
         "banner_image": "shopify://shop_images/banner_categorias_marezi_desk-desktop_1x_fe1c7ec3-0975-4e5a-b1ca-41ccec336835.jpg",
         "banner_url": "shopify://collections/all",
-        "cta_text": "",
-        "cta_url": "",
         "color_scheme": "scheme-1"
       }
     },
