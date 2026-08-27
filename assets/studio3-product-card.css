@@ -1,10 +1,19 @@
 /* Restilo do card de produto nativo do Dawn (snippets/card-product.liquid) pro visual
-   do projeto Studio3. Cor/fonte vêm das custom properties globais; aqui só o que é
-   específico do card: botão de wishlist, linha de subtítulo/tamanho, mensagem de
-   exclusividade e o link de login. */
+   do projeto Studio3. Valores conferidos direto contra o CSS real do site de
+   referência (.product-card* em app-D-LMZKup.css): texto centralizado, nome do
+   produto em Arsenal, imagem com os 4 cantos arredondados (o Dawn por padrão só
+   arredonda os de cima, assumindo um card com fundo/borda visível — aqui a "card" é
+   só a imagem, então precisa arredondar os 4). */
 
 .card__media {
   position: relative;
+  border-radius: var(--product-card-corner-radius, 0.8rem);
+  overflow: hidden;
+}
+
+.card__media .media,
+.card__media .media img {
+  border-radius: var(--product-card-corner-radius, 0.8rem);
 }
 
 .studio3-wishlist-btn {
@@ -35,19 +44,20 @@
 
 .studio3-card__meta {
   display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
+  flex-direction: column;
   margin-top: 0.2rem;
 }
 
 .studio3-card__subtitle {
-  margin: 0;
+  margin: 0.15rem 0 0;
   font-family: var(--font-body-family);
   font-size: 1.3rem;
   color: var(--studio3-color-ink-muted);
 }
 
 .studio3-card__size {
+  display: block;
+  margin-top: 0.1rem;
   font-family: var(--font-body-family);
   font-size: 1.2rem;
   color: var(--studio3-color-ink-muted);
@@ -65,10 +75,23 @@
   text-decoration: none;
 }
 
-.card__heading a,
-.card__heading {
-  font-family: var(--font-body-family);
+.card__heading,
+.card__heading a {
+  font-family: var(--font-heading-family);
   color: var(--studio3-color-ink);
+}
+
+.card__content,
+.card__information {
+  text-align: center;
+}
+
+.card__information {
+  align-items: center;
+}
+
+.price {
+  justify-content: center;
 }
 
 /* O Dawn usa CSS Grid com grid-row-start explícito que posiciona o quick-add ANTES

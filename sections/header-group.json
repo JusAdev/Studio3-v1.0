@@ -8,6 +8,29 @@
     },
     "header": {
       "type": "header",
+      "blocks": {
+        "promo-profissional": {
+          "type": "mega_menu_promo",
+          "settings": {
+            "menu_item_title": "Profissional",
+            "image": "shopify://shop_images/Menu-Desktop---DropDown-Profissional---572-x-764px-desktop_1x_55762cfc-88e9-4be8-af8d-b1e01c36799c.jpg",
+            "link": "shopify://collections/all",
+            "label": "Ofertas para profissionais",
+            "see_all_label": "Ver todos os produtos profissionais"
+          }
+        },
+        "promo-homecare": {
+          "type": "mega_menu_promo",
+          "settings": {
+            "menu_item_title": "Home Care",
+            "image": "shopify://shop_images/Menu-Desktop---DropDown-Home-Care---572-x-764px-desktop_1x_4bb2b3d5-7dad-4b27-91fa-7fe27096ebee.jpg",
+            "link": "shopify://collections/all",
+            "label": "Ofertas para home care",
+            "see_all_label": "Ver todos os produtos home care"
+          }
+        }
+      },
+      "block_order": ["promo-profissional", "promo-homecare"],
       "settings": {
         "color_scheme": "scheme-1",
         "menu_color_scheme": "scheme-1",
