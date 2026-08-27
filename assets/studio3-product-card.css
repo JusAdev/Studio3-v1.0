@@ -100,6 +100,17 @@
   flex-direction: column;
 }
 
+/* O card do Dawn tem um SEGUNDO bloco .card__content, aninhado dentro de .card__inner
+   (junto com .card__media), usado só pelo card_style "standard" pra sobrepor texto na
+   imagem. O Dawn só esconde o `.card__information` de dentro dele (ver
+   component-card.css) — o container em si continua de pé, e como tem
+   `flex-grow: 1; width: 100%`, ele disputa largura com `.card__media` dentro do
+   flex-row de `.card__inner`, espremendo a imagem pra menos da metade da largura
+   (o "frame vertical" que a imagem ficava). Escondendo o container inteiro aqui. */
+.card__inner .card__content {
+  display: none;
+}
+
 /* Preço: inteiro maior, centavos menores */
 .studio3-card__pricing {
   margin: 0.4rem 0;
