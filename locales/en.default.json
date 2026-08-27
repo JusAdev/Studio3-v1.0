@@ -7,7 +7,11 @@
     "card": {
       "wishlist_add": "Favoritar produto",
       "exclusive_message": "Produto exclusivo para profissionais",
-      "login_to_buy": "Faça login ou cadastre-se"
+      "login_to_buy": "Faça login ou cadastre-se",
+      "view_product": "Ver Produto",
+      "add_to_cart_quick": "Compra rápida",
+      "price_from": "De:",
+      "price_to": "por:"
     }
   },
   "general": {

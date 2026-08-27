@@ -297,6 +297,9 @@
               {%- endif -%}
             </div>
           </div>
+          <a href="{{ card_product.url }}" class="studio3-card__cta-ver">
+            {{ 'studio3.card.view_product' | t }}
+          </a>
           {%- unless studio3_exclusive -%}
           {% assign product_form_id = 'quick-add-' | append: section_id | append: card_product.id %}
           {% if quick_add == 'standard' %}
@@ -368,7 +371,7 @@
                       id="{{ product_form_id }}-submit"
                       type="submit"
                       name="add"
-                      class="quick-add__submit button button--full-width button--secondary{% if horizontal_quick_add %} card--horizontal__quick-add{% endif %}"
+                      class="quick-add__submit studio3-card__cta-buy{% if horizontal_quick_add %} card--horizontal__quick-add{% endif %}"
                       aria-haspopup="dialog"
                       aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ card_product.id }}"
                       aria-live="polite"
@@ -377,9 +380,12 @@
                         disabled
                       {% endif %}
                     >
+                      {%- unless card_product.selected_or_first_available_variant.available == false -%}
+                        <span class="svg-wrapper studio3-card__cta-buy-icon">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+                      {%- endunless -%}
                       <span>
                         {%- if card_product.selected_or_first_available_variant.available -%}
-                          {{ 'products.product.add_to_cart' | t }}
+                          {{ 'studio3.card.add_to_cart_quick' | t }}
                         {%- else -%}
                           {{ 'products.product.sold_out' | t }}
                         {%- endif -%}
@@ -559,8 +565,9 @@
             {% endif %}
           {% endif %}
           {%- else -%}
-            <a href="{{ routes.account_login_url }}" class="studio3-card__login-link button button--full-width button--secondary">
-              {{ 'studio3.card.login_to_buy' | t }}
+            <a href="{{ routes.account_login_url }}" class="studio3-card__cta-buy studio3-card__cta-buy--login">
+              <span class="svg-wrapper studio3-card__cta-buy-icon">{{ 'icon-account.svg' | inline_asset_content }}</span>
+              <span>{{ 'studio3.card.login_to_buy' | t }}</span>
             </a>
           {%- endunless -%}
           <div class="card__badge {{ settings.badge_position }}">

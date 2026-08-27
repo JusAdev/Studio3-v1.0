@@ -1,6 +1,9 @@
 {% comment %}
   Preço do card, ou mensagem "exclusivo para profissionais" no lugar do preço quando
   aplicável (produto com a tag `exclusivo-profissional` e visitante sem sessão logada).
+  Não usa o snippet nativo `price` — a referência tem um tratamento tipográfico
+  específico (número grande + centavos pequenos, "De: / por:" no desconto) que o
+  `price` genérico do Dawn não reproduz.
 
   Accepts:
   - product: {Object} Product Liquid object
@@ -14,5 +17,26 @@
 {%- if exclusive -%}
   <p class="studio3-card__exclusive-msg">{{ 'studio3.card.exclusive_message' | t }}</p>
 {%- else -%}
-  {% render 'price', product: product, price_class: '', show_compare_at_price: true %}
+  {%- liquid
+    assign target = product.selected_or_first_available_variant
+    assign compare_at = target.compare_at_price
+    assign price = target.price
+  -%}
+  <div class="studio3-card__pricing">
+    {%- if compare_at > price -%}
+      <div class="studio3-card__price-row">
+        <span class="studio3-card__price-was">
+          {{ 'studio3.card.price_from' | t }} <s>{{ compare_at | money }}</s>
+        </span>
+        <span class="studio3-card__price-current">
+          <span class="studio3-card__price-prefix">{{ 'studio3.card.price_to' | t }}</span>
+          {%- render 'studio3-price-split', amount: price -%}
+        </span>
+      </div>
+    {%- else -%}
+      <span class="studio3-card__price-current">
+        {%- render 'studio3-price-split', amount: price -%}
+      </span>
+    {%- endif -%}
+  </div>
 {%- endif -%}

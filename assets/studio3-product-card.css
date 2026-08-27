@@ -3,7 +3,9 @@
    referência (.product-card* em app-D-LMZKup.css): texto centralizado, nome do
    produto em Arsenal, imagem com os 4 cantos arredondados (o Dawn por padrão só
    arredonda os de cima, assumindo um card com fundo/borda visível — aqui a "card" é
-   só a imagem, então precisa arredondar os 4). */
+   só a imagem, então precisa arredondar os 4), dois CTAs separados ("Ver Produto" em
+   botão contorno + "Compra rápida" em texto verde maiúsculo com ícone), e preço com o
+   inteiro maior que os centavos. */
 
 .card__media {
   position: relative;
@@ -65,14 +67,13 @@
 
 .studio3-card__exclusive-msg {
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   font-family: var(--font-body-family);
-  font-size: 1.3rem;
-  color: var(--studio3-color-gold);
-}
-
-.studio3-card__login-link {
-  font-family: var(--font-body-family);
-  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--studio3-color-ink-muted);
+  padding: 0.5rem 0;
 }
 
 .card__heading,
@@ -90,15 +91,107 @@
   align-items: center;
 }
 
-.price {
-  justify-content: center;
-}
-
 /* O Dawn usa CSS Grid com grid-row-start explícito que posiciona o quick-add ANTES
    do bloco de informação (efeito "botão flutuando" nativo do tema) — a referência
    quer nome/subtítulo/preço primeiro e o botão por último. Troca pra flex-column,
-   que segue a ordem real do DOM (informação -> preço -> quick-add -> badge). */
+   que segue a ordem real do DOM (informação -> preço -> "Ver Produto" -> quick-add). */
 .card__content {
   display: flex;
   flex-direction: column;
+}
+
+/* Preço: inteiro maior, centavos menores */
+.studio3-card__pricing {
+  margin: 0.4rem 0;
+}
+
+.studio3-card__price-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.studio3-card__price-was {
+  font-family: var(--font-body-family);
+  font-size: 1.1rem;
+  color: var(--studio3-color-ink-muted);
+}
+
+.studio3-card__price-current {
+  font-family: var(--font-body-family);
+  color: var(--studio3-color-ink);
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.studio3-card__price-current small {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.studio3-card__price-prefix {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-right: 0.2rem;
+}
+
+/* "Ver Produto" — botão contorno */
+.studio3-card__cta-ver {
+  display: block;
+  margin-top: auto;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--studio3-color-ink);
+  border-radius: 0.7rem;
+  color: var(--studio3-color-ink);
+  font-family: var(--font-body-family);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.studio3-card__cta-ver:hover {
+  background: var(--studio3-color-ink);
+  color: rgb(var(--color-background));
+}
+
+/* "Compra rápida" / "Faça login ou cadastre-se" — texto verde maiúsculo com ícone,
+   sem borda/fundo (fica visualmente abaixo do botão "Ver Produto"). */
+.studio3-card__cta-buy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.6rem;
+  padding: 0.5rem 0;
+  background: none;
+  border: none;
+  color: var(--studio3-color-accent);
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.studio3-card__cta-buy:hover {
+  color: var(--studio3-color-ink);
+}
+
+.studio3-card__cta-buy-icon svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.studio3-card__cta-buy--login {
+  color: var(--studio3-color-ink);
+  font-weight: 400;
+  font-size: 1.1rem;
 }

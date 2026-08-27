@@ -1,0 +1,18 @@
+{% comment %}
+  Renderiza um valor monetário com o inteiro maior e os centavos menores (ex.: "R$
+  79" grande + ",00" pequeno), igual ao `.product-card__price-current strong/small`
+  do site de referência. Divide a string já formatada pelo filtro `money` (respeita o
+  formato de moeda configurado na loja) na última vírgula — se não houver vírgula
+  (moeda sem separador decimal por vírgula), cai de volta pro valor plano, sem quebrar.
+
+  Accepts:
+  - amount: {Number} valor em centavos (ex.: variant.price)
+
+  Usage:
+  {% render 'studio3-price-split', amount: variant.price %}
+{% endcomment %}
+{%- liquid
+  assign money_str = amount | money
+  assign parts = money_str | split: ','
+-%}
+{%- if parts.size == 2 -%}{{ parts[0] }}<small>,{{ parts[1] }}</small>{%- else -%}{{ money_str }}{%- endif -%}
