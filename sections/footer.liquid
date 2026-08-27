@@ -318,6 +318,11 @@
         {%- endif -%}
       </div>
     </div>
+    {%- if section.settings.cnpj_address != blank -%}
+      <div class="footer__content-bottom-wrapper page-width footer__content-bottom-wrapper--center">
+        <p class="studio3-footer__cnpj caption">{{ section.settings.cnpj_address }}</p>
+      </div>
+    {%- endif -%}
   </div>
 </footer>
 
@@ -491,6 +496,12 @@
       "default": true,
       "label": "t:sections.footer.settings.show_policy.label",
       "info": "t:sections.footer.settings.show_policy.info"
+    },
+    {
+      "type": "text",
+      "id": "cnpj_address",
+      "label": "CNPJ e endereço (opcional)",
+      "info": "Exibido no rodapé, abaixo do copyright."
     },
     {
       "type": "header",
