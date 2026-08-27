@@ -70,3 +70,12 @@
   font-family: var(--font-body-family);
   color: var(--studio3-color-ink);
 }
+
+/* O Dawn usa CSS Grid com grid-row-start explícito que posiciona o quick-add ANTES
+   do bloco de informação (efeito "botão flutuando" nativo do tema) — a referência
+   quer nome/subtítulo/preço primeiro e o botão por último. Troca pra flex-column,
+   que segue a ordem real do DOM (informação -> preço -> quick-add -> badge). */
+.card__content {
+  display: flex;
+  flex-direction: column;
+}
