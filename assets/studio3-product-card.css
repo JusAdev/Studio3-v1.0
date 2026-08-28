@@ -196,7 +196,7 @@ product-component {
      min-height reserva o espaço da variante de 2 linhas nas duas, senão o "Ver
      Produto" (empurrado por margin-top: auto) fica em alturas diferentes entre um
      card com quick-add normal e um card exclusivo/login na mesma fileira. */
-  min-height: 3.2rem;
+  min-height: 5rem;
   background: none;
   border: none;
   color: var(--studio3-color-accent);
