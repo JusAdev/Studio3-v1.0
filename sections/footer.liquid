@@ -25,6 +25,23 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  /* Referência (tulipia.com.br) usa títulos de coluna em maiúsculas e links sem
+     sublinhado — o Dawn nativo sublinha `.link` e mantém o texto tal como digitado
+     no admin. */
+  .footer .footer-block__heading {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 1.3rem;
+  }
+
+  .footer .footer-block__details-content .link {
+    text-decoration: none;
+  }
+
+  .footer .footer-block__details-content .link:hover {
+    text-decoration: underline;
+  }
 {%- endstyle -%}
 
 <footer class="footer color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">

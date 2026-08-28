@@ -139,6 +139,33 @@
               {%- endfor -%}
             </ul>
           </nav>
+          {%- if shop.customer_accounts_enabled -%}
+            <ul class="menu-drawer__menu list-menu studio3-menu-drawer__account" role="list">
+              {%- if customer -%}
+                <li>
+                  <a href="{{ routes.account_url }}" class="menu-drawer__menu-item list-menu__item link link--text focus-inset">
+                    {{ 'studio3.header.my_account' | t }}
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ routes.account_logout_url }}" class="menu-drawer__menu-item list-menu__item link link--text focus-inset">
+                    {{ 'customer.log_out' | t }}
+                  </a>
+                </li>
+              {%- else -%}
+                <li>
+                  <a href="{{ routes.account_login_url }}" class="menu-drawer__menu-item list-menu__item link link--text focus-inset">
+                    {{ 'studio3.header.login' | t }}
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ routes.account_register_url }}" class="menu-drawer__menu-item list-menu__item link link--text focus-inset">
+                    {{ 'studio3.header.register' | t }}
+                  </a>
+                </li>
+              {%- endif -%}
+            </ul>
+          {%- endif -%}
           <div class="menu-drawer__utility-links">
             {%- if show_country_selector or show_language_selector -%}
               <div class="menu-drawer__localization header-localization">
