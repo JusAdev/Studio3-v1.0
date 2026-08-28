@@ -7,6 +7,19 @@
    botão contorno + "Compra rápida" em texto verde maiúsculo com ícone), e preço com o
    inteiro maior que os centavos. */
 
+/* O Dawn já resolve "cards da mesma fileira com a mesma altura e CTA alinhado" via
+   `.card-wrapper { height: 100% }` -> `.card { display: flex; flex-direction: column;
+   height: 100% }` -> `.card__content { flex-grow: 1 }` (esse último empurra o CTA pro
+   fim quando ele tem `margin-top: auto`). Só que esse card sempre é renderizado dentro
+   de `<product-component>` (custom element do quick-add), que é `display: block` sem
+   altura própria — quebra a corrente de `height: 100%` bem no meio, porque uma altura
+   em % só resolve se o pai tiver altura definida, e um bloco `auto` não conta. Sem
+   isso, cada card fica com a altura do seu próprio conteúdo, e os botões saem
+   desalinhados entre colunas de uma mesma fileira. */
+product-component {
+  height: 100%;
+}
+
 .card__media {
   position: relative;
   border-radius: var(--product-card-corner-radius, 0.8rem);
