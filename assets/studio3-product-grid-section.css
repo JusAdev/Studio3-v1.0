@@ -1,5 +1,9 @@
 .studio3-grid-section {
-  padding: 3rem 0;
+  /* Só padding vertical aqui — como este elemento também carrega a classe .page-width
+     (que já cuida do padding horizontal responsivo), usar o shorthand `padding: 3rem 0`
+     zerava padding-left/right e colava o conteúdo na borda da viewport no mobile. */
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .studio3-grid-section__header {
