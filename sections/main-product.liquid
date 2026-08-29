@@ -15,6 +15,7 @@
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+  {{ 'studio3-main-product.css' | asset_url | stylesheet_tag }}
 
   {% unless product.has_only_default_variant %}
     {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
@@ -76,7 +77,8 @@
   <product-component view-event-payload="{{ product | standard_event_data: 'view', context: 'page' | escape }}">
     <div class="page-width">
       <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
-        <div class="grid__item product__media-wrapper">
+        <div class="grid__item product__media-wrapper studio3-product__media-wrapper">
+          {% render 'studio3-wishlist-button', product: product %}
           {% render 'product-media-gallery', variant_images: variant_images %}
         </div>
         <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
@@ -85,6 +87,16 @@
             class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
           >
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
+
+            {%- if product.collections.first != blank -%}
+              <nav class="studio3-product__breadcrumb" aria-label="{{ 'studio3.product.breadcrumb_label' | t }}">
+                <a href="{{ routes.root_url }}">{{ 'studio3.product.breadcrumb_home' | t }}</a>
+                <span aria-hidden="true">›</span>
+                <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+                <span aria-hidden="true">›</span>
+                <span>{{ product.title }}</span>
+              </nav>
+            {%- endif -%}
 
             {%- for block in section.blocks -%}
               {%- case block.type -%}
@@ -105,6 +117,46 @@
                         {{ product.title | escape }}
                       </h2>
                     </a>
+                  </div>
+                {%- when 'studio3_subtitle' -%}
+                  {%- if product.metafields.custom.subtitle.value != blank -%}
+                    <p class="studio3-product__subtitle" {{ block.shopify_attributes }}>
+                      {{ product.metafields.custom.subtitle.value }}
+                    </p>
+                  {%- endif -%}
+                {%- when 'studio3_meta' -%}
+                  {%- assign studio3_size = product.selected_or_first_available_variant.title -%}
+                  {%- if studio3_size != blank and studio3_size != 'Default Title' -%}
+                    <div class="studio3-product__meta" {{ block.shopify_attributes }}>
+                      <span>{{ studio3_size }}</span>
+                    </div>
+                  {%- endif -%}
+                {%- when 'studio3_ativos' -%}
+                  {%- assign studio3_ativos = product.metafields.custom.active_ingredients.value -%}
+                  {%- if studio3_ativos != blank -%}
+                    <div class="studio3-product__ativos" {{ block.shopify_attributes }}>
+                      <p class="studio3-product__ativos-label">{{ 'studio3.product.active_ingredients' | t }}</p>
+                      <div class="studio3-product__ativos-pills">
+                        {%- for ativo in studio3_ativos -%}
+                          <span class="studio3-product__ativo-pill">{{ ativo }}</span>
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                {%- when 'studio3_trust_badges' -%}
+                  <div class="studio3-product__trust-badges" {{ block.shopify_attributes }}>
+                    <div class="studio3-product__trust-badge">
+                      <span class="svg-wrapper">{{ 'icon-truck.svg' | inline_asset_content }}</span>
+                      <span>{{ block.settings.badge_1 }}</span>
+                    </div>
+                    <div class="studio3-product__trust-badge">
+                      <span class="svg-wrapper">{{ 'icon-return.svg' | inline_asset_content }}</span>
+                      <span>{{ block.settings.badge_2 }}</span>
+                    </div>
+                    <div class="studio3-product__trust-badge">
+                      <span class="svg-wrapper">{{ 'icon-lock.svg' | inline_asset_content }}</span>
+                      <span>{{ block.settings.badge_3 }}</span>
+                    </div>
                   </div>
                 {%- when 'price' -%}
                   <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
@@ -798,6 +850,46 @@
       "type": "title",
       "name": "t:sections.main-product.blocks.title.name",
       "limit": 1
+    },
+    {
+      "type": "studio3_subtitle",
+      "name": "Studio3 - Subtítulo",
+      "limit": 1
+    },
+    {
+      "type": "studio3_meta",
+      "name": "Studio3 - Tamanho",
+      "limit": 1
+    },
+    {
+      "type": "studio3_ativos",
+      "name": "Studio3 - Ativos",
+      "limit": 1
+    },
+    {
+      "type": "studio3_trust_badges",
+      "name": "Studio3 - Selos",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "badge_1",
+          "label": "Selo 1",
+          "default": "Frete grátis acima de R$500"
+        },
+        {
+          "type": "text",
+          "id": "badge_2",
+          "label": "Selo 2",
+          "default": "Troca em até 7 dias"
+        },
+        {
+          "type": "text",
+          "id": "badge_3",
+          "label": "Selo 3",
+          "default": "Compra segura"
+        }
+      ]
     },
     {
       "type": "price",

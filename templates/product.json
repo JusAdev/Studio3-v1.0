@@ -3,83 +3,74 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
-          "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
-          }
-        },
         "title": {
           "type": "title"
+        },
+        "studio3_subtitle": {
+          "type": "studio3_subtitle"
+        },
+        "studio3_meta": {
+          "type": "studio3_meta"
+        },
+        "rating": {
+          "type": "rating"
         },
         "price": {
           "type": "price"
         },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
-          }
-        },
-        "quantity_selector": {
-          "type": "quantity_selector"
-        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": false
+          }
+        },
+        "studio3_trust_badges": {
+          "type": "studio3_trust_badges",
+          "settings": {
+            "badge_1": "Frete grátis acima de R$500",
+            "badge_2": "Troca em até 7 dias",
+            "badge_3": "Compra segura"
           }
         },
         "description": {
           "type": "description"
         },
-        "share": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
-          }
+        "studio3_ativos": {
+          "type": "studio3_ativos"
         }
       },
       "block_order": [
-        "vendor",
         "title",
+        "studio3_subtitle",
+        "studio3_meta",
+        "rating",
         "price",
-        "variant_picker",
-        "quantity_selector",
         "buy_buttons",
+        "studio3_trust_badges",
         "description",
-        "share"
+        "studio3_ativos"
       ],
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
         "media_position": "left",
-        "gallery_layout": "stacked",
+        "gallery_layout": "thumbnail",
         "media_size": "large",
         "constrain_to_viewport": true,
         "media_fit": "contain",
         "image_zoom": "lightbox",
-        "mobile_thumbnails": "hide",
+        "mobile_thumbnails": "show",
         "hide_variants": true,
         "enable_video_looping": false,
         "padding_top": 36,
         "padding_bottom": 12
       }
     },
-    "disclosures": {
-      "type": "disclosures",
-      "settings": {
-        "padding_top": 36,
-        "padding_bottom": 0
-      }
-    },
-    "related-products": {
+    "complete-protocol": {
       "type": "related-products",
       "settings": {
-        "heading": "You may also like",
+        "heading": "Complete Seu Protocolo",
         "heading_size": "h2",
         "products_to_show": 4,
         "columns_desktop": 4,
@@ -90,14 +81,63 @@
         "show_vendor": false,
         "show_rating": false,
         "columns_mobile": "2",
-        "padding_top": 36,
-        "padding_bottom": 28
+        "padding_top": 48,
+        "padding_bottom": 24
+      }
+    },
+    "studio3-trust-policy": {
+      "type": "studio3-trust-policy",
+      "blocks": {
+        "item-1": {
+          "type": "policy_item",
+          "settings": {
+            "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"7\" width=\"20\" height=\"14\" rx=\"2\"></rect><path d=\"M16 7V5a4 4 0 0 0-8 0v2\"></path></svg>",
+            "title": "Troca em 7 dias",
+            "text": "Troque seus produtos em até 7 dias após o recebimento."
+          }
+        },
+        "item-2": {
+          "type": "policy_item",
+          "settings": {
+            "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z\"></path><path d=\"m3.3 7 8.7 5 8.7-5\"></path><path d=\"M12 22V12\"></path></svg>",
+            "title": "Embalagem original",
+            "text": "Produtos em perfeito estado e nunca utilizados."
+          }
+        },
+        "item-3": {
+          "type": "policy_item",
+          "settings": {
+            "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"></path><path d=\"m9 12 2 2 4-4\"></path></svg>",
+            "title": "Compra segura",
+            "text": "Saiba mais sobre nossos termos e condições."
+          }
+        }
+      },
+      "block_order": ["item-1", "item-2", "item-3"]
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Produtos Relacionados",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "2",
+        "padding_top": 24,
+        "padding_bottom": 48
       }
     }
   },
   "order": [
     "main",
-    "disclosures",
-    "related-products"
+    "complete-protocol",
+    "related-products",
+    "studio3-trust-policy"
   ]
 }

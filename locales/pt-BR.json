@@ -22,6 +22,11 @@
       "add_to_cart_quick": "Compra rápida",
       "price_from": "De:",
       "price_to": "por:"
+    },
+    "product": {
+      "breadcrumb_label": "Trilha de navegação",
+      "breadcrumb_home": "Home",
+      "active_ingredients": "Princípios Ativos"
     }
   },
   "general": {
