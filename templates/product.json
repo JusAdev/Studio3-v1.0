@@ -122,6 +122,9 @@
         "color_scheme": "scheme-1"
       }
     },
+    "studio3-product-details": {
+      "type": "studio3-product-details"
+    },
     "studio3-trust-policy": {
       "type": "studio3-trust-policy",
       "blocks": {
@@ -180,6 +183,7 @@
     "main",
     "complete-protocol",
     "related-products",
+    "studio3-product-details",
     "studio3-trust-policy"
   ]
 }
