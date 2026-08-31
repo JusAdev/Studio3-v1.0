@@ -6,21 +6,25 @@
 {% endcomment %}
 
 {%- style -%}
+  .studio3-trust-policy {
+    background: #f8f5f0;
+  }
+
   .studio3-trust-policy__title {
     font-family: var(--font-heading-family);
-    font-size: 1.5rem;
+    font-size: 2.4rem;
     font-weight: 400;
-    letter-spacing: 0.07rem;
+    letter-spacing: 0.112rem;
     color: var(--studio3-color-ink);
     text-align: center;
-    margin: 0 0 2rem;
+    margin: 0 0 3.2rem;
   }
 
   .studio3-trust-policy__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    max-width: 960px;
+    gap: 3.2rem;
+    max-width: 900px;
     margin: 0 auto;
   }
 
@@ -32,26 +36,31 @@
   }
 
   .studio3-trust-policy__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
     text-align: center;
   }
 
   .studio3-trust-policy__item svg {
     width: 2.8rem;
     height: 2.8rem;
+    margin-bottom: 0.4rem;
     color: var(--studio3-color-ink);
   }
 
   .studio3-trust-policy__item h3 {
     font-family: var(--font-heading-family);
-    font-size: 1.4rem;
-    font-weight: 700;
+    font-size: 1.6rem;
+    font-weight: 400;
     color: var(--studio3-color-ink);
-    margin: 1rem 0 0.5rem;
+    margin: 0;
   }
 
   .studio3-trust-policy__item p {
     font-family: var(--font-body-family);
-    font-size: 1.2rem;
+    font-size: 1.28rem;
     line-height: 1.5;
     color: var(--studio3-color-ink-muted);
     margin: 0;
@@ -74,7 +83,7 @@
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+<div class="studio3-trust-policy color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
   <div class="page-width">
     {%- if section.settings.heading != blank -%}
       <h2 class="studio3-trust-policy__title">{{ section.settings.heading }}</h2>
@@ -121,7 +130,7 @@
       "step": 4,
       "unit": "px",
       "label": "Espaço acima",
-      "default": 56
+      "default": 64
     },
     {
       "type": "range",
@@ -131,7 +140,7 @@
       "step": 4,
       "unit": "px",
       "label": "Espaço abaixo",
-      "default": 56
+      "default": 64
     }
   ],
   "blocks": [

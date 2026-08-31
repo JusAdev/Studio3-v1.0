@@ -30,7 +30,16 @@
 {% endcomment %}
 {{ 'studio3-product-grid-section.css' | asset_url | stylesheet_tag }}
 
-<div class="studio3-grid-section page-width">
+{% comment %}
+  Na página de produto (Complete Seu Protocolo / Produtos Relacionados), a referência
+  usa `.product-page__section` (padding 4rem 0 = 64px no sistema deles) e um título
+  centralizado — valores diferentes do que já foi validado pro cabeçalho "Os
+  queridinhos"/"Últimos Lançamentos" da home. Como este snippet é compartilhado entre
+  os dois contextos, o modificador `--pdp` (ligado só quando `template.name == 'product'`)
+  isola o ajuste sem mexer no espaçamento já conferido da home. Ver
+  assets/studio3-product-grid-section.css.
+{% endcomment %}
+<div class="studio3-grid-section page-width{% if template.name == 'product' %} studio3-grid-section--pdp{% endif %}">
   <div class="studio3-grid-section__header">
     <h2 class="studio3-grid-section__title">{{ heading | escape }}</h2>
     {%- if subtitle != blank -%}

@@ -8,55 +8,54 @@
 
 {%- style -%}
   .studio3-product-details {
-    background: #f4f2ee;
+    background: #fafafa;
   }
 
   .studio3-product-details__inner {
     max-width: 96rem;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 1.6rem;
   }
 
   .studio3-product-details__title {
     font-family: var(--font-heading-family);
-    font-size: 1.5rem;
+    font-size: 2.4rem;
     font-weight: 400;
-    letter-spacing: 0.07rem;
+    letter-spacing: 0.112rem;
     color: var(--studio3-color-ink);
     text-align: center;
-    margin: 0 0 1.5rem;
+    margin: 0 0 3.2rem;
   }
 
   .studio3-product-details__text {
     font-family: var(--font-body-family);
-    font-size: 1.3rem;
-    line-height: 1.6;
+    font-size: 1.472rem;
+    line-height: 1.9;
     color: var(--studio3-color-ink-muted);
-    max-width: 70rem;
-    margin: 0 auto;
+    padding: 0 0.4rem;
   }
 
   .studio3-product-details__allergy {
     display: flex;
     align-items: flex-start;
-    gap: 0.6rem;
-    max-width: 70rem;
-    margin: 1.5rem auto 0;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e0dcd4;
+    gap: 0.96rem;
+    background: #00000008;
+    border-radius: 10px;
+    margin-top: 2.4rem;
+    padding: 1.6rem 2rem;
   }
 
   .studio3-product-details__allergy svg {
     flex-shrink: 0;
     width: 1.6rem;
     height: 1.6rem;
-    margin-top: 0.2rem;
+    margin-top: 0.16rem;
     color: var(--studio3-color-ink-muted);
   }
 
   .studio3-product-details__allergy p {
     font-family: var(--font-body-family);
-    font-size: 1.15rem;
+    font-size: 1.28rem;
     line-height: 1.5;
     color: var(--studio3-color-ink-muted);
     margin: 0;
@@ -64,22 +63,25 @@
 
   .studio3-product-details__composition-label {
     display: block;
-    font-family: var(--font-heading-family);
-    font-size: 1.3rem;
-    font-weight: 700;
+    font-family: var(--font-body-family);
+    font-size: 1.28rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
     color: var(--studio3-color-ink);
-    text-align: center;
-    margin-bottom: 1rem;
+    text-align: left;
+    margin-bottom: 0.8rem;
   }
 
   .studio3-product-details__composition-text {
     font-family: var(--font-body-family);
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: 1.152rem;
+    line-height: 1.7;
     color: var(--studio3-color-ink-muted);
+    text-transform: lowercase;
+  }
+
+  .studio3-product-details__composition-text:first-letter {
     text-transform: uppercase;
-    max-width: 70rem;
-    margin: 0 auto;
   }
 
   .section-{{ section.id }}-padding {
@@ -142,7 +144,7 @@
       "step": 4,
       "unit": "px",
       "label": "Espaço acima",
-      "default": 56
+      "default": 64
     },
     {
       "type": "range",
@@ -152,7 +154,7 @@
       "step": 4,
       "unit": "px",
       "label": "Espaço abaixo",
-      "default": 56
+      "default": 64
     }
   ],
   "presets": [

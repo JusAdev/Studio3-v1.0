@@ -75,3 +75,28 @@
 .studio3-grid-section__cta:hover {
   text-decoration: underline;
 }
+
+/* ---- Variante da página de produto ("Complete Seu Protocolo" / "Produtos
+   Relacionados") — valores conferidos contra `.product-page__section` /
+   `.product-page__section-title` da referência (sistema de 16px deles), convertidos
+   pro nosso root de 10px. Escopado com `--pdp` (ver studio3-product-grid-section.liquid)
+   pra não alterar o espaçamento já validado das seções da home que reusam este
+   mesmo snippet. */
+.studio3-grid-section--pdp {
+  /* Referência: .product-page__section { padding: 4rem 0 } = 64px. 64 / 10 = 6.4rem. */
+  padding-top: 6.4rem;
+  padding-bottom: 6.4rem;
+}
+
+.studio3-grid-section--pdp .studio3-grid-section__header {
+  /* Referência: .product-page__section-title { margin-bottom: 2rem } = 32px.
+     32 / 10 = 3.2rem. */
+  margin-bottom: 3.2rem;
+  text-align: center;
+}
+
+.studio3-grid-section--pdp .studio3-grid-section__title {
+  /* Referência: .product-page__section-title { font-size: 1.5rem } = 24px.
+     24 / 10 = 2.4rem. letter-spacing fica em em, escala junto com o font-size. */
+  font-size: 2.4rem;
+}
