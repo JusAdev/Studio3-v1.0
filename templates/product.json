@@ -1,22 +1,36 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-product",
       "blocks": {
         "title": {
-          "type": "title"
+          "type": "title",
+          "settings": {}
         },
         "studio3_subtitle": {
-          "type": "studio3_subtitle"
+          "type": "studio3_subtitle",
+          "settings": {}
         },
         "studio3_meta": {
-          "type": "studio3_meta"
+          "type": "studio3_meta",
+          "settings": {}
         },
         "rating": {
-          "type": "rating"
+          "type": "rating",
+          "settings": {}
         },
         "price": {
-          "type": "price"
+          "type": "price",
+          "settings": {}
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -34,10 +48,12 @@
           }
         },
         "description": {
-          "type": "description"
+          "type": "description",
+          "settings": {}
         },
         "studio3_ativos": {
-          "type": "studio3_ativos"
+          "type": "studio3_ativos",
+          "settings": {}
         }
       },
       "block_order": [
@@ -54,13 +70,13 @@
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
-        "media_position": "left",
-        "gallery_layout": "thumbnail",
         "media_size": "large",
         "constrain_to_viewport": true,
         "media_fit": "contain",
-        "image_zoom": "lightbox",
+        "gallery_layout": "thumbnail",
         "mobile_thumbnails": "show",
+        "media_position": "left",
+        "image_zoom": "lightbox",
         "hide_variants": true,
         "enable_video_looping": false,
         "padding_top": 36,
@@ -72,61 +88,90 @@
       "blocks": {
         "p1": {
           "type": "product",
-          "settings": { "product": "marezi" }
+          "settings": {
+            "product": "marezi"
+          }
         },
         "p2": {
           "type": "product",
-          "settings": { "product": "skin-molecular" }
+          "settings": {
+            "product": "skin-molecular"
+          }
         },
         "p3": {
           "type": "product",
-          "settings": { "product": "niacine" }
+          "settings": {
+            "product": "niacine"
+          }
         },
         "p4": {
           "type": "product",
-          "settings": { "product": "hidrasol-fps-30" }
+          "settings": {
+            "product": "hidrasol-fps-30"
+          }
         }
       },
-      "block_order": ["p1", "p2", "p3", "p4"],
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
       "settings": {
         "heading": "Complete Seu Protocolo",
         "color_scheme": "scheme-1"
       }
     },
     "studio3-product-benefits": {
-      "type": "studio3-product-benefits"
+      "type": "studio3-product-benefits",
+      "settings": {}
     },
     "studio3-product-ingredients": {
-      "type": "studio3-product-ingredients"
+      "type": "studio3-product-ingredients",
+      "settings": {}
     },
     "related-products": {
       "type": "studio3-bestsellers",
       "blocks": {
         "p1": {
           "type": "product",
-          "settings": { "product": "calmskin" }
+          "settings": {
+            "product": "calmskin"
+          }
         },
         "p2": {
           "type": "product",
-          "settings": { "product": "hidrasol-fps-60" }
+          "settings": {
+            "product": "hidrasol-fps-60"
+          }
         },
         "p3": {
           "type": "product",
-          "settings": { "product": "primavera-mask" }
+          "settings": {
+            "product": "primavera-mask"
+          }
         },
         "p4": {
           "type": "product",
-          "settings": { "product": "dermo-estetic" }
+          "settings": {
+            "product": "dermo-estetic"
+          }
         }
       },
-      "block_order": ["p1", "p2", "p3", "p4"],
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
       "settings": {
         "heading": "Produtos Relacionados",
         "color_scheme": "scheme-1"
       }
     },
     "studio3-product-details": {
-      "type": "studio3-product-details"
+      "type": "studio3-product-details",
+      "settings": {}
     },
     "studio3-trust-policy": {
       "type": "studio3-trust-policy",
@@ -156,7 +201,12 @@
           }
         }
       },
-      "block_order": ["item-1", "item-2", "item-3"]
+      "block_order": [
+        "item-1",
+        "item-2",
+        "item-3"
+      ],
+      "settings": {}
     }
   },
   "order": [
