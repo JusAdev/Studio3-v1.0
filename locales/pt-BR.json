@@ -29,7 +29,10 @@
       "active_ingredients": "Princípios Ativos",
       "how_to_use": "Modo de usar",
       "composition": "Composição (INCI)",
-      "allergy_notice": "Antes de usar qualquer produto, faça uma prova de alergenicidade aplicando uma pequena quantidade no antebraço ou atrás da orelha. Espere 35 minutos e depois lave o local."
+      "allergy_notice": "Antes de usar qualquer produto, faça uma prova de alergenicidade aplicando uma pequena quantidade no antebraço ou atrás da orelha. Espere 35 minutos e depois lave o local.",
+      "benefits_label": "Benefícios",
+      "indications": "Indicações",
+      "ativos_disclaimer": "As informações a seguir referem-se exclusivamente aos ativos, conforme a literatura do fabricante."
     }
   },
   "general": {

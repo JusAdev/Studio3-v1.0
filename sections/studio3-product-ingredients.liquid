@@ -1,0 +1,211 @@
+{% comment %}
+  "Princípios Ativos" (lista numerada com descrição, lida de `custom.ingredients_
+  detail`, metafield tipo JSON — array de {title, desc}) + "Indicações" (pills, lida
+  de `custom.indications`) lado a lado. Só renderiza cada coluna se tiver dado; a
+  section inteira não renderiza se as duas estiverem vazias. Referência:
+  produto-layout-1.html linhas ~1310-1420 (.product-page__ingredients-row).
+{% endcomment %}
+
+{%- assign ingredients_detail = product.metafields.custom.ingredients_detail.value -%}
+{%- assign indications = product.metafields.custom.indications.value -%}
+
+{%- if ingredients_detail != blank or indications != blank -%}
+  {%- style -%}
+    .studio3-product-ingredients {
+      background: #f8f5f0;
+    }
+
+    .studio3-product-ingredients__inner {
+      max-width: 96rem;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .studio3-product-ingredients__row {
+      display: flex;
+      align-items: flex-start;
+      gap: 3rem;
+    }
+
+    .studio3-product-ingredients__col {
+      flex: 1.2;
+      min-width: 0;
+    }
+
+    .studio3-product-ingredients__indicators-col {
+      flex: 0.8;
+      min-width: 0;
+    }
+
+    .studio3-product-ingredients__title {
+      font-family: var(--font-heading-family);
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--studio3-color-ink);
+      margin: 0 0 1rem;
+    }
+
+    .studio3-product-ingredients__disclaimer {
+      font-family: var(--font-body-family);
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: var(--studio3-color-ink-muted);
+      margin: 0 0 1rem;
+    }
+
+    .studio3-product-ingredients__list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .studio3-product-ingredients__item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid #e8e0d8;
+    }
+
+    .studio3-product-ingredients__number {
+      flex-shrink: 0;
+      width: 2.5rem;
+      font-family: var(--font-heading-family);
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: rgba(76, 81, 84, 0.15);
+    }
+
+    .studio3-product-ingredients__item-title {
+      margin: 0 0 0.3rem;
+      font-family: var(--font-body-family);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--studio3-color-ink);
+    }
+
+    .studio3-product-ingredients__item-desc {
+      margin: 0;
+      font-family: var(--font-body-family);
+      font-size: 1.12rem;
+      line-height: 1.6;
+      color: var(--studio3-color-ink);
+    }
+
+    .studio3-product-ingredients__indicators {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .studio3-product-ingredients__indicator {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      padding: 0.4rem 1rem;
+      background: rgba(174, 149, 112, 0.12);
+      border: 1px solid rgba(174, 149, 112, 0.25);
+      border-radius: 20px;
+      font-family: var(--font-body-family);
+      font-size: 1.08rem;
+      letter-spacing: 0.02em;
+      color: #635241;
+    }
+
+    @media screen and (max-width: 749px) {
+      .studio3-product-ingredients__row {
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+    }
+
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+  {%- endstyle -%}
+
+  <div class="studio3-product-ingredients section-{{ section.id }}-padding">
+    <div class="studio3-product-ingredients__inner">
+      <div class="studio3-product-ingredients__row">
+        {%- if ingredients_detail != blank -%}
+          <div class="studio3-product-ingredients__col">
+            <h2 class="studio3-product-ingredients__title">{{ 'studio3.product.active_ingredients' | t }}</h2>
+            <p class="studio3-product-ingredients__disclaimer">{{ 'studio3.product.ativos_disclaimer' | t }}</p>
+            <div class="studio3-product-ingredients__list">
+              {%- for ing in ingredients_detail -%}
+                <div class="studio3-product-ingredients__item">
+                  <span class="studio3-product-ingredients__number">{{ forloop.index | prepend: '00' | slice: -2, 2 }}</span>
+                  <div>
+                    <h3 class="studio3-product-ingredients__item-title">{{ ing.title }}</h3>
+                    <p class="studio3-product-ingredients__item-desc">{{ ing.desc }}</p>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- if indications != blank -%}
+          <div class="studio3-product-ingredients__indicators-col">
+            <h2 class="studio3-product-ingredients__title">{{ 'studio3.product.indications' | t }}</h2>
+            <div class="studio3-product-ingredients__indicators">
+              {%- for item in indications -%}
+                <span class="studio3-product-ingredients__indicator">{{ item }}</span>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Studio3 - Ativos",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaço acima",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaço abaixo",
+      "default": 56
+    }
+  ],
+  "presets": [
+    {
+      "name": "Studio3 - Ativos"
+    }
+  ]
+}
+{% endschema %}
