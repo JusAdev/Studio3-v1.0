@@ -4,11 +4,28 @@
    borda dourada no thumbnail ativo, título/subtítulo em Arsenal, CTA verde cheio com
    ícone de carrinho, badges de confiança com divisor, pills de princípios ativos. */
 
-/* ---- Layout geral: imagem ~55% / informação ~45%, igual à referência ---- */
+/* ---- Layout geral: imagem ~55% / informação ~45%, igual à referência ----
+   `.product` usa a classe utilitária `.grid` do Dawn, que é flexbox (`display: flex;
+   flex-wrap: wrap`), NÃO CSS Grid — apesar do nome da classe `grid--2-col-tablet`.
+   `grid-template-columns` não tem efeito nenhum aqui (não quebra, só é ignorado
+   silenciosamente). O item some pra baixo da imagem (quebra de linha do flex) quando
+   a largura dos dois itens somada ao gap ultrapassa 100% do container — foi
+   exatamente o que aconteceu com um `gap: 4rem` que não batia com a largura calculada
+   pelo Dawn (`calc(50% - var(--grid-desktop-horizontal-spacing) / 2)`). Setando a
+   largura explícita dos dois itens (não do container) e zerando o padding-left que o
+   Dawn usa como "gap" nativo entre eles, evita esse descompasso. */
 @media screen and (min-width: 990px) {
   .product.grid--2-col-tablet {
-    grid-template-columns: 55fr 45fr;
-    gap: 4rem;
+    column-gap: 2.5rem;
+  }
+
+  .product.grid--2-col-tablet .product__media-wrapper {
+    width: calc(55% - 1.25rem);
+  }
+
+  .product.grid--2-col-tablet .product__info-wrapper {
+    width: calc(45% - 1.25rem);
+    padding-left: 0;
   }
 }
 
