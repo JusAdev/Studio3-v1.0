@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "current": "Dawn",
   "presets": {
@@ -80,6 +71,17 @@
             "secondary_button_label": "#1A1A1A",
             "shadow": "#1A1A1A"
           }
+        },
+        "scheme-7": {
+          "settings": {
+            "background": "#F4F4F4",
+            "background_gradient": "",
+            "text": "#4C5154",
+            "button": "#2D8019",
+            "button_label": "#FFFFFF",
+            "secondary_button_label": "#4C5154",
+            "shadow": "#4C5154"
+          }
         }
       },
       "type_header_font": "assistant_n4",
@@ -115,7 +117,7 @@
       "inputs_shadow_blur": 5,
       "card_style": "card",
       "card_image_padding": 0,
-      "card_text_alignment": "left",
+      "card_text_alignment": "center",
       "card_color_scheme": "scheme-1",
       "card_border_thickness": 0,
       "card_border_opacity": 10,

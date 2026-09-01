@@ -88,11 +88,7 @@
               aria-current="page"
             {% endif %}
           >
-            <span
-              {%- if link.current %}
-                class="header__active-menu-item"
-              {% endif %}
-            >
+            <span class="{% if link.current %}header__active-menu-item {% endif %}{% if link.title == 'Oferta do mês' %}studio3-nav-gradient-text{% endif %}">
               {{- link.title | escape -}}
             </span>
           </a>

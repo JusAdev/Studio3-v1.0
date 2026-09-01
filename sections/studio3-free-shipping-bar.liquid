@@ -4,10 +4,20 @@
   visitante. Ver assets/studio3-free-shipping-bar.js.
 {% endcomment %}
 {%- style -%}
-  .studio3-shipping-bar {
+  /* Wrapper de section (id="shopify-section-{{ section.id }}") — precisa ser ESTE elemento
+     (não o .studio3-shipping-bar interno) que fica sticky: a div interna tem exatamente a
+     mesma altura do conteúdo, então sticky nela não tem "espaço" pra realmente grudar (o
+     sticky fica restrito à caixa do pai). O header nativo do Dawn usa a mesma técnica —
+     ver .section-header/.shopify-section-header-sticky em base.css e a classe
+     "class": "section-header" no schema de sections/header.liquid. */
+  .studio3-shipping-bar-section {
     position: sticky;
     top: 0;
-    z-index: 3;
+    z-index: 4;
+  }
+
+  .studio3-shipping-bar {
+    position: relative;
     height: 2.8rem;
     background-color: {{ section.settings.background_color }};
     color: {{ section.settings.text_color }};
@@ -72,6 +82,7 @@
 {% schema %}
 {
   "name": "Barra de frete grátis",
+  "class": "studio3-shipping-bar-section",
   "settings": [
     {
       "type": "number",

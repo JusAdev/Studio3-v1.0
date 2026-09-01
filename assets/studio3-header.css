@@ -3,6 +3,54 @@
    aqui só o que é específico do header: links de cadastro/login, título de coluna do
    mega menu em Arsenal, grid de 2 colunas pra listas longas, e o tile promocional. */
 
+/* Empilhamento com a barra de frete grátis (sections/studio3-free-shipping-bar.liquid).
+   Confirmado na referência (tulipia.com.br): .cart-frete-widget fica sticky top:0 e o
+   <nav> do header fica sticky top:20px (exatamente a altura da barra) — as duas visíveis
+   juntas ao rolar, uma embaixo da outra, nunca sobrepostas. Reproduzimos o mesmo padrão:
+   quando a barra (.studio3-shipping-bar-section) existe antes do header no DOM, o header
+   sticky (.section-header.shopify-section-header-sticky, ver base.css) ganha um top igual
+   à altura da barra (2.8rem) em vez de 0. :not(.shopify-section-header-hidden) evita
+   interferir no modo "esconder ao rolar pra baixo" (sticky_header_type diferente de
+   "always"), que já usa um top negativo próprio pra sumir de vez. */
+.studio3-shipping-bar-section ~ .section-header.shopify-section-header-sticky:not(.shopify-section-header-hidden) {
+  top: 2.8rem;
+}
+
+/* Sombra do header — valor extraído via getComputedStyle do <nav> sticky da referência
+   (box-shadow: rgba(0,0,0,0.1) 1px 1px 4px 0px), presente mesmo sem scroll. Bate com o
+   token --studio3-shadow-soft já definido (sem uso até então) em studio3-theme-variables. */
+.header-wrapper {
+  box-shadow: var(--studio3-shadow-soft);
+}
+
+/* "Oferta do mês" — texto com gradiente animado igual ao span.gradient-animated-text da
+   referência (background-clip:text + keyframes de background-position; NÃO é o mesmo
+   gradiente verde/turquesa da barra de frete — cores próprias, ver --studio3-promo-gradient
+   em studio3-theme-variables.liquid). Aplicado condicionalmente por título do link em
+   snippets/header-mega-menu.liquid e header-dropdown-menu.liquid. */
+.studio3-nav-gradient-text {
+  display: inline-block;
+  background-image: var(--studio3-promo-gradient);
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: studio3-gradient-move 4s linear infinite;
+}
+
+@keyframes studio3-gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .studio3-header__text-link {
   display: flex;
   align-items: center;

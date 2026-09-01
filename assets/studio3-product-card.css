@@ -100,6 +100,18 @@ product-component {
   text-align: center;
 }
 
+/* Essa regra acima NÃO alcança `.card-information` (nativo do Dawn, wrapper aninhado
+   dentro de `.card__information` que embrulha vendor/rating/preço — ver
+   card-product.liquid) porque ele tem seu próprio `text-align: var(--text-alignment)`
+   explícito em component-card.css, que vence a herança daqui. `--text-alignment` vem de
+   `--product-card-text-alignment`, que por sua vez é só um espelho direto do setting
+   `card_text_alignment` (config/settings_data.json) — estava em "left" (default nativo
+   do Dawn, nunca revisado quando `card_style`/`card_corner_radius`/`card_color_scheme`
+   foram configurados pro projeto, ver CLAUDE.md 0.2). Corrigido lá pra "center" — sem
+   isso, `.studio3-card__pricing` (preço, dentro de `.card-information`) renderizava
+   desalinhado à esquerda mesmo com o título acima corretamente centralizado (conferido
+   via Playwright: offset de ~102px do centro do card antes da correção). */
+
 .card__information {
   align-items: center;
 }
@@ -129,17 +141,31 @@ product-component {
   margin: 0.4rem 0;
 }
 
+/* Referência (`.product-card__price-row`, tulipia.com.br): quando existe preço "De/por",
+   é flex-row com `justify-content: space-between; align-items: flex-end` — preço antigo
+   na ponta esquerda, preço atual na ponta direita (não empilhado/centralizado). O caso de
+   preço único (sem `.price-row`, só `.price-current` direto dentro de `.pricing`) continua
+   centralizado herdando o `text-align: center` de `.card__content`/`.card__information`
+   acima — conferido que a referência também centraliza esse caso
+   (`.product-card__price-single`: `align-items: center; text-align: center`). */
 .studio3-card__price-row {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.1rem;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
 .studio3-card__price-was {
   font-family: var(--font-body-family);
   font-size: 1.1rem;
   color: var(--studio3-color-ink-muted);
+  text-align: left;
+}
+
+/* Só dentro do price-row (caso "De/por") o preço atual vai pra ponta direita — no caso de
+   preço único ele deve continuar centralizado (herdado, ver comentário acima). */
+.studio3-card__price-row .studio3-card__price-current {
+  text-align: right;
 }
 
 .studio3-card__price-current {
@@ -176,10 +202,25 @@ product-component {
   text-align: center;
   text-decoration: none;
   transition: all 0.2s;
+  /* O `card__heading a::after` nativo do Dawn (component-card.css) é um link "esticado"
+     (`position: absolute; inset: 0; z-index: 1`) sobre o `.card-wrapper` inteiro, pra
+     tornar o card todo clicável — sem um `position`/`z-index` próprio aqui, esse botão
+     fica embaixo dele e nunca recebe :hover/click de verdade (conferido via Playwright:
+     `document.elementFromPoint` no centro do botão resolvia pro link do título, não pro
+     botão). `position: relative; z-index: 1` (mesmo valor do overlay, decidido por ordem
+     no DOM — este botão vem depois no HTML) resolve, igual ao padrão que o próprio Dawn
+     usa em `.quick-add`/`.card__information-volume-pricing-note--button`. */
+  position: relative;
+  z-index: 1;
 }
 
 .studio3-card__cta-ver:hover {
-  background: var(--studio3-color-ink);
+  /* Referência (tulipia.com.br): hover de `.product-card__cta-ver` vira
+     rgb(174, 149, 112) = #ae9570 (fundo E borda), que já existe como
+     --studio3-color-gold — antes usava --studio3-color-ink (cinza), sem bater com a
+     referência. */
+  background: var(--studio3-color-gold);
+  border-color: var(--studio3-color-gold);
   color: rgb(var(--color-background));
 }
 
@@ -208,10 +249,24 @@ product-component {
   text-decoration: none;
   cursor: pointer;
   transition: color 0.2s;
+  /* Mesmo problema do link "esticado" documentado em .studio3-card__cta-ver acima —
+     este elemento também precisa se elevar acima do overlay do card__heading pra
+     receber :hover/click de verdade (o wrapper nativo `.quick-add` do Dawn já resolveria
+     isso via quick-add.css, mas esse CSS só é carregado pelas seções nativas que usam
+     card-product.liquid diretamente — não pelas 3 seções de vitrine da home, que passam
+     por studio3-product-grid-section.liquid. Resolver aqui, direto no elemento, deixa
+     independente de qual CSS a seção carrega). */
+  position: relative;
+  z-index: 1;
 }
 
+/* Referência (tulipia.com.br): hover de `.product-card__cta-buy` (variante normal,
+   "Compra rápida") vira rgb(30, 85, 17) = #1e5511 — um verde mais escuro que não bate
+   com nenhum token existente (não é --studio3-color-accent nem --studio3-color-accent-
+   strong), por isso fica hardcoded. Antes usava --studio3-color-ink (cinza), sem bater
+   com a referência. */
 .studio3-card__cta-buy:hover {
-  color: var(--studio3-color-ink);
+  color: #1e5511;
 }
 
 .studio3-card__cta-buy-icon svg {
@@ -223,4 +278,13 @@ product-component {
   color: var(--studio3-color-ink);
   font-weight: 400;
   font-size: 1.1rem;
+}
+
+/* Variante "Faça login ou cadastre-se": na referência o hover vai pro verde de ação
+   (rgb(45, 128, 25) = --studio3-color-accent), diferente do hover mais escuro da
+   variante normal acima — precisa de override específico (senão herdaria o #1e5511
+   escuro de .studio3-card__cta-buy:hover, que não é o que a referência mostra pra esta
+   variante especificamente). */
+.studio3-card__cta-buy--login:hover {
+  color: var(--studio3-color-accent);
 }

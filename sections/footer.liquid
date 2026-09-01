@@ -26,13 +26,19 @@
     }
   }
 
-  /* Referência (tulipia.com.br) usa títulos de coluna em maiúsculas e links sem
-     sublinhado — o Dawn nativo sublinha `.link` e mantém o texto tal como digitado
-     no admin. */
+  /* Referência (tulipia.com.br) usa títulos de coluna em maiúsculas, com uma borda
+     sutil embaixo, e links sem sublinhado — o Dawn nativo sublinha `.link` e mantém
+     o texto tal como digitado no admin. Valores conferidos direto contra
+     .site-footer__heading (getComputedStyle): font-size 10.4px, letter-spacing
+     2.6px, padding-bottom 12px, margin-bottom 20px, border rgba(151,135,119,.25)
+     — convertidos pro nosso root de 10px (referência usa 16px, ver CLAUDE.md 1.3.12). */
   .footer .footer-block__heading {
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-size: 1.3rem;
+    letter-spacing: 0.26rem;
+    font-size: 1.04rem;
+    padding-bottom: 1.2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(151, 135, 119, 0.25);
   }
 
   .footer .footer-block__details-content .link {
@@ -41,6 +47,37 @@
 
   .footer .footer-block__details-content .link:hover {
     text-decoration: underline;
+  }
+
+  /* Referência: .site-footer__bottom tem um tom mais escuro que o resto do rodapé
+     (#CFBA9B vs #E4D3BC do scheme-6) — não é a mesma cor do color_scheme herdado. */
+  .footer__content-bottom {
+    background-color: #cfba9b;
+  }
+
+  .studio3-footer__payment-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .studio3-footer__payment-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.2rem;
+    height: 2.8rem;
+    background: #fff;
+    border-radius: 4px;
+  }
+
+  .studio3-footer__payment-badge img {
+    display: block;
+    max-width: 2.4rem;
+    max-height: 2.4rem;
   }
 {%- endstyle -%}
 
@@ -301,12 +338,46 @@
       </div>
       <div class="footer__column footer__column--info">
         {%- if section.settings.payment_enable -%}
+          {%- liquid
+            assign studio3_payment_icons = ''
+            if section.settings.payment_visa
+              assign studio3_payment_icons = studio3_payment_icons | append: 'visa,'
+            endif
+            if section.settings.payment_mastercard
+              assign studio3_payment_icons = studio3_payment_icons | append: 'mastercard,'
+            endif
+            if section.settings.payment_american
+              assign studio3_payment_icons = studio3_payment_icons | append: 'american,'
+            endif
+            if section.settings.payment_elo
+              assign studio3_payment_icons = studio3_payment_icons | append: 'elo,'
+            endif
+            if section.settings.payment_diners
+              assign studio3_payment_icons = studio3_payment_icons | append: 'diners,'
+            endif
+            if section.settings.payment_discover
+              assign studio3_payment_icons = studio3_payment_icons | append: 'discover,'
+            endif
+            if section.settings.payment_aura
+              assign studio3_payment_icons = studio3_payment_icons | append: 'aura,'
+            endif
+            if section.settings.payment_jbc
+              assign studio3_payment_icons = studio3_payment_icons | append: 'jbc,'
+            endif
+            assign studio3_payment_icons = studio3_payment_icons | split: ','
+          -%}
           <div class="footer__payment">
             <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
-            <ul class="list list-payment" role="list">
-              {%- for type in shop.enabled_payment_types -%}
-                <li class="list-payment__item">
-                  {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+            <ul class="list studio3-footer__payment-list" role="list">
+              {%- for icon in studio3_payment_icons -%}
+                <li class="studio3-footer__payment-badge">
+                  <img
+                    src="{{ 'icon-payment-' | append: icon | append: '.svg' | asset_url }}"
+                    alt="{{ icon | capitalize }}"
+                    width="24"
+                    height="24"
+                    loading="lazy"
+                  >
                 </li>
               {%- endfor -%}
             </ul>
@@ -506,6 +577,58 @@
       "id": "payment_enable",
       "default": true,
       "label": "t:sections.footer.settings.payment_enable.label"
+    },
+    {
+      "type": "paragraph",
+      "content": "Escolha quais bandeiras aparecem — não depende dos métodos configurados em Admin > Pagamentos."
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_visa",
+      "default": true,
+      "label": "Visa"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_mastercard",
+      "default": true,
+      "label": "Mastercard"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_american",
+      "default": true,
+      "label": "American Express"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_elo",
+      "default": true,
+      "label": "Elo"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_diners",
+      "default": true,
+      "label": "Diners Club"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_discover",
+      "default": true,
+      "label": "Discover"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_aura",
+      "default": true,
+      "label": "Aura"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_jbc",
+      "default": true,
+      "label": "JCB"
     },
     {
       "type": "checkbox",

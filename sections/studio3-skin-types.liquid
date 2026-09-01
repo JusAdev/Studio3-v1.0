@@ -16,7 +16,7 @@
   .studio3-skin-types-header__title {
     margin: 0;
     font-family: var(--font-heading-family);
-    font-size: 2.25rem;
+    font-size: 3.6rem;
     font-weight: 400;
     line-height: 1.1;
     letter-spacing: 0.045em;
@@ -27,7 +27,7 @@
     display: none;
     margin: 0;
     font-family: var(--font-body-family);
-    font-size: 1.1rem;
+    font-size: 1.76rem;
     font-weight: 400;
     letter-spacing: 0.05em;
     color: var(--studio3-color-ink);
@@ -85,7 +85,7 @@
     text-transform: uppercase;
     letter-spacing: 0.4em;
     font-family: var(--font-body-family);
-    font-size: 0.6rem;
+    font-size: 0.96rem;
     font-weight: 700;
     background-color: {{ section.settings.label_bg_color }};
     color: {{ section.settings.label_text_color }};
@@ -117,9 +117,9 @@
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="page-width section-{{ section.id }}-padding">
-    {%- if section.settings.heading != blank or section.settings.subtitle != blank -%}
+<div class="color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  {%- if section.settings.heading != blank or section.settings.subtitle != blank -%}
+    <div class="page-width">
       <div class="studio3-skin-types-header">
         {%- if section.settings.heading != blank -%}
           <h2 class="studio3-skin-types-header__title">{{ section.settings.heading }}</h2>
@@ -128,58 +128,58 @@
           <p class="studio3-skin-types-header__subtitle">{{ section.settings.subtitle }}</p>
         {%- endif -%}
       </div>
-    {%- endif -%}
+    </div>
+  {%- endif -%}
 
-    {%- liquid
-      assign studio3_placeholders = 'hero-apparel-1,hero-apparel-2,hero-apparel-3,lifestyle-1,lifestyle-2,detailed-apparel-1,hero-apparel-1,hero-apparel-2' | split: ','
-    -%}
-    {%- if section.blocks.size > 0 -%}
-      <div class="studio3-skin-types">
-        {%- for block in section.blocks -%}
-          {%- liquid
-            assign tile_url = block.settings.link
-            assign placeholder_index = forloop.index0 | modulo: 8
-            assign placeholder_name = studio3_placeholders[placeholder_index]
-          -%}
-          <a
-            {% if tile_url != blank %}
-              href="{{ tile_url }}"
-            {% else %}
-              role="link"
-              aria-disabled="true"
-            {% endif %}
-            class="studio3-skin-tile"
-            {% if block.settings.label != blank %}
-              aria-label="{{ block.settings.label | strip_html | escape }}"
-            {% endif %}
-            {{ block.shopify_attributes }}
-          >
-            {%- if block.settings.image != blank -%}
-              {{
-                block.settings.image
-                | image_url: width: 900
-                | image_tag:
-                  loading: 'lazy',
-                  widths: '275, 400, 550, 750, 900',
-                  sizes: '(min-width: 769px) 33vw, 50vw',
-                  class: 'studio3-skin-tile__img',
-                  alt: block.settings.label
-              }}
-            {%- else -%}
-              {{ placeholder_name | placeholder_svg_tag: 'placeholder-svg studio3-skin-tile__img' }}
-            {%- endif -%}
-            {%- if block.settings.label != blank -%}
-              <span class="studio3-skin-tile__label">{{ block.settings.label }}</span>
-            {%- endif -%}
-          </a>
-        {%- endfor -%}
-      </div>
-    {%- else -%}
-      <div class="studio3-skin-types__empty">
-        {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
-      </div>
-    {%- endif -%}
-  </div>
+  {%- liquid
+    assign studio3_placeholders = 'hero-apparel-1,hero-apparel-2,hero-apparel-3,lifestyle-1,lifestyle-2,detailed-apparel-1,hero-apparel-1,hero-apparel-2' | split: ','
+  -%}
+  {%- if section.blocks.size > 0 -%}
+    <div class="studio3-skin-types">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign tile_url = block.settings.link
+          assign placeholder_index = forloop.index0 | modulo: 8
+          assign placeholder_name = studio3_placeholders[placeholder_index]
+        -%}
+        <a
+          {% if tile_url != blank %}
+            href="{{ tile_url }}"
+          {% else %}
+            role="link"
+            aria-disabled="true"
+          {% endif %}
+          class="studio3-skin-tile"
+          {% if block.settings.label != blank %}
+            aria-label="{{ block.settings.label | strip_html | escape }}"
+          {% endif %}
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 900
+              | image_tag:
+                loading: 'lazy',
+                widths: '275, 400, 550, 750, 900',
+                sizes: '(min-width: 769px) 33vw, 50vw',
+                class: 'studio3-skin-tile__img',
+                alt: block.settings.label
+            }}
+          {%- else -%}
+            {{ placeholder_name | placeholder_svg_tag: 'placeholder-svg studio3-skin-tile__img' }}
+          {%- endif -%}
+          {%- if block.settings.label != blank -%}
+            <span class="studio3-skin-tile__label">{{ block.settings.label }}</span>
+          {%- endif -%}
+        </a>
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    <div class="studio3-skin-types__empty">
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+  {%- endif -%}
 </div>
 
 {% schema %}
