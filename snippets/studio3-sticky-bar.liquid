@@ -1,0 +1,76 @@
+{% comment %}
+  Barra fixa de "adicionar ao carrinho" (product-page__sticky-bar), visível só depois
+  que o botão real de compra (buy_buttons, ver snippets/buy-buttons.liquid) sai da
+  viewport ao rolar a página. Referência: produto-layout-1.html linhas ~2358-2372 /
+  ~2656-2662 e app-D-LMZKup.css (.product-page__sticky-bar*).
+
+  Não reimplementa a lógica de carrinho — o botão desta barra só dispara um `click()`
+  no botão de submit REAL do formulário (`#ProductSubmitButton-{{ section_id }}`,
+  renderizado por buy-buttons.liquid), reaproveitando o <product-form> nativo do Dawn
+  (variante selecionada, AJAX, notificação/drawer do carrinho) de graça.
+
+  Accepts:
+  - product: {Object} Product Liquid object
+  - section_id: {String} id da section que está renderizando (pra casar com o id do
+    botão real de compra, ex.: "ProductSubmitButton-{{ section_id }}")
+
+  Usage:
+  {% render 'studio3-sticky-bar', product: product, section_id: section.id %}
+{% endcomment %}
+{%- if product != blank -%}
+  {%- liquid
+    assign sticky_variant = product.selected_or_first_available_variant
+    assign sticky_cta_unavailable = false
+    if sticky_variant == null or sticky_variant.available == false
+      assign sticky_cta_unavailable = true
+    endif
+    assign sticky_target_id = 'ProductSubmitButton-' | append: section_id
+    assign sticky_alt = product.featured_image.alt | default: product.title | escape
+  -%}
+  <div
+    id="StickyBar-{{ section_id }}"
+    class="product-page__sticky-bar"
+    data-studio3-sticky-bar
+    data-target-button-id="{{ sticky_target_id }}"
+  >
+    <div class="product-page__sticky-bar-inner">
+      <div class="product-page__sticky-bar-product">
+        {%- if product.featured_image != blank -%}
+          {{
+            product.featured_image
+            | image_url: width: 112
+            | image_tag:
+              width: 56,
+              height: 56,
+              loading: 'lazy',
+              alt: sticky_alt,
+              class: 'product-page__sticky-bar-img'
+          }}
+        {%- endif -%}
+        <div class="product-page__sticky-bar-text">
+          <strong class="product-page__sticky-bar-name">{{ product.title }}</strong>
+          {%- if product.metafields.custom.subtitle.value != blank -%}
+            <span class="product-page__sticky-bar-subtitle">{{ product.metafields.custom.subtitle.value }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+      <button
+        type="button"
+        class="product-page__sticky-bar-cta"
+        data-studio3-sticky-bar-cta
+        {% if sticky_cta_unavailable %}
+          disabled
+        {% endif %}
+      >
+        {%- if sticky_cta_unavailable -%}
+          {{ 'products.product.sold_out' | t }}
+        {%- else -%}
+          {{ 'products.product.add_to_cart' | t }}
+          <span class="product-page__sticky-bar-price">{{ sticky_variant.price | money }}</span>
+        {%- endif -%}
+      </button>
+    </div>
+  </div>
+
+  <script src="{{ 'studio3-sticky-bar.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

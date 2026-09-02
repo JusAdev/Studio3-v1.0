@@ -1,0 +1,144 @@
+{% comment %}
+  Bloco editorial "Pomada reparadora, hidratante e calmante" (título + parágrafos
+  ricos, alternando subtítulo em negrito + texto corrido), lido de
+  `product.metafields.custom.story_title` (h2) e `custom.story_blocks` (metafield
+  tipo JSON — array de {subheading, text}, a Shopify já desserializa isso pra Liquid
+  automaticamente, dá pra fazer `for block in story_blocks` direto). Conteúdo
+  opcional por produto — nem todo produto tem essa seção na referência, então só
+  renderiza se houver título ou blocos preenchidos. Referência: produto-layout-1.html
+  linhas ~1288-1295 (.product-page__section.product-page__section--alt
+  .product-page__rich-content, entre "Complete Seu Protocolo" e "Benefícios").
+{% endcomment %}
+
+{%- assign story_title = product.metafields.custom.story_title.value -%}
+{%- assign story_blocks = product.metafields.custom.story_blocks.value -%}
+
+{%- if story_title != blank or story_blocks != blank -%}
+  {%- style -%}
+    .studio3-product-story {
+      background: #f8f5f0;
+      border-radius: 14px;
+    }
+
+    .studio3-product-story__inner {
+      max-width: 96rem;
+      margin: 0 auto;
+      padding: 0 1.6rem;
+    }
+
+    .studio3-product-story__title {
+      font-family: var(--font-heading-family);
+      font-size: 2.4rem;
+      font-weight: 400;
+      letter-spacing: 0.112rem;
+      color: var(--studio3-color-ink);
+      text-align: center;
+      margin: 0 0 3.2rem;
+    }
+
+    .studio3-product-story__content {
+      max-width: 76rem;
+      margin: 0 auto;
+    }
+
+    .studio3-product-story__block {
+      margin: 0 0 2.4rem;
+    }
+
+    .studio3-product-story__block:last-child {
+      margin-bottom: 0;
+    }
+
+    .studio3-product-story__subheading {
+      margin: 0 0 0.8rem;
+      font-family: var(--font-body-family);
+      font-size: 1.472rem;
+      font-weight: 700;
+      line-height: 1.6;
+      color: var(--studio3-color-ink);
+    }
+
+    .studio3-product-story__text {
+      margin: 0;
+      font-family: var(--font-body-family);
+      font-size: 1.472rem;
+      line-height: 1.9;
+      color: var(--studio3-color-ink-muted);
+    }
+
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+  {%- endstyle -%}
+
+  <div class="page-width">
+    <div class="studio3-product-story section-{{ section.id }}-padding">
+      <div class="studio3-product-story__inner">
+        {%- if story_title != blank -%}
+          <h2 class="studio3-product-story__title">{{ story_title }}</h2>
+        {%- endif -%}
+        {%- if story_blocks != blank -%}
+          <div class="studio3-product-story__content">
+            {%- for block in story_blocks -%}
+              <div class="studio3-product-story__block">
+                {%- if block.subheading != blank -%}
+                  <p class="studio3-product-story__subheading">{{ block.subheading }}</p>
+                {%- endif -%}
+                {%- if block.text != blank -%}
+                  <p class="studio3-product-story__text">{{ block.text }}</p>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Studio3 - Conteúdo",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaço acima",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaço abaixo",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Studio3 - Conteúdo"
+    }
+  ]
+}
+{% endschema %}

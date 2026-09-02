@@ -93,6 +93,9 @@
         "color_scheme": "scheme-1"
       }
     },
+    "studio3-product-story": {
+      "type": "studio3-product-story"
+    },
     "studio3-product-benefits": {
       "type": "studio3-product-benefits"
     },
@@ -162,6 +165,7 @@
   "order": [
     "main",
     "complete-protocol",
+    "studio3-product-story",
     "studio3-product-benefits",
     "studio3-product-ingredients",
     "related-products",

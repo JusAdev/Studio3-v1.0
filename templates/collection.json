@@ -5,7 +5,14 @@
       "settings": {
         "show_collection_description": true,
         "show_collection_image": false,
-        "color_scheme": "scheme-1"
+        "color_scheme": "scheme-2"
+      }
+    },
+    "collection-spotlight": {
+      "type": "studio3-collection-spotlight",
+      "settings": {
+        "padding_top": 32,
+        "padding_bottom": 48
       }
     },
     "product-grid": {
@@ -31,6 +38,7 @@
   },
   "order": [
     "banner",
+    "collection-spotlight",
     "product-grid"
   ]
 }

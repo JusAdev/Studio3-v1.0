@@ -24,6 +24,10 @@
       "benefits_label": "Benefícios",
       "indications": "Indicações",
       "ativos_disclaimer": "As informações a seguir referem-se exclusivamente aos ativos, conforme a literatura do fabricante."
+    },
+    "collection_spotlight": {
+      "price_prefix": "Cliente final -",
+      "cta": "Ver produto"
     }
   },
   "general": {

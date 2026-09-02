@@ -101,27 +101,31 @@
 {%- assign composition = product.metafields.custom.composition_inci.value -%}
 
 {%- if how_to_use != blank -%}
-  <div class="studio3-product-details section-{{ section.id }}-padding">
-    <div class="studio3-product-details__inner">
-      <h2 class="studio3-product-details__title">{{ 'studio3.product.how_to_use' | t }}</h2>
-      <p class="studio3-product-details__text">{{ how_to_use }}</p>
-      <div class="studio3-product-details__allergy">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
-          <circle cx="8" cy="8" r="7" stroke="currentColor"></circle>
-          <path stroke="currentColor" d="M8 4.5v4"></path>
-          <circle cx="8" cy="11.5" r=".75" fill="currentColor"></circle>
-        </svg>
-        <p>{{ 'studio3.product.allergy_notice' | t }}</p>
+  <div class="page-width">
+    <div class="studio3-product-details section-{{ section.id }}-padding">
+      <div class="studio3-product-details__inner">
+        <h2 class="studio3-product-details__title">{{ 'studio3.product.how_to_use' | t }}</h2>
+        <p class="studio3-product-details__text">{{ how_to_use }}</p>
+        <div class="studio3-product-details__allergy">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
+            <circle cx="8" cy="8" r="7" stroke="currentColor"></circle>
+            <path stroke="currentColor" d="M8 4.5v4"></path>
+            <circle cx="8" cy="11.5" r=".75" fill="currentColor"></circle>
+          </svg>
+          <p>{{ 'studio3.product.allergy_notice' | t }}</p>
+        </div>
       </div>
     </div>
   </div>
 {%- endif -%}
 
 {%- if composition != blank -%}
-  <div class="studio3-product-details section-{{ section.id }}-padding" style="padding-top: 0;">
-    <div class="studio3-product-details__inner">
-      <span class="studio3-product-details__composition-label">{{ 'studio3.product.composition' | t }}</span>
-      <p class="studio3-product-details__composition-text">{{ composition }}</p>
+  <div class="page-width">
+    <div class="studio3-product-details section-{{ section.id }}-padding" style="padding-top: 0;">
+      <div class="studio3-product-details__inner">
+        <span class="studio3-product-details__composition-label">{{ 'studio3.product.composition' | t }}</span>
+        <p class="studio3-product-details__composition-text">{{ composition }}</p>
+      </div>
     </div>
   </div>
 {%- endif -%}

@@ -1,0 +1,284 @@
+{% comment %}
+  Bloco de produto em destaque da página de coleção — imagem grande à esquerda +
+  nome/subtítulo/descrição/preço/CTA à direita. Referência: tulipia.com.br/queridinhos,
+  <section class="container"> logo abaixo do <header class="categoria-header">, antes
+  da grade normal de produtos. Medido via Playwright (getComputedStyle) em
+  01/09/2026, viewport 1400x1000, root da referência confirmado em 16px:
+  - "Immortalité-C" (nome do produto): <h2>, font-size 40px, uppercase, Arsenal.
+  - Subtítulo ("Sabonete Antioxidante..."): font-size 14.4px, 700, uppercase,
+    letter-spacing 0.72px.
+  - Descrição: font-size 14.4px, cor rgb(151,167,175) — mais azulada que
+    --studio3-color-ink-muted, mantida como valor próprio deste bloco.
+  - "Cliente final - R$ 79,00": font-size 14.4px, cor ink, SEM strikethrough
+    (diferente do <s> usado no preço "De:" do card padrão — conferido no DOM real,
+    não tem <s>/<del>, então não replicamos risco aqui apesar do rascunho inicial
+    do briefing mencionar "struck-through").
+  - "R$ 71,10": font-size 40px, Arsenal (fonte de título, não a de corpo do preço
+    do card), letter-spacing 0.8px.
+  - Botão "Ver produto": bg rgb(38,44,44), border-radius 5.04px, max-width 250px.
+  Todos os valores em px acima convertidos pra rem do nosso tema com
+  nosso_rem = valor_px_referência / 10 (root daqui é 10px, não 16px — ver CLAUDE.md
+  1.3.6/1.3.12).
+
+  Reaproveita o snippet `studio3-price-split` (mesma lógica de "inteiro grande +
+  centavos pequenos" do preço do card, ver assets/studio3-product-card.css) em vez
+  de reinventar formatação de dinheiro — mas com classes/tamanhos próprios
+  (`studio3-collection-spotlight__price-*`), já que o tratamento visual aqui é bem
+  maior/diferente do preço do card (fonte de título, empilhado, sem "De:"/"por:").
+
+  Setting `product` fica em branco por padrão de propósito: esta section é
+  adicionada ao template de coleção PADRÃO (usado por toda coleção da loja), então
+  só deve aparecer quando o lojista escolhe um produto manualmente pra aquela
+  coleção específica (ex.: Queridinhos) via Editor de Temas — mesmo padrão de
+  "some se não tiver dado" de sections/studio3-product-details.liquid.
+{% endcomment %}
+
+{%- liquid
+  assign spotlight_product = section.settings.product
+-%}
+
+{%- if spotlight_product != blank -%}
+  {%- liquid
+    assign subtitle = spotlight_product.metafields.custom.subtitle
+    assign desc_parts = spotlight_product.description | split: '</p>'
+    assign short_description = desc_parts[0] | strip_html | strip | truncatewords: 40
+    assign target = spotlight_product.selected_or_first_available_variant
+    assign compare_at = target.compare_at_price
+    assign price = target.price
+    assign widths_string = '375, 550, 750, 1100, 1600'
+  -%}
+
+  {%- style -%}
+    .studio3-collection-spotlight__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.6rem;
+    }
+
+    .studio3-collection-spotlight__media {
+      border-radius: 1rem;
+      overflow: hidden;
+      aspect-ratio: 1117 / 500;
+    }
+
+    .studio3-collection-spotlight__media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .studio3-collection-spotlight__link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .studio3-collection-spotlight__eyebrow {
+      margin: 0;
+      font-family: var(--font-heading-family);
+      font-size: 2.6rem;
+      font-weight: 400;
+      line-height: 1;
+      text-transform: uppercase;
+      color: var(--studio3-color-ink);
+    }
+
+    .studio3-collection-spotlight__subtitle {
+      margin: 0.8rem 0 0;
+      font-family: var(--font-body-family);
+      font-size: 1.44rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.072rem;
+      text-transform: uppercase;
+      color: var(--studio3-color-ink);
+    }
+
+    .studio3-collection-spotlight__description {
+      margin: 1.6rem 0 0;
+      font-family: var(--font-body-family);
+      font-size: 1.44rem;
+      line-height: 1.25;
+      /* Cor própria deste bloco (rgb(151,167,175) na referência) — mais azulada
+         que --studio3-color-ink-muted (#6b7479), não é o mesmo token. */
+      color: #97a7af;
+    }
+
+    .studio3-collection-spotlight__pricing {
+      margin: 1.6rem 0 0;
+    }
+
+    .studio3-collection-spotlight__price-was {
+      margin: 0 0 0.4rem;
+      font-family: var(--font-body-family);
+      font-size: 1.44rem;
+      font-weight: 400;
+      color: var(--studio3-color-ink);
+    }
+
+    .studio3-collection-spotlight__price-current {
+      display: block;
+      margin: 0;
+      font-family: var(--font-heading-family);
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: 0.08rem;
+      color: var(--studio3-color-ink);
+    }
+
+    .studio3-collection-spotlight__price-current small {
+      font-size: 0.6em;
+    }
+
+    .studio3-collection-spotlight__cta {
+      display: block;
+      max-width: 25rem;
+      margin-top: 2.4rem;
+      padding: 1.1rem 2rem;
+      border-radius: 0.6rem;
+      background: #262c2c;
+      color: #ffffff;
+      font-family: var(--font-body-family);
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .studio3-collection-spotlight__link:hover .studio3-collection-spotlight__cta {
+      opacity: 0.85;
+    }
+
+    @media screen and (min-width: 750px) {
+      .studio3-collection-spotlight__grid {
+        grid-template-columns: 2fr 1fr;
+        align-items: flex-end;
+        gap: 2.4rem;
+      }
+
+      .studio3-collection-spotlight__eyebrow {
+        font-size: 4rem;
+      }
+
+      .studio3-collection-spotlight__price-current {
+        font-size: 4rem;
+      }
+    }
+
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+  {%- endstyle -%}
+
+  <div class="page-width">
+    <div class="studio3-collection-spotlight section-{{ section.id }}-padding">
+      <div class="studio3-collection-spotlight__grid">
+        <div class="studio3-collection-spotlight__media">
+          {{
+            spotlight_product.featured_image
+            | image_url: width: 1600
+            | image_tag:
+              widths: widths_string,
+              sizes: '(min-width: 750px) 66vw, 100vw',
+              loading: 'lazy',
+              alt: spotlight_product.featured_image.alt | default: spotlight_product.title
+          }}
+        </div>
+
+        <a href="{{ spotlight_product.url }}" class="studio3-collection-spotlight__link">
+          <div class="studio3-collection-spotlight__content">
+            <h2 class="studio3-collection-spotlight__eyebrow">{{ spotlight_product.title }}</h2>
+
+            {%- if subtitle != blank -%}
+              <p class="studio3-collection-spotlight__subtitle">{{ subtitle }}</p>
+            {%- endif -%}
+
+            {%- if short_description != blank -%}
+              <p class="studio3-collection-spotlight__description">{{ short_description }}</p>
+            {%- endif -%}
+
+            <div class="studio3-collection-spotlight__pricing">
+              {%- if compare_at > price -%}
+                <p class="studio3-collection-spotlight__price-was">
+                  {{ 'studio3.collection_spotlight.price_prefix' | t }} {{ compare_at | money }}
+                </p>
+                <span class="studio3-collection-spotlight__price-current">
+                  {%- render 'studio3-price-split', amount: price -%}
+                </span>
+              {%- else -%}
+                <span class="studio3-collection-spotlight__price-current">
+                  {%- render 'studio3-price-split', amount: price -%}
+                </span>
+              {%- endif -%}
+            </div>
+
+            <span class="studio3-collection-spotlight__cta">{{ 'studio3.collection_spotlight.cta' | t }}</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Studio3 - Destaque",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Produto em destaque"
+    },
+    {
+      "type": "paragraph",
+      "content": "Fica em branco por padrão. Escolha um produto pra este bloco aparecer só nas coleções onde fizer sentido (ex.: Queridinhos)."
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Produto"
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaço acima",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaço abaixo",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Studio3 - Destaque"
+    }
+  ]
+}
+{% endschema %}

@@ -7,6 +7,14 @@
       padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
     }
   }
+
+  /* Referência (tulipia.com.br/queridinhos, conferido via Playwright): descrição da
+     coleção em font-size 14.4px (root 16px deles) -> nosso_rem = 14.4 / 10 = 1.44rem.
+     O padrão nativo do Dawn aqui é maior (1.8rem/1.6rem) — ajustado só pra este
+     parágrafo, sem mexer no resto do component-collection-hero.css nativo. */
+  .collection-hero__title + .collection-hero__description {
+    font-size: 1.44rem;
+  }
 {%- endstyle -%}
 
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">

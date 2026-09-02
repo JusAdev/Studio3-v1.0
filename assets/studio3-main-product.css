@@ -21,12 +21,37 @@
     column-gap: 4rem;
   }
 
+  /* Referência: `.product-page__gallery { flex: 0 0 55% }` / `.product-page__info
+     { flex: 0 0 40% }` — NÃO usa calc(% - gap). São flex-basis que somam só 95%
+     de propósito, deixando o restante (~5%) como folga pro gap em px, técnica
+     padrão de flexbox (o "0 0" do shorthand `flex` zera grow/shrink, então os itens
+     NUNCA esticam além do valor declarado). O calc(% - 2rem) anterior deixava a
+     info efetivamente mais larga que a referência (45% em vez de 40%) — esse era
+     o bug reportado ("product__info-wrapper não está com a largura igual ao
+     original").
+
+     IMPORTANTE — `max-width` E `flex-grow` também precisam de override, não só
+     `width`: o nativo do Dawn (section-main-product.css) tem regra própria pro
+     media_size "large" (o valor configurado em templates/product.json, arquivo que
+     não mexemos aqui) — `.product--large:not(.product--no-media) .product__media-
+     wrapper { max-width: 65% }` e `.product__info-wrapper { max-width: 35% }` —,
+     com a MESMA especificidade da nossa (3 classes cada), então só ganha por vir
+     depois no documento a propriedade que a gente realmente sobrescreve. Sem o
+     `max-width` aqui, a info ficava travada em 35% (max-width do Dawn, que nunca
+     sobrescrevemos) e o `flex-grow: 1` herdado do `.grid__item` nativo jogava toda
+     a sobra de espaço pra media (resultado medido: 61.9%/35% em vez de 55%/40%).
+     `flex-grow: 0` elimina esse redistribuição residual (a folga de ~5% vira
+     espaço vazio depois da info, igual à referência, em vez de esticar os itens). */
   .product.grid--2-col-tablet .product__media-wrapper {
-    width: calc(55% - 2rem);
+    width: 55%;
+    max-width: 55%;
+    flex-grow: 0;
   }
 
   .product.grid--2-col-tablet .product__info-wrapper {
-    width: calc(45% - 2rem);
+    width: 40%;
+    max-width: 40%;
+    flex-grow: 0;
     padding-left: 0;
   }
 }
@@ -320,5 +345,164 @@
 
   .product__info-container .product__title h1 {
     font-size: 2rem;
+  }
+}
+
+/* ---- Barra fixa "adicionar ao carrinho" (product-page__sticky-bar) ----
+   Referência: produto-layout-1.html (~linhas 2358-2372/2656-2662) + app-D-LMZKup.css.
+   Escondida por padrão (translateY(100%)), controlada via IntersectionObserver em
+   assets/studio3-sticky-bar.js observando o botão real de compra (buy_buttons) —
+   quando ele sai da viewport a barra ganha `--visible` e desliza pra cima.
+   Todo valor em rem abaixo convertido do sistema de 16px da referência pro nosso
+   sistema de 10px (valor_referência_px / 10, ver CLAUDE.md 1.3.12); valores em px
+   (bordas finas, border-radius, sombras, o thumbnail 56x56) ficam como estavam. */
+.product-page__sticky-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1040;
+  max-width: 1360px;
+  margin: 0 auto;
+  /* Referência: .75rem 1.5rem (12px/24px) => 1.2rem/2.4rem no nosso root de 10px. */
+  padding: 1.2rem 2.4rem;
+  background: #ffffffc9;
+  border: 0.5px solid #ffffff59;
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 24px #00000014;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  pointer-events: none;
+  transform: translateY(100%);
+  transition: transform 0.3s;
+}
+
+.product-page__sticky-bar--visible {
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.product-page__sticky-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+}
+
+.product-page__sticky-bar-product {
+  display: flex;
+  align-items: center;
+  /* Bootstrap gap-3 na referência (1rem/16px, não fazia parte do bloco de CSS já
+     extraído) => 1.6rem no nosso root, mesma conversão de sempre. */
+  gap: 1.6rem;
+  min-width: 0;
+}
+
+.product-page__sticky-bar-img {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  background: #f2f2f2;
+  border: none;
+  border-radius: 14px;
+}
+
+.product-page__sticky-bar-text {
+  min-width: 0;
+}
+
+.product-page__sticky-bar-name {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: var(--font-heading-family);
+  /* Referência: .95rem (15.2px) => 1.52rem. Cor #4c5154 bate exatamente com o token
+     --studio3-color-ink, reaproveitado em vez de repetir o hex. */
+  font-size: 1.52rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--studio3-color-ink);
+}
+
+.product-page__sticky-bar-subtitle {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: var(--font-body-family);
+  /* Referência: .75rem (12px) => 1.2rem. #8a8a8a não bate com nenhum token existente
+     (--studio3-color-ink-muted é #6b7479, valor diferente), mantido como está. */
+  font-size: 1.2rem;
+  line-height: 1.2;
+  color: #8a8a8a;
+}
+
+.product-page__sticky-bar-cta {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Referência: .4rem (6.4px) => 0.64rem. */
+  gap: 0.64rem;
+  /* Referência: .8rem 2rem (12.8px/32px) => 1.28rem/3.2rem. */
+  padding: 1.28rem 3.2rem;
+  font-family: var(--font-body-family);
+  /* Referência: .9rem (14.4px) => 1.44rem. */
+  font-size: 1.44rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #fff;
+  cursor: pointer;
+  /* Referência: background #1d9001ed / border #2d8019c4 — as cores base (sem alpha)
+     batem exatamente com --studio3-color-accent-strong / --studio3-color-accent,
+     então reaproveitamos os tokens via color-mix() em vez de hardcodar hex novo. */
+  background: color-mix(in srgb, var(--studio3-color-accent-strong) 93%, transparent);
+  border: 1px solid color-mix(in srgb, var(--studio3-color-accent) 77%, transparent);
+  border-radius: 10px;
+  box-shadow: 0 4px 30px #0000001a;
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  transition: all 0.3s;
+}
+
+.product-page__sticky-bar-cta:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.product-page__sticky-bar-price {
+  font-size: 1.44rem;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 749px) {
+  .product-page__sticky-bar {
+    padding: 1rem 1.6rem;
+    border-radius: 0;
+  }
+
+  .product-page__sticky-bar-inner {
+    gap: 1rem;
+  }
+
+  .product-page__sticky-bar-product {
+    gap: 1rem;
+  }
+
+  .product-page__sticky-bar-subtitle {
+    display: none;
+  }
+
+  .product-page__sticky-bar-cta {
+    padding: 1rem 1.6rem;
+    font-size: 1.2rem;
+    gap: 0.4rem;
+  }
+
+  .product-page__sticky-bar-price {
+    font-size: 1.2rem;
   }
 }

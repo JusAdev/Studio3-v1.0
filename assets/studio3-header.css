@@ -84,6 +84,32 @@
 
 .studio3-mega-menu__list {
   align-items: start;
+  /* Dawn's base .mega-menu__list (component-mega-menu.css) hardcodes
+     `grid-template-columns: repeat(6, minmax(0, 1fr))`, which forces 6 equal
+     tracks no matter how many real <li> children exist. Our real menus
+     (Profissional, Home Care — both checked live) have exactly 4 top-level
+     items: 3 title columns ("Categorias"/"Cuidados"/"Linhas", each with >10
+     sub-items so each gets the 2-col .studio3-mega-menu__sublist--grid, see
+     header-mega-menu.liquid) + 1 promo tile. That left 2 of the 6 tracks
+     empty and squeezed every real column to ~183px (~90px per sub-column
+     inside the 2-col sub-grid — doubly squeezed).
+     auto-fit collapses unused tracks so columns take the freed-up width
+     instead. The 24rem (240px) floor is deliberately tuned, not copied from
+     a spec: at this section's content width (~130rem after page-width
+     padding, i.e. ~1300px at our capped 1400px page_width), any floor in
+     roughly the 19-29rem range resolves to exactly 4 equal ~29.5rem
+     (~295px) tracks — matching the 4 real items with zero wasted tracks.
+     NOTE: an earlier version of this rule also gave the dense sub-grid
+     column(s) `grid-column: span 2`, following the (reasonable-looking)
+     assumption that only ONE column would carry
+     .studio3-mega-menu__sublist--grid. Live measurement showed all 3 title
+     columns carry it (Categorias/Cuidados/Linhas all have >10 sub-items) —
+     spanning all three demands 6 of the 6 available tracks, leaving none
+     for the promo tile, which was forced onto its own row below. Widening
+     the floor (so every column already gets ~295px, comfortable for a 2-col
+     sub-grid at ~140px per sub-column) fixes the squeeze without spanning
+     and without the promo-wraps-to-its-own-row regression. */
+  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
 }
 
 .studio3-mega-menu__promo {

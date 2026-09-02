@@ -135,37 +135,39 @@
     }
   {%- endstyle -%}
 
-  <div class="studio3-product-ingredients section-{{ section.id }}-padding">
-    <div class="studio3-product-ingredients__inner">
-      <div class="studio3-product-ingredients__row">
-        {%- if ingredients_detail != blank -%}
-          <div class="studio3-product-ingredients__col">
-            <h2 class="studio3-product-ingredients__title">{{ 'studio3.product.active_ingredients' | t }}</h2>
-            <p class="studio3-product-ingredients__disclaimer">{{ 'studio3.product.ativos_disclaimer' | t }}</p>
-            <div class="studio3-product-ingredients__list">
-              {%- for ing in ingredients_detail -%}
-                <div class="studio3-product-ingredients__item">
-                  <span class="studio3-product-ingredients__number">{{ forloop.index | prepend: '00' | slice: -2, 2 }}</span>
-                  <div>
-                    <h3 class="studio3-product-ingredients__item-title">{{ ing.title }}</h3>
-                    <p class="studio3-product-ingredients__item-desc">{{ ing.desc }}</p>
+  <div class="page-width">
+    <div class="studio3-product-ingredients section-{{ section.id }}-padding">
+      <div class="studio3-product-ingredients__inner">
+        <div class="studio3-product-ingredients__row">
+          {%- if ingredients_detail != blank -%}
+            <div class="studio3-product-ingredients__col">
+              <h2 class="studio3-product-ingredients__title">{{ 'studio3.product.active_ingredients' | t }}</h2>
+              <p class="studio3-product-ingredients__disclaimer">{{ 'studio3.product.ativos_disclaimer' | t }}</p>
+              <div class="studio3-product-ingredients__list">
+                {%- for ing in ingredients_detail -%}
+                  <div class="studio3-product-ingredients__item">
+                    <span class="studio3-product-ingredients__number">{{ forloop.index | prepend: '00' | slice: -2, 2 }}</span>
+                    <div>
+                      <h3 class="studio3-product-ingredients__item-title">{{ ing.title }}</h3>
+                      <p class="studio3-product-ingredients__item-desc">{{ ing.desc }}</p>
+                    </div>
                   </div>
-                </div>
-              {%- endfor -%}
+                {%- endfor -%}
+              </div>
             </div>
-          </div>
-        {%- endif -%}
+          {%- endif -%}
 
-        {%- if indications != blank -%}
-          <div class="studio3-product-ingredients__indicators-col">
-            <h2 class="studio3-product-ingredients__title">{{ 'studio3.product.indications' | t }}</h2>
-            <div class="studio3-product-ingredients__indicators">
-              {%- for item in indications -%}
-                <span class="studio3-product-ingredients__indicator">{{ item }}</span>
-              {%- endfor -%}
+          {%- if indications != blank -%}
+            <div class="studio3-product-ingredients__indicators-col">
+              <h2 class="studio3-product-ingredients__title">{{ 'studio3.product.indications' | t }}</h2>
+              <div class="studio3-product-ingredients__indicators">
+                {%- for item in indications -%}
+                  <span class="studio3-product-ingredients__indicator">{{ item }}</span>
+                {%- endfor -%}
+              </div>
             </div>
-          </div>
-        {%- endif -%}
+          {%- endif -%}
+        </div>
       </div>
     </div>
   </div>
