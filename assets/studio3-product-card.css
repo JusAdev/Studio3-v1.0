@@ -95,6 +95,16 @@ product-component {
   color: var(--studio3-color-ink);
 }
 
+/* O Dawn aplica `.underline-links-hover` no card-wrapper (card-product.liquid), que
+   sublinha TODO `<a>` dentro do card ao passar o cursor (`.underline-links-hover:hover
+   a`, component-card.css, dentro de `@media (min-width: 990px)`) — inclui o título e o
+   "Ver Produto". Sobrescrito aqui pra manter só a troca de cor no CTA (acima), sem
+   sublinhado/borda em nenhum dos dois. */
+.underline-links-hover:hover .card__heading a,
+.underline-links-hover:hover .studio3-card__cta-ver {
+  text-decoration: none;
+}
+
 .card__content,
 .card__information {
   text-align: center;
@@ -214,7 +224,12 @@ product-component {
   z-index: 1;
 }
 
-.studio3-card__cta-ver:hover {
+/* Hover ancorado no CARD inteiro (`.card-wrapper:hover`), não só no próprio botão —
+   passar o cursor em qualquer lugar do card já deve trocar a cor do CTA, igual à
+   referência. `.card-wrapper:hover X` também cobre hover direto em X (hover num
+   descendente conta como hover no ancestor), então isso não perde nenhum caso do
+   `:hover` isolado que tinha antes. */
+.card-wrapper:hover .studio3-card__cta-ver {
   /* Referência (tulipia.com.br): hover de `.product-card__cta-ver` vira
      rgb(174, 149, 112) = #ae9570 (fundo E borda), que já existe como
      --studio3-color-gold — antes usava --studio3-color-ink (cinza), sem bater com a
@@ -265,7 +280,7 @@ product-component {
    com nenhum token existente (não é --studio3-color-accent nem --studio3-color-accent-
    strong), por isso fica hardcoded. Antes usava --studio3-color-ink (cinza), sem bater
    com a referência. */
-.studio3-card__cta-buy:hover {
+.card-wrapper:hover .studio3-card__cta-buy {
   color: #1e5511;
 }
 
@@ -285,6 +300,6 @@ product-component {
    variante normal acima — precisa de override específico (senão herdaria o #1e5511
    escuro de .studio3-card__cta-buy:hover, que não é o que a referência mostra pra esta
    variante especificamente). */
-.studio3-card__cta-buy--login:hover {
+.card-wrapper:hover .studio3-card__cta-buy--login {
   color: var(--studio3-color-accent);
 }
