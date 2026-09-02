@@ -1,0 +1,441 @@
+{% comment %}
+  Cadastro em 2 passos (Profissional da Estética / Cliente Final), inspirado em
+  tulipia.com.br/register. Passo 1 escolhe o perfil, passo 2 coleta os dados da conta.
+  A criação da conta e o setup B2B (só pra "profissional") acontecem via JS
+  (assets/studio3-register.js) — ver esse arquivo pra entender o fluxo completo.
+  URL do Worker fica em branco até o deploy (ver Studio3-B2B-Worker/README.md); até lá o
+  cadastro cria a conta normalmente, só sem o catálogo profissional atribuído ainda.
+{% endcomment %}
+
+{%- style -%}
+  .studio3-register {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 0 1.6rem;
+  }
+
+  .studio3-register__progress {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .studio3-register__dot {
+    width: 3.2rem;
+    height: 0.4rem;
+    border-radius: 1rem;
+    background: rgba(76, 81, 84, 0.15);
+    transition: background 0.2s;
+  }
+
+  .studio3-register__dot.is-active {
+    background: var(--studio3-color-gold);
+  }
+
+  .studio3-register__step-label {
+    display: block;
+    text-align: center;
+    font-family: var(--font-body-family);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--studio3-color-ink-muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .studio3-register__title {
+    text-align: center;
+    font-family: var(--font-heading-family);
+    font-size: 3.2rem;
+    font-weight: 400;
+    color: var(--studio3-color-ink);
+    margin: 0 0 0.8rem;
+  }
+
+  .studio3-register__subtitle {
+    text-align: center;
+    font-family: var(--font-body-family);
+    font-size: 1.4rem;
+    color: var(--studio3-color-ink-muted);
+    margin: 0 0 3.2rem;
+  }
+
+  .studio3-register__cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.6rem;
+    margin-bottom: 2.4rem;
+  }
+
+  .studio3-register__card {
+    text-align: left;
+    background: none;
+    border: 1px solid rgba(76, 81, 84, 0.15);
+    border-radius: 1.2rem;
+    padding: 2.4rem;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+  }
+
+  .studio3-register__card:hover {
+    border-color: var(--studio3-color-gold);
+  }
+
+  .studio3-register__card.is-selected {
+    border-color: var(--studio3-color-gold);
+    box-shadow: 0 0 0 1px var(--studio3-color-gold);
+  }
+
+  .studio3-register__card-head {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .studio3-register__card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 50%;
+    background: rgba(174, 149, 112, 0.12);
+    color: var(--studio3-color-gold);
+    flex-shrink: 0;
+  }
+
+  .studio3-register__card-icon svg {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .studio3-register__card-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    background: rgba(76, 81, 84, 0.08);
+    font-family: var(--font-body-family);
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--studio3-color-ink-muted);
+  }
+
+  .studio3-register__card-title {
+    font-family: var(--font-heading-family);
+    font-size: 1.9rem;
+    font-weight: 400;
+    color: var(--studio3-color-ink);
+    margin: 0 0 0.6rem;
+  }
+
+  .studio3-register__card-desc {
+    font-family: var(--font-body-family);
+    font-size: 1.28rem;
+    line-height: 1.5;
+    color: var(--studio3-color-ink-muted);
+    margin: 0;
+  }
+
+  .studio3-register__continue,
+  .studio3-register__submit {
+    display: block;
+    width: 100%;
+    padding: 1.44rem 2.4rem;
+    background: var(--studio3-color-accent);
+    color: #fff;
+    border: none;
+    border-radius: 1rem;
+    font-family: var(--font-body-family);
+    font-size: 1.44rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+  }
+
+  .studio3-register__continue:hover:not(:disabled),
+  .studio3-register__submit:hover:not(:disabled) {
+    background: var(--studio3-color-accent-strong);
+  }
+
+  .studio3-register__continue:disabled {
+    background: rgba(76, 81, 84, 0.15);
+    color: rgba(76, 81, 84, 0.5);
+    cursor: not-allowed;
+  }
+
+  .studio3-register__submit.is-loading {
+    opacity: 0.7;
+    cursor: wait;
+  }
+
+  .studio3-register__footer-link {
+    text-align: center;
+    margin-top: 2.4rem;
+    padding-top: 2.4rem;
+    border-top: 1px solid rgba(76, 81, 84, 0.1);
+    font-family: var(--font-body-family);
+    font-size: 1.28rem;
+    color: var(--studio3-color-ink-muted);
+  }
+
+  .studio3-register__footer-link a {
+    color: var(--studio3-color-accent);
+    font-weight: 600;
+  }
+
+  .studio3-register__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-bottom: 1.6rem;
+    font-family: var(--font-body-family);
+    font-size: 1.28rem;
+    color: var(--studio3-color-ink-muted);
+    cursor: pointer;
+  }
+
+  .studio3-register__selected-profile {
+    text-align: center;
+    font-family: var(--font-body-family);
+    font-size: 1.2rem;
+    color: var(--studio3-color-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+
+  .studio3-register__field {
+    margin-bottom: 1.6rem;
+  }
+
+  .studio3-register__field label {
+    display: block;
+    font-family: var(--font-body-family);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--studio3-color-ink);
+    margin-bottom: 0.6rem;
+  }
+
+  .studio3-register__field input {
+    width: 100%;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid rgba(76, 81, 84, 0.2);
+    border-radius: 0.8rem;
+    font-family: var(--font-body-family);
+    font-size: 1.4rem;
+    color: var(--studio3-color-ink);
+  }
+
+  .studio3-register__field input:focus {
+    outline: none;
+    border-color: var(--studio3-color-gold);
+  }
+
+  .studio3-register__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.6rem;
+  }
+
+  .studio3-register__error {
+    background: rgba(200, 60, 60, 0.08);
+    border: 1px solid rgba(200, 60, 60, 0.25);
+    border-radius: 0.8rem;
+    padding: 1.2rem 1.6rem;
+    margin-bottom: 1.6rem;
+    font-family: var(--font-body-family);
+    font-size: 1.28rem;
+    color: #a83232;
+  }
+
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .studio3-register__cards,
+    .studio3-register__row {
+      grid-template-columns: 1fr;
+    }
+  }
+{%- endstyle -%}
+
+<div
+  class="studio3-register section-{{ section.id }}-padding"
+  data-studio3-register
+  data-shop-domain="{{ shop.permanent_domain }}"
+  data-storefront-token="{{ section.settings.storefront_access_token }}"
+  data-worker-url="{{ section.settings.worker_url }}"
+  data-login-url="{{ routes.account_login_url }}"
+  data-error-required="{{ 'studio3.register.error_required' | t }}"
+  data-error-password-length="{{ 'studio3.register.error_password_length' | t }}"
+  data-error-password-match="{{ 'studio3.register.error_password_match' | t }}"
+  data-error-generic="{{ 'studio3.register.error_generic' | t }}"
+>
+  <div class="studio3-register__progress">
+    <span class="studio3-register__dot is-active" data-step-dot></span>
+    <span class="studio3-register__dot" data-step-dot></span>
+  </div>
+  <span class="studio3-register__step-label" data-step-label data-template="{{ 'studio3.register.step_label' | t }}">
+    {{ 'studio3.register.step_label' | t | replace: '[n]', 1 }}
+  </span>
+
+  <div data-step="1">
+    <h1 class="studio3-register__title">{{ 'studio3.register.step1_title' | t }}</h1>
+    <p class="studio3-register__subtitle">{{ 'studio3.register.step1_subtitle' | t }}</p>
+
+    <div class="studio3-register__cards">
+      <button type="button" class="studio3-register__card" data-profile-card="profissional">
+        <div class="studio3-register__card-head">
+          <span class="studio3-register__card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2 4 5v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V5l-8-3Z"></path>
+            </svg>
+          </span>
+          <span class="studio3-register__card-badge">{{ 'studio3.register.professional_badge' | t }}</span>
+        </div>
+        <h2 class="studio3-register__card-title" data-profile-title>{{ 'studio3.register.professional_title' | t }}</h2>
+        <p class="studio3-register__card-desc">{{ 'studio3.register.professional_desc' | t }}</p>
+      </button>
+
+      <button type="button" class="studio3-register__card" data-profile-card="cliente-final">
+        <div class="studio3-register__card-head">
+          <span class="studio3-register__card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 11.5 12 4l9 7.5"></path>
+              <path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"></path>
+            </svg>
+          </span>
+          <span class="studio3-register__card-badge">{{ 'studio3.register.consumer_badge' | t }}</span>
+        </div>
+        <h2 class="studio3-register__card-title" data-profile-title>{{ 'studio3.register.consumer_title' | t }}</h2>
+        <p class="studio3-register__card-desc">{{ 'studio3.register.consumer_desc' | t }}</p>
+      </button>
+    </div>
+
+    <button type="button" class="studio3-register__continue" data-continue-btn disabled>
+      {{ 'studio3.register.continue' | t }}
+    </button>
+
+    <div class="studio3-register__footer-link">
+      {{ 'studio3.register.already_registered' | t }}<br>
+      <a href="{{ routes.account_login_url }}">{{ 'studio3.register.go_to_login' | t }}</a>
+    </div>
+  </div>
+
+  <div data-step="2" hidden>
+    <button type="button" class="studio3-register__back" data-back-btn>
+      ← {{ 'studio3.register.back' | t }}
+    </button>
+    <p class="studio3-register__selected-profile" data-selected-profile-label></p>
+    <h1 class="studio3-register__title">{{ 'studio3.register.step2_title' | t }}</h1>
+    <p class="studio3-register__subtitle">{{ 'studio3.register.step2_subtitle' | t }}</p>
+
+    <div class="studio3-register__error" data-form-error hidden></div>
+
+    <form data-register-form>
+      <div class="studio3-register__row">
+        <div class="studio3-register__field">
+          <label for="Register-FirstName">{{ 'studio3.register.first_name' | t }}</label>
+          <input type="text" id="Register-FirstName" name="first_name" autocomplete="given-name" required>
+        </div>
+        <div class="studio3-register__field">
+          <label for="Register-LastName">{{ 'studio3.register.last_name' | t }}</label>
+          <input type="text" id="Register-LastName" name="last_name" autocomplete="family-name">
+        </div>
+      </div>
+      <div class="studio3-register__field">
+        <label for="Register-Email">{{ 'studio3.register.email' | t }}</label>
+        <input type="email" id="Register-Email" name="email" autocomplete="email" required>
+      </div>
+      <div class="studio3-register__row">
+        <div class="studio3-register__field">
+          <label for="Register-Password">{{ 'studio3.register.password' | t }}</label>
+          <input type="password" id="Register-Password" name="password" autocomplete="new-password" required>
+        </div>
+        <div class="studio3-register__field">
+          <label for="Register-PasswordConfirm">{{ 'studio3.register.password_confirm' | t }}</label>
+          <input type="password" id="Register-PasswordConfirm" name="password_confirm" autocomplete="new-password" required>
+        </div>
+      </div>
+
+      <button type="submit" class="studio3-register__submit" data-submit-btn>
+        {{ 'studio3.register.submit' | t }}
+      </button>
+    </form>
+  </div>
+</div>
+
+<script src="{{ 'studio3-register.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Studio3 - Cadastro",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "storefront_access_token",
+      "label": "Storefront API access token",
+      "info": "Token público (não é o token de Admin) — gerado uma vez via Admin API."
+    },
+    {
+      "type": "text",
+      "id": "worker_url",
+      "label": "URL do Cloudflare Worker (setup B2B)",
+      "info": "Deixe em branco até o deploy do Worker (ver Studio3-B2B-Worker/README.md) — até lá o cadastro funciona normalmente, só sem atribuir o catálogo profissional."
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaço acima",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaço abaixo",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Studio3 - Cadastro"
+    }
+  ]
+}
+{% endschema %}
