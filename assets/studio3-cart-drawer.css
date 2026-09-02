@@ -6,6 +6,23 @@
    10px dividindo por 10 (nosso_rem = referencia_px_computado / 10), não precisou reconverter
    a partir de rem porque a medição já veio em px absolutos. */
 
+/* Dawn deixa `.drawer` (o wrapper INTEIRO, width:100vw, por trás do painel) com
+   `background-color: rgba(var(--color-foreground), 0.5)` — um scrim escuro nativo pra
+   apagar o resto da página, padrão comum de modal. Só que o `backdrop-filter` do
+   `.drawer__inner` (abaixo) amostra o que está ATRÁS dele nessa pilha de composição —
+   incluindo esse scrim escuro, que fica ENTRE a página de verdade e o blur. Resultado:
+   o blur passa a borrar uma versão já escurecida da página, em vez da página colorida
+   de verdade, deixando o vidro mais opaco/manchado do que a referência (que não tem
+   scrim nenhum — só o blur + translucidez do próprio painel fazem a separação visual).
+   Removendo esse fundo aqui pra o backdrop-filter amostrar a página real. */
+/* <cart-drawer class="drawer"> é o custom element (tag), não a div.cart-drawer (essa é
+   um FILHO dele, id="CartDrawer") — precisa do seletor de tag `cart-drawer` aqui, não
+   de classe, e não pode ser só `.drawer` sozinho porque essa classe também é reusada
+   pelo menu-drawer mobile (mexeria no drawer errado). */
+cart-drawer.drawer {
+  background-color: transparent;
+}
+
 .cart-drawer .drawer__inner {
   width: 42rem;
   background: rgba(146, 163, 164, 0.43);
