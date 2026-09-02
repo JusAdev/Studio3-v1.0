@@ -33,7 +33,9 @@
       "unit_price_prefix": "x",
       "shipping_bar_incomplete": "Faltam [valor] para o frete grátis",
       "shipping_bar_complete": "Você ganhou frete grátis!",
-      "continue_shopping": "Continuar comprando"
+      "continue_shopping": "Continuar comprando",
+      "subtotal": "Subtotal",
+      "installments": "em até {{ n }}x de {{ value }} sem juros"
     },
     "register": {
       "step_label": "Passo [n] de 2",

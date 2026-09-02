@@ -16,7 +16,14 @@
   <link rel="stylesheet" href="{{ 'component-mega-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
 
-<link rel="stylesheet" href="{{ 'studio3-header.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- comment -%}
+  Carregamento síncrono (não `media="print" onload`) de propósito: esse CSS carrega
+  bloqueando, mas evita o FOUC visível no ícone do carrinho — sem isso, o Dawn desenha o
+  ícone padrão dele (44px) primeiro e só troca pro tamanho certo (20px) alguns instantes
+  depois, quando o CSS assíncrono termina de carregar, gerando um "pulo" perceptível bem
+  no cabeçalho, que fica visível o tempo todo.
+{%- endcomment -%}
+{{ 'studio3-header.css' | asset_url | stylesheet_tag }}
 
 <style>
   header-drawer {

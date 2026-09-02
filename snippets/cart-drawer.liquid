@@ -520,7 +520,12 @@
               <span data-studio3-shipping-bar-text>{{ 'studio3.cart.shipping_bar_incomplete' | t }}</span>
             </div>
             <div class="studio3-cart-drawer-shipping-bar__track">
-              <div class="studio3-cart-drawer-shipping-bar__fill" data-studio3-shipping-bar-progress></div>
+              {%- comment -%}
+                &nbsp; necessário: `div:empty { display: none }` do Dawn (base.css) escondia
+                essa div inteira por não ter nenhum nó de texto — ver mesmo comentário em
+                studio3-free-shipping-bar.liquid.
+              {%- endcomment -%}
+              <div class="studio3-cart-drawer-shipping-bar__fill" data-studio3-shipping-bar-progress>&nbsp;</div>
             </div>
           </div>
         {%- endunless -%}
@@ -563,9 +568,27 @@
           </div>
 
           <div class="totals" role="status">
-            <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
+            <h2 class="totals__total">{{ 'studio3.cart.subtotal' | t }}</h2>
             <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
           </div>
+
+          {%- comment -%}
+            "Em até Nx de R$Y sem juros" — a referência só mostra essa linha a partir de um
+            valor mínimo de carrinho (confirmado: escondida em R$71,10, visível em
+            R$426,60) — o valor exato do limite não ficou claro pela amostra, usando
+            R$100 como limite razoável até ajuste. N fixo em 6 parcelas (confirmado: total
+            de R$426,60 ÷ 6 = R$71,10 batendo exatamente com o texto "em até 6x de R$
+            71,10 sem juros" capturado na referência).
+          {%- endcomment -%}
+          {%- assign studio3_installments_max = 6 -%}
+          {%- assign studio3_installments_min_cents = 10000 -%}
+          {%- if cart.total_price >= studio3_installments_min_cents -%}
+            {%- assign studio3_installment_cents = cart.total_price | divided_by: studio3_installments_max -%}
+            {%- assign studio3_installment_value = studio3_installment_cents | money -%}
+            <p class="studio3-cart-drawer__installments" data-cart-installments>
+              {{ 'studio3.cart.installments' | t: n: studio3_installments_max, value: studio3_installment_value }}
+            </p>
+          {%- endif -%}
 
           <small class="tax-note caption-large rte">
             {%- if cart.duties_included and cart.taxes_included -%}

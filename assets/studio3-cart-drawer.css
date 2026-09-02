@@ -65,6 +65,12 @@ cart-drawer.drawer {
   text-transform: uppercase;
 }
 
+/* Os itens do carrinho ficavam colados direto embaixo do cabeçalho (0px de espaço) —
+   margem separando visualmente as duas áreas. */
+.cart-drawer .drawer__contents {
+  margin-top: 1.6rem;
+}
+
 /* Dawn mostra "PRODUCT"/"TOTAL" como cabeçalho de tabela visível (`.caption-with-letter-
    spacing`) — a referência não tem essa linha (o card já é autoexplicativo). Escondida
    visualmente mas mantida acessível pra leitor de tela (mesmo padrão de .visually-hidden
@@ -137,16 +143,31 @@ cart-drawer.drawer {
   display: none;
 }
 
-/* ---- Total da linha ---- */
-/* Ocupa a MESMA área de grid da quantidade (não uma coluna reservada à parte — o card é
-   estreito demais pra dividir em 2 colunas fixas sem espremer o stepper) e se ancora na
-   ponta direita via justify-self, igual à referência (stepper+preço unitário à esquerda,
-   total à direita, tudo na mesma linha). */
+/* ---- Linha de quantidade + preço, largura TOTAL do card ---- */
+/* Na referência, `.product-qty-price` é IRMÃ de `.holder` (imagem+info), não filha —
+   ocupa a largura INTEIRA do card, por baixo da imagem também, não só a coluna de texto
+   ao lado dela. O grid nativo do Dawn faz a imagem ocupar `grid-row: 1/3` (2 linhas) — se
+   a imagem só ocupar a linha 1, a linha 2 fica livre pra quantidade+total usarem TODAS as
+   4 colunas (1/5), não só as 3 que sobram ao lado da imagem. Isso dá espaço suficiente
+   pra caber tudo numa linha só sem precisar espremer ou quebrar (o `flex-wrap` usado
+   antes pra evitar sobreposição não é mais necessário com esse espaço extra). */
+.cart-drawer .cart-item__media {
+  grid-row: 1;
+}
+
+.cart-drawer .cart-items .cart-item__quantity {
+  grid-row: 2;
+  grid-column: 1 / 5;
+  padding-top: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
 .cart-drawer .cart-items .cart-item__totals {
   grid-row: 2;
-  grid-column: 2 / 5;
-  justify-self: end;
+  grid-column: 1 / 5;
   align-self: center;
+  padding-top: 1.2rem;
   justify-content: flex-end;
 }
 
@@ -157,34 +178,16 @@ cart-drawer.drawer {
   color: var(--studio3-color-ink);
 }
 
-/* ---- Linha de quantidade + preço unitário ---- */
-/* Especificidade igual à regra nativa do Dawn `.cart-drawer .cart-items .cart-item__quantity`
-   (3 classes) — sem isso, o `grid-column: 2/5` original do Dawn vence e a célula de
-   quantidade invade o espaço do total da linha, causando sobreposição visual. */
-.cart-drawer .cart-items .cart-item__quantity {
-  grid-row: 2;
-  grid-column: 2 / 5;
-  padding-top: 0;
-  display: flex;
-  align-items: center;
-}
-
 .cart-drawer .cart-item__quantity-wrapper {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  max-width: calc(100% - 8.5rem);
+  gap: 1rem;
 }
 
-/* flex-wrap em vez de forçar caber numa linha só: o card é estreito (~390px) e o preço
-   unitário varia de tamanho por produto (ex.: "x R$1.250,00" é bem mais longo que "x
-   R$79,00") — permitir quebra evita sobrepor o total da linha em vez de arriscar um
-   ajuste fino que só funciona pros preços testados. */
 .cart-drawer .quantity-popover-container {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.4rem 0.8rem;
+  gap: 1rem;
 }
 
 /* Dawn trava `.quantity { width: calc(14rem / var(--font-body-scale) + ...) }` (base.css)
@@ -198,18 +201,18 @@ cart-drawer.drawer {
 }
 
 .cart-drawer .quantity__button {
-  width: 3.2rem;
-  height: 3.4rem;
-  font-size: 1.4rem;
+  width: 3.8rem;
+  height: 3.8rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: var(--studio3-color-ink);
 }
 
 .cart-drawer .quantity__input {
-  width: 3.6rem;
-  height: 3.4rem;
+  width: 4.9rem;
+  height: 3.8rem;
   padding: 0;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
   background: rgba(255, 255, 255, 0.2);
   color: var(--studio3-color-ink);
@@ -217,13 +220,25 @@ cart-drawer.drawer {
 
 .studio3-cart-item__unit-price {
   font-family: var(--font-body-family);
-  font-size: 1.2rem;
+  font-size: 1.36rem;
   color: rgba(76, 81, 84, 0.85);
   white-space: nowrap;
 }
 
+/* `<quantity-popover>` (custom element nativo do Dawn, ancestral direto de
+   cart-remove-button dentro da célula de quantidade) já vem com `position: relative`
+   dele mesmo — isso faz ELE virar o "containing block" do `position:absolute` abaixo em
+   vez do `.cart-item` (TR), então a lixeira posicionava relativa à LINHA de quantidade,
+   não ao canto do card (só usado aqui pra popover de regra de quantidade/preço por
+   volume, recurso que os produtos desta loja não usam — seguro neutralizar). */
+.cart-drawer quantity-popover {
+  position: static;
+}
+
 /* Botão de remover reposicionado pro canto superior direito do card, separado da linha
-   de quantidade (igual à referência: lixeira isolada, não fica ao lado do stepper). */
+   de quantidade (igual à referência: lixeira isolada, não fica ao lado do stepper).
+   Aumentado e escurecido em relação à primeira versão — ficava fraco/pouco visível
+   (opacity baixa + ícone pequeno herdado do Dawn, 1.5rem). */
 .cart-drawer cart-remove-button {
   position: absolute;
   top: 1rem;
@@ -231,11 +246,16 @@ cart-drawer.drawer {
 }
 
 .cart-drawer .cart-remove-button {
-  color: rgba(76, 81, 84, 0.6);
+  color: rgba(76, 81, 84, 0.75);
 }
 
 .cart-drawer .cart-remove-button:hover {
   color: var(--studio3-color-ink);
+}
+
+.cart-drawer .cart-remove-button .icon-remove {
+  width: 1.9rem;
+  height: 1.9rem;
 }
 
 /* ---- Barra de frete grátis (rodapé, acima do subtotal) ---- */
@@ -285,6 +305,18 @@ cart-drawer.drawer {
   border-radius: 1rem;
   background: linear-gradient(90deg, #91f25f 1%, #00c6ab);
   transition: width 0.4s ease;
+  /* O &nbsp; dentro (necessário pra escapar do `div:empty` do Dawn, ver comentário no
+     liquid) não pode aparecer visualmente — zera a fonte pra ele nunca ocupar espaço. */
+  font-size: 0;
+  line-height: 0;
+}
+
+/* "Em até Nx de R$Y sem juros" */
+.studio3-cart-drawer__installments {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
+  color: rgba(76, 81, 84, 0.75);
 }
 
 /* ---- Subtotal / checkout / continuar comprando ---- */
@@ -302,6 +334,14 @@ cart-drawer.drawer {
   font-size: 1.68rem;
   font-weight: 800;
   color: var(--studio3-color-ink);
+}
+
+/* Dawn deixa `.cart__ctas { display:flex; flex-direction:row; flex-wrap:nowrap }`
+   (component-cart.css) — com os 2 botões tendo `width:100%` cada, isso os espreme lado a
+   lado numa linha só (flex-shrink permite os dois encolherem pra caber), em vez de
+   empilhados como a referência (botão verde em cima, link "continuar" embaixo). */
+.cart-drawer .cart__ctas {
+  flex-direction: column;
 }
 
 .cart-drawer .cart__checkout-button {

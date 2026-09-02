@@ -31,6 +31,10 @@
     width: 0%;
     background: linear-gradient(90deg, {{ section.settings.progress_start_color }} 1%, {{ section.settings.progress_end_color }});
     transition: width 0.4s ease;
+    /* O &nbsp; dentro (necessário pra escapar do `div:empty` do Dawn) não pode aparecer
+       visualmente — zera a fonte pra ele nunca ocupar espaço. */
+    font-size: 0;
+    line-height: 0;
   }
 
   .studio3-shipping-bar__text {
@@ -65,7 +69,14 @@
   data-text-incomplete="{{ section.settings.text_incomplete | escape }}"
   data-text-complete="{{ section.settings.text_complete | escape }}"
 >
-  <div class="studio3-shipping-bar__progress" data-studio3-shipping-bar-progress></div>
+  {%- comment -%}
+    O &nbsp; é necessário: `div:empty { display: none }` do próprio Dawn (base.css) esconde
+    qualquer div sem NENHUM nó de texto dentro — essa barra de progresso é só uma cor de
+    fundo via CSS, sem conteúdo nenhum, então caía exatamente nessa regra e ficava
+    completamente invisível (largura sempre computava 0, mesmo com o `style="width: X%"`
+    certo aplicado pelo JS). Já documentado como gotcha recorrente do Dawn no CLAUDE.md.
+  {%- endcomment -%}
+  <div class="studio3-shipping-bar__progress" data-studio3-shipping-bar-progress>&nbsp;</div>
   <div class="studio3-shipping-bar__text">
     <svg class="studio3-shipping-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M16 3H1v13h15V3z"></path>
