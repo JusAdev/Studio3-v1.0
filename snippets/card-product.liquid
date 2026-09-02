@@ -40,8 +40,18 @@
       assign ratio = 1
     endif
 
+    comment
+      `customer.b2b?` é o objeto nativo do Shopify que reflete se o cliente logado está
+      comprando de verdade como B2B (contato vinculado a uma company com catálogo) — ao
+      contrário da tag `profissional` (que só é setada uma vez no cadastro e nunca se
+      autoatualiza se a empresa for removida depois), este objeto é sempre a fonte de
+      verdade ATUAL. `!= true` cobre tanto visitante deslogado (customer em branco,
+      b2b? resolve pra nil/false) quanto cliente logado que NÃO é profissional de
+      verdade (b2b? false) — só quem realmente compra como empresa (b2b? true) escapa
+      do gate.
+    endcomment
     assign studio3_exclusive = false
-    if card_product.tags contains 'exclusivo-profissional' and customer == blank
+    if card_product.tags contains 'exclusivo-profissional' and customer.b2b? != true
       assign studio3_exclusive = true
     endif
   -%}

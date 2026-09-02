@@ -310,6 +310,7 @@ cart-drawer.drawer {
   z-index: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.8rem;
   /* Vertical padding reduzido de 1rem pra 0.4rem: com o ícone/line-height originais, a
      barra renderizava ~40px de altura total contra ~28px da referência (medido via

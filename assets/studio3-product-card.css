@@ -129,8 +129,21 @@ product-component {
 /* O Dawn usa CSS Grid com grid-row-start explícito que posiciona o quick-add ANTES
    do bloco de informação (efeito "botão flutuando" nativo do tema) — a referência
    quer nome/subtítulo/preço primeiro e o botão por último. Troca pra flex-column,
-   que segue a ordem real do DOM (informação -> preço -> "Ver Produto" -> quick-add). */
-.card__content {
+   que segue a ordem real do DOM (informação -> preço -> "Ver Produto" -> quick-add).
+   PRECISA do seletor `.card > .card__content` (não `.card__content` sozinho): o
+   `.card__content { display: grid }` nativo do Dawn (component-card.css) tem a MESMA
+   especificidade (uma classe) que um `.card__content` solto aqui — quem ganha depende
+   só da ordem de carregamento dos arquivos, e o Dawn carrega depois, então esse
+   override nunca teve efeito de verdade (confirmado via getComputedStyle: `display`
+   continuava `grid`). Com o grid ainda ativo, `.studio3-card__cta-ver` (sem
+   grid-row-start próprio) caía na primeira linha livre do grid — ANTES de
+   `.card__information` (que tem `grid-row-start: 2` explícito) — daí "Ver Produto"
+   aparecer colado na imagem em vez de depois do preço. `.card > .card__content` tem
+   duas classes (mais specific, ganha independente da ordem de load) e também é
+   estruturalmente mais preciso: só bate no `.card__content` REAL (filho direto de
+   `.card`), nunca no outro `.card__content` (escondido, aninhado dentro de
+   `.card__inner`, usado só pelo card_style "standard"). */
+.card > .card__content {
   display: flex;
   flex-direction: column;
 }
