@@ -510,6 +510,16 @@
             data-text-incomplete="{{ 'studio3.cart.shipping_bar_incomplete' | t | escape }}"
             data-text-complete="{{ 'studio3.cart.shipping_bar_complete' | t | escape }}"
           >
+            {%- comment -%}
+              &nbsp; necessário: `div:empty { display: none }` do Dawn (base.css) escondia
+              essa div inteira por não ter nenhum nó de texto — ver mesmo comentário em
+              studio3-free-shipping-bar.liquid. Estrutura igual à barra do topo do site
+              (studio3-free-shipping-bar.liquid): o preenchimento é uma camada ABSOLUTA
+              cobrindo a barra INTEIRA (não uma tira fina separada embaixo do texto), com
+              o texto por cima (z-index) — dá o efeito de "encher" o fundo conforme o
+              carrinho se aproxima do frete grátis, igual ao padrão já usado no topo.
+            {%- endcomment -%}
+            <div class="studio3-cart-drawer-shipping-bar__progress" data-studio3-shipping-bar-progress>&nbsp;</div>
             <div class="studio3-cart-drawer-shipping-bar__text">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M16 3H1v13h15V3z"></path>
@@ -518,14 +528,6 @@
                 <circle cx="18.5" cy="18.5" r="2.5"></circle>
               </svg>
               <span data-studio3-shipping-bar-text>{{ 'studio3.cart.shipping_bar_incomplete' | t }}</span>
-            </div>
-            <div class="studio3-cart-drawer-shipping-bar__track">
-              {%- comment -%}
-                &nbsp; necessário: `div:empty { display: none }` do Dawn (base.css) escondia
-                essa div inteira por não ter nenhum nó de texto — ver mesmo comentário em
-                studio3-free-shipping-bar.liquid.
-              {%- endcomment -%}
-              <div class="studio3-cart-drawer-shipping-bar__fill" data-studio3-shipping-bar-progress>&nbsp;</div>
             </div>
           </div>
         {%- endunless -%}
