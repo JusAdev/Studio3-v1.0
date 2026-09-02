@@ -51,6 +51,23 @@
   }
 }
 
+/* Header mais alto que a referência (tulipia.com.br): o `.header__heading-link`
+   nativo do Dawn (base.css) tem `padding: 0.75rem` nos 4 lados — 7.5px de "área de
+   clique" acima E abaixo da logo, que empurra a altura do `<h1>` (e por consequência
+   a linha inteira do grid do `.header`, já que ele é o filho mais alto) 15px além do
+   tamanho real da imagem. Medido via Playwright: nossa logo renderiza a 50px de
+   altura, mas o `<h1 class="header__heading">` que a envolve mede 65px por causa
+   desse padding — enquanto a referência não tem esse "colchão" de clique (o link
+   da logo lá não tem padding vertical). Zerado aqui (mantendo o padding horizontal
+   nativo, que não afeta a altura) + `padding_top`/`padding_bottom` da section
+   (sections/header-group.json) reduzidos de 12/12 pra 4/4 — a combinação dos dois
+   fecha a conta: 58px de altura total no desktop (1400px) e 53.75px no mobile
+   (390px), batendo com a referência nos dois breakpoints. */
+.header__heading-link {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .studio3-header__text-link {
   display: flex;
   align-items: center;

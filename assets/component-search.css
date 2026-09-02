@@ -72,3 +72,80 @@ input::-webkit-search-decoration {
 .template-search__results {
   position: relative;
 }
+
+/* ============================================================
+   Restilização da busca do header pra bater com a referência
+   tulipia.com.br (ver CLAUDE.md 1.3.25). Tudo escopado a
+   ".header__search" (classe do <details-modal> em
+   header-search.liquid) de propósito: ".search__button"/
+   ".reset__button"/".search__input" acima também são usados pelo
+   form solto de sections/main-search.liquid (página /search cheia),
+   que fica fora do escopo desta tarefa (só o ícone de busca do
+   header + dropdown). E as duas cores abaixo (#f8f5f0 fundo,
+   #ebdad3 borda) são valores reais extraídos via Playwright do
+   overlay de busca de tulipia.com.br — não existe token de marca
+   pra "bege claro"/"creme" ainda, só os de texto (ink/ink-muted)
+   que reaproveitamos abaixo. */
+
+.header__search .search-modal.modal__content {
+  background-color: #f8f5f0;
+}
+
+/* Cantos mais arredondados (14px reais, medidos no input da referência) e
+   borda numa cor quente em vez do cinza neutro padrão do Dawn. Sobrescrevendo
+   --inputs-radius/-outset aqui (não settings_data.json, que é global pra
+   QUALQUER input do tema) os estados de hover/foco do Dawn, que reusam essas
+   mesmas variáveis, acompanham automaticamente. */
+.header__search .field {
+  --inputs-radius: 1.4rem;
+  --inputs-radius-outset: 1.4rem;
+}
+
+.header__search .field:after {
+  box-shadow: 0 0 0 var(--inputs-border-width) #ebdad3;
+}
+
+.header__search .field:hover.field:after {
+  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width)) rgba(174, 149, 112, 0.5);
+}
+
+.header__search .field__input:focus-visible,
+.header__search .field__input:focus {
+  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width)) rgba(174, 149, 112, 0.5);
+}
+
+/* Ícone de lupa à ESQUERDA (padrão da referência) em vez dos dois botões
+   empilhados à direita do Dawn — só o botão de limpar (reset) fica à direita. */
+.header__search .search__button {
+  left: var(--inputs-border-width);
+  right: auto;
+}
+
+.header__search .reset__button {
+  right: var(--inputs-border-width);
+}
+
+/* Sem o botão de busca do lado, o divisor vertical do reset (pensado pra
+   separar os dois botões quando os dois ficavam juntos à direita) não faz
+   mais sentido sozinho. */
+.header__search .reset__button:not(:focus-visible)::after,
+.header__search .reset__button:not(:focus)::after {
+  display: none;
+}
+
+.header__search .search__input.field__input {
+  padding-left: 4.6rem;
+  padding-right: 4.6rem;
+}
+
+.header__search .search__input.field__input:focus,
+.header__search .search__input.field__input:not(:placeholder-shown) {
+  padding-left: 4.6rem;
+  padding-right: 4.6rem;
+}
+
+.header__search .field__label,
+.header__search .field__input:focus ~ .field__label,
+.header__search .field__input:not(:placeholder-shown) ~ .field__label {
+  left: calc(var(--inputs-border-width) + 4.6rem);
+}

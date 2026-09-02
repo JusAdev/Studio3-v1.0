@@ -77,7 +77,16 @@
     .studio3-collection-spotlight__eyebrow {
       margin: 0;
       font-family: var(--font-heading-family);
-      font-size: 2.6rem;
+      /* Referência (tulipia.com.br/queridinhos, medido via Playwright 01/09/2026):
+         40px em 1920px, 27.85px em 390px — a única seção auditada onde a própria
+         referência já reduz o título no mobile (usa uma classe Bootstrap
+         "display-6"). Clamp reproduz essa curva (~28px em 390px, 40px a partir de
+         ~1000px) em vez do salto fixo 2.6rem→4rem no breakpoint de 750px que
+         havia antes (que já estava bem próximo, mas trocado por clamp() a pedido
+         do cliente/pela consistência de método com as outras seções deste lote).
+         Substitui a regra desktop (min-width:750px) abaixo, que também
+         estabelecia font-size: 4rem pra este elemento — removida de lá. */
+      font-size: clamp(2.8rem, 2rem + 2vw, 4rem);
       font-weight: 400;
       line-height: 1;
       text-transform: uppercase;
@@ -159,9 +168,8 @@
         gap: 2.4rem;
       }
 
-      .studio3-collection-spotlight__eyebrow {
-        font-size: 4rem;
-      }
+      /* __eyebrow não é mais sobrescrito aqui — font-size vem só do clamp()
+         definido acima (já chega em 4rem/40px sozinho a partir de ~1000px). */
 
       .studio3-collection-spotlight__price-current {
         font-size: 4rem;

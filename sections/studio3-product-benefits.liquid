@@ -35,7 +35,14 @@
       max-width: 60rem;
       margin: 0 auto 5.6rem;
       font-family: var(--font-heading-family);
-      font-size: 3.2rem;
+      /* Referência (.bfA__title, medido via Playwright em produto-layout real de
+         tulipia.com.br 01/09/2026): 32px tanto em 1920px quanto em 390px — não
+         encolhe entre breakpoints. Desktop (3.2rem) já batia; o problema era só o
+         @media abaixo derrubando pra 2.4rem (24px) no mobile, bem abaixo do
+         próprio desktop daqui, ao contrário da referência. Clamp mantém ~29px no
+         mobile (perto do teto de 32px) e o @media não sobrescreve mais o
+         font-size (só o espaçamento). */
+      font-size: clamp(2.9rem, 2.7rem + 0.5vw, 3.2rem);
       font-weight: 400;
       line-height: 1.3;
       letter-spacing: 0.01em;
@@ -63,7 +70,9 @@
 
     @media screen and (max-width: 749px) {
       .studio3-product-benefits__title {
-        font-size: 2.4rem;
+        /* font-size agora vem só do clamp() acima — não sobrescrever aqui, senão
+           volta a derrubar o mobile pra bem abaixo do desktop (ver comentário
+           acima do clamp). */
         margin-bottom: 3.2rem;
       }
 

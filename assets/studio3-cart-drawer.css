@@ -205,7 +205,14 @@ cart-drawer.drawer {
 .cart-drawer .quantity.cart-quantity {
   width: auto;
   min-height: 0;
-  background: rgba(255, 255, 255, 0.4);
+  /* Era rgba(255,255,255,0.4) — uma cor semi-transparente. Como `.drawer__inner` tem
+     `backdrop-filter: blur()` (ver CLAUDE.md 1.3.22), a cor final renderizada depende
+     do que está atrás do vidro fosco, então o mesmo valor rgba compõe DIFERENTE aqui
+     e na referência (confirmado via sample de pixel: nosso composto saía #e5eaeb,
+     visivelmente mais escuro/acinzentado que o #f1f4f4 da referência, apesar do CSS
+     usar a mesma rgba nos dois sites). Fix: cor sólida igual à referência, não mais
+     dependente do que está atrás. Ver CLAUDE.md 1.3.25. */
+  background: #f4f6f6;
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 0.8rem;
 }
@@ -304,7 +311,12 @@ cart-drawer.drawer {
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  padding: 1rem 1.5rem;
+  /* Vertical padding reduzido de 1rem pra 0.4rem: com o ícone/line-height originais, a
+     barra renderizava ~40px de altura total contra ~28px da referência (medido via
+     Playwright nos dois lados) — o excesso vinha inteiro do padding vertical, não do
+     conteúdo (o line-height do texto já é maior que o ícone e sozinho dita a altura da
+     linha). Ver CLAUDE.md 1.3.25. */
+  padding: 0.4rem 1.5rem;
   font-family: var(--font-body-family);
   font-size: 1.12rem;
   letter-spacing: 0.029rem;
@@ -312,8 +324,11 @@ cart-drawer.drawer {
 
 .studio3-cart-drawer-shipping-bar__text svg {
   flex-shrink: 0;
-  width: 2rem;
-  height: 2rem;
+  /* 1.6rem (16px) em vez de 2rem (20px) pra bater com o tamanho real do ícone da
+     referência (16x16 renderizado, apesar do atributo width/height="20" no próprio
+     SVG) — ver CLAUDE.md 1.3.25. */
+  width: 1.6rem;
+  height: 1.6rem;
 }
 
 .studio3-cart-drawer-shipping-bar__text strong {
