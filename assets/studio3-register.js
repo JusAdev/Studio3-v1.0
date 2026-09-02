@@ -105,6 +105,11 @@
     const result = await storefrontFetch(query, {
       input: { firstName, lastName, email, password },
     });
+    if (!result.data) {
+      throw new Error(
+        'Storefront API: ' + (result.errors ? JSON.stringify(result.errors) : 'resposta sem "data"')
+      );
+    }
     return result.data.customerCreate;
   }
 
