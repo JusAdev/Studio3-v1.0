@@ -7,6 +7,7 @@
 
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'studio3-cart-drawer.css' | asset_url | stylesheet_tag }}
 
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
@@ -69,6 +70,7 @@
           onclick="this.closest('cart-drawer').close()"
           aria-label="{{ 'accessibility.close' | t }}"
         >
+          <span class="studio3-cart-drawer__close-label" aria-hidden="true">{{ 'accessibility.close' | t }}</span>
           <span class="svg-wrapper">
             {{- 'icon-close.svg' | inline_asset_content -}}
           </span>
@@ -162,6 +164,15 @@
                               modal_id: cart_disclosure_modal_id
                             -%}
                           </div>
+
+                          {%- assign studio3_cart_subtitle = item.product.metafields.custom.subtitle.value -%}
+                          {%- if studio3_cart_subtitle != blank -%}
+                            <p class="studio3-cart-item__subtitle">{{ studio3_cart_subtitle }}</p>
+                          {%- endif -%}
+                          {%- assign studio3_cart_size = item.variant.title -%}
+                          {%- if studio3_cart_size != blank and studio3_cart_size != 'Default Title' -%}
+                            <p class="studio3-cart-item__size">{{ studio3_cart_size }}</p>
+                          {%- endif -%}
 
                           {%- if item.original_price != item.final_price -%}
                             <div class="cart-item__discounted-prices">
@@ -356,6 +367,9 @@
                                     </span>
                                   </button>
                                 </quantity-input>
+                                <span class="studio3-cart-item__unit-price">
+                                  {{ 'studio3.cart.unit_price_prefix' | t }} {{ item.original_price | money }}
+                                </span>
                               </div>
                               <cart-remove-button
                                 id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
@@ -488,6 +502,28 @@
         </form>
       </cart-drawer-items>
       <div class="drawer__footer">
+        {%- unless cart == empty -%}
+          <div
+            class="studio3-cart-drawer-shipping-bar"
+            data-studio3-shipping-bar
+            data-threshold-cents="{{ 500 | times: 100 }}"
+            data-text-incomplete="{{ 'studio3.cart.shipping_bar_incomplete' | t | escape }}"
+            data-text-complete="{{ 'studio3.cart.shipping_bar_complete' | t | escape }}"
+          >
+            <div class="studio3-cart-drawer-shipping-bar__text">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M16 3H1v13h15V3z"></path>
+                <path d="M16 8h4l3 3v5h-7V8z"></path>
+                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+              </svg>
+              <span data-studio3-shipping-bar-text>{{ 'studio3.cart.shipping_bar_incomplete' | t }}</span>
+            </div>
+            <div class="studio3-cart-drawer-shipping-bar__track">
+              <div class="studio3-cart-drawer-shipping-bar__fill" data-studio3-shipping-bar-progress></div>
+            </div>
+          </div>
+        {%- endunless -%}
         {%- if settings.show_cart_note -%}
           <details id="Details-CartDrawer">
             <summary>
@@ -586,6 +622,13 @@
             {% endif %}
           >
             {{ 'sections.cart.checkout' | t }}
+          </button>
+          <button
+            type="button"
+            class="studio3-cart-drawer__continue"
+            onclick="this.closest('cart-drawer').close()"
+          >
+            {{ 'studio3.cart.continue_shopping' | t }}
           </button>
         </div>
       </div>

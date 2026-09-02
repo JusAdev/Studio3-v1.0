@@ -49,4 +49,13 @@
 
   document.addEventListener('DOMContentLoaded', refresh);
   document.addEventListener('cart:updated', refresh);
+
+  /* `pubsub.js`/`constants.js` carregam antes de qualquer section script (ambos são
+     `<script defer>` no <head>, e scripts com defer executam em ordem de documento) —
+     `subscribe`/`PUB_SUB_EVENTS` já existem no escopo global quando este arquivo roda.
+     Isso cobre TODOS os fluxos nativos do Dawn que mexem no carrinho (product-form.js no
+     add-to-cart, cart.js no +/-/remover) sem precisar tocar nesses arquivos do Dawn. */
+  if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+    subscribe(PUB_SUB_EVENTS.cartUpdate, refresh);
+  }
 })();

@@ -89,6 +89,13 @@ class CartDrawer extends HTMLElement {
       sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
     });
 
+    /* `publish(PUB_SUB_EVENTS.cartUpdate, ...)` em product-form.js dispara ANTES desta
+       troca de innerHTML (é síncrono dentro do publish, enquanto renderContents roda
+       depois, numa promise) — qualquer listener de cartUpdate que dependa do DOM do
+       drawer já atualizado (ex.: barra de frete grátis) roda cedo demais e não encontra
+       o elemento novo. Este evento dispara só depois do innerHTML acima já estar no ar. */
+    document.dispatchEvent(new CustomEvent('cart:updated'));
+
     setTimeout(() => {
       this.querySelector('#CartDrawer-Overlay').addEventListener('click', this.close.bind(this));
       this.open();

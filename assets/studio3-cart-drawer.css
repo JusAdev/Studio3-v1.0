@@ -1,0 +1,328 @@
+/* Restilo do cart drawer nativo do Dawn (snippets/cart-drawer.liquid) pro visual "vidro"
+   do site de referência (tulipia.com.br): painel translúcido com backdrop-blur, cards de
+   item com o mesmo tratamento, barra de progresso de frete grátis embutida no rodapé, e
+   botão de checkout verde + link "Continuar comprando" abaixo. Valores conferidos direto
+   contra getComputedStyle() da referência (JÁ em px reais) — convertidos pro nosso root de
+   10px dividindo por 10 (nosso_rem = referencia_px_computado / 10), não precisou reconverter
+   a partir de rem porque a medição já veio em px absolutos. */
+
+.cart-drawer .drawer__inner {
+  width: 42rem;
+  background: rgba(146, 163, 164, 0.43);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  backdrop-filter: blur(20px) saturate(1.8);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.08);
+  border: none;
+}
+
+/* ---- Cabeçalho ---- */
+.cart-drawer .drawer__header {
+  background: rgba(255, 255, 255, 0.45);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
+  backdrop-filter: blur(16px) saturate(1.8);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin: 0 -1.5rem;
+  padding: 1.6rem 1.5rem;
+}
+
+.cart-drawer .drawer__heading {
+  font-family: var(--font-heading-family);
+  font-size: 1.76rem;
+  font-weight: 400;
+  letter-spacing: 0.106rem;
+  text-transform: uppercase;
+  color: var(--studio3-color-ink);
+}
+
+.cart-drawer .drawer__close {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-body-family);
+  font-size: 1.44rem;
+  letter-spacing: 0.03rem;
+  color: rgba(76, 81, 84, 0.85);
+}
+
+.cart-drawer .drawer__close .studio3-cart-drawer__close-label {
+  text-transform: uppercase;
+}
+
+/* Dawn mostra "PRODUCT"/"TOTAL" como cabeçalho de tabela visível (`.caption-with-letter-
+   spacing`) — a referência não tem essa linha (o card já é autoexplicativo). Escondida
+   visualmente mas mantida acessível pra leitor de tela (mesmo padrão de .visually-hidden
+   do Dawn), já que os `<th>`/role="columnheader" continuam dando semântica de tabela. */
+.cart-drawer .cart-items thead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Cards de item ---- */
+.cart-drawer .cart-item {
+  position: relative;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 1rem;
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  backdrop-filter: blur(12px) saturate(1.5);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 1.2rem;
+  margin-bottom: 1.2rem !important;
+}
+
+.cart-drawer .cart-item__image {
+  border-radius: 0.8rem;
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
+  background: #f2f2f2;
+}
+
+.cart-drawer .cart-item__details {
+  padding-top: 0;
+}
+
+.cart-drawer .cart-item__name {
+  font-family: var(--font-body-family);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.025rem;
+  text-transform: uppercase;
+  color: rgba(76, 81, 84, 0.85);
+}
+
+.studio3-cart-item__subtitle,
+.studio3-cart-item__size {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: rgba(76, 81, 84, 0.85);
+}
+
+/* Dawn mostra o preço simples logo abaixo do título — a referência só mostra o preço
+   perto do seletor de quantidade (ver .studio3-cart-item__unit-price/.cart-item__totals
+   abaixo), então escondemos esse aqui pra não duplicar. Escondemos também a lista nativa
+   de opções de variante (<dl>, ex.: "Tamanho: 30g") porque já mostramos o tamanho de
+   forma simples via .studio3-cart-item__size, igual à referência — sem isso aparecem os
+   dois ao mesmo tempo. */
+.cart-drawer .cart-item__details > .cart-item__discounted-prices,
+.cart-drawer .cart-item__details > .product-option:not(:has(dt)),
+.cart-drawer .cart-item__details > dl {
+  display: none;
+}
+
+/* ---- Total da linha ---- */
+/* Ocupa a MESMA área de grid da quantidade (não uma coluna reservada à parte — o card é
+   estreito demais pra dividir em 2 colunas fixas sem espremer o stepper) e se ancora na
+   ponta direita via justify-self, igual à referência (stepper+preço unitário à esquerda,
+   total à direita, tudo na mesma linha). */
+.cart-drawer .cart-items .cart-item__totals {
+  grid-row: 2;
+  grid-column: 2 / 5;
+  justify-self: end;
+  align-self: center;
+  justify-content: flex-end;
+}
+
+.cart-drawer .cart-item__totals .price {
+  font-family: var(--font-body-family);
+  font-size: 1.52rem;
+  font-weight: 700;
+  color: var(--studio3-color-ink);
+}
+
+/* ---- Linha de quantidade + preço unitário ---- */
+/* Especificidade igual à regra nativa do Dawn `.cart-drawer .cart-items .cart-item__quantity`
+   (3 classes) — sem isso, o `grid-column: 2/5` original do Dawn vence e a célula de
+   quantidade invade o espaço do total da linha, causando sobreposição visual. */
+.cart-drawer .cart-items .cart-item__quantity {
+  grid-row: 2;
+  grid-column: 2 / 5;
+  padding-top: 0;
+  display: flex;
+  align-items: center;
+}
+
+.cart-drawer .cart-item__quantity-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: calc(100% - 8.5rem);
+}
+
+/* flex-wrap em vez de forçar caber numa linha só: o card é estreito (~390px) e o preço
+   unitário varia de tamanho por produto (ex.: "x R$1.250,00" é bem mais longo que "x
+   R$79,00") — permitir quebra evita sobrepor o total da linha em vez de arriscar um
+   ajuste fino que só funciona pros preços testados. */
+.cart-drawer .quantity-popover-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+}
+
+/* Dawn trava `.quantity { width: calc(14rem / var(--font-body-scale) + ...) }` (base.css)
+   no container inteiro — sobrescrever só os filhos (botão/input) não muda nada até
+   sobrescrever essa largura fixa aqui também. */
+.cart-drawer .quantity.cart-quantity {
+  width: auto;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 0.8rem;
+}
+
+.cart-drawer .quantity__button {
+  width: 3.2rem;
+  height: 3.4rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--studio3-color-ink);
+}
+
+.cart-drawer .quantity__input {
+  width: 3.6rem;
+  height: 3.4rem;
+  padding: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--studio3-color-ink);
+}
+
+.studio3-cart-item__unit-price {
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
+  color: rgba(76, 81, 84, 0.85);
+  white-space: nowrap;
+}
+
+/* Botão de remover reposicionado pro canto superior direito do card, separado da linha
+   de quantidade (igual à referência: lixeira isolada, não fica ao lado do stepper). */
+.cart-drawer cart-remove-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.cart-drawer .cart-remove-button {
+  color: rgba(76, 81, 84, 0.6);
+}
+
+.cart-drawer .cart-remove-button:hover {
+  color: var(--studio3-color-ink);
+}
+
+/* ---- Barra de frete grátis (rodapé, acima do subtotal) ---- */
+.studio3-cart-drawer-shipping-bar {
+  position: relative;
+  margin: 0 -1.5rem 1.6rem;
+  padding: 1rem 1.5rem;
+  background: #e4d3bc;
+  color: #3a3a3a;
+  overflow: hidden;
+}
+
+.studio3-cart-drawer-shipping-bar__text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--font-body-family);
+  font-size: 1.12rem;
+  letter-spacing: 0.029rem;
+  margin-bottom: 0.6rem;
+}
+
+.studio3-cart-drawer-shipping-bar__text svg {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+}
+
+.studio3-cart-drawer-shipping-bar__text strong {
+  font-weight: 700;
+}
+
+.studio3-cart-drawer-shipping-bar__track {
+  position: relative;
+  height: 0.6rem;
+  border-radius: 1rem;
+  background: rgba(58, 58, 58, 0.12);
+  overflow: hidden;
+}
+
+.studio3-cart-drawer-shipping-bar__fill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  border-radius: 1rem;
+  background: linear-gradient(90deg, #91f25f 1%, #00c6ab);
+  transition: width 0.4s ease;
+}
+
+/* ---- Subtotal / checkout / continuar comprando ---- */
+.cart-drawer .totals__total {
+  font-family: var(--font-heading-family);
+  font-size: 1.68rem;
+  font-weight: 400;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  color: var(--studio3-color-ink);
+}
+
+.cart-drawer .totals__total-value {
+  font-family: var(--font-body-family);
+  font-size: 1.68rem;
+  font-weight: 800;
+  color: var(--studio3-color-ink);
+}
+
+.cart-drawer .cart__checkout-button {
+  background: color-mix(in srgb, var(--studio3-color-accent) 93%, transparent);
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  height: 5rem;
+  font-family: var(--font-heading-family);
+  font-size: 1.44rem;
+  letter-spacing: 0.144rem;
+  text-transform: uppercase;
+}
+
+.cart-drawer .cart__checkout-button:hover {
+  background: var(--studio3-color-accent-strong);
+}
+
+.studio3-cart-drawer__continue {
+  display: block;
+  width: 100%;
+  margin-top: 0.8rem;
+  padding: 0.8rem 1.2rem;
+  background: none;
+  border: none;
+  border-radius: 0.45rem;
+  font-family: var(--font-body-family);
+  font-size: 1.28rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-align: center;
+  color: var(--studio3-color-ink);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 749px) {
+  .cart-drawer .drawer__inner {
+    width: 100vw;
+    max-width: 100vw;
+  }
+}
