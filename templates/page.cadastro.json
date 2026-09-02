@@ -1,4 +1,5 @@
 {
+  "layout": "cadastro",
   "sections": {
     "main": {
       "type": "studio3-register",
