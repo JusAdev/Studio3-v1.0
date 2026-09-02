@@ -183,6 +183,14 @@
   border-top: 1px solid #e8e0d8;
 }
 
+/* Dawn's próprio `.product-form__buttons { max-width: 44rem }` (section-main-product.css)
+   foi pensado pro layout padrão do Dawn, onde a coluna de info pode passar de 440px —
+   aqui a coluna já é só 40% da largura (bem menor), então esse teto nativo passou a
+   encolher o botão abaixo da largura real disponível em vez de deixá-lo full-width. */
+.product__info-container .product-form__buttons {
+  max-width: none;
+}
+
 .product__info-container .product-form__submit {
   background: var(--studio3-color-accent);
   color: #fff;

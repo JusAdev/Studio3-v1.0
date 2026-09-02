@@ -67,6 +67,15 @@
   height: 1.8rem;
 }
 
+/* Dawn's `.header__icon--cart .icon { height/width: 4.4rem }` (base.css) forces the cart
+   icon to 44px — fine for Dawn's stock glyph (which has built-in padding inside its
+   viewBox), but the reference's trolley path fills its viewBox edge-to-edge, so the same
+   44px box renders visibly oversized. Reference's own cart icon measures 20px. */
+.header__icon--cart .icon {
+  width: 2rem;
+  height: 2rem;
+}
+
 .mega-menu__link--level-2 {
   font-family: var(--font-heading-family);
   font-size: 1.6rem;
