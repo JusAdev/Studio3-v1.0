@@ -388,7 +388,11 @@
                                 <ul class="list-unstyled">
                                   <li>
                                     <span>{{ item.variant.quantity_rule.min }}+</span>
-                                    {%- assign price = item.variant.price | money_with_currency -%}
+                                    {%- if settings.currency_code_enabled -%}
+                                      {%- assign price = item.variant.price | money_with_currency -%}
+                                    {%- else -%}
+                                      {%- assign price = item.variant.price | money -%}
+                                    {%- endif -%}
                                     <span> {{ 'sections.quick_order_list.each' | t: money: price }}</span>
                                   </li>
                                   {%- for price_break in item.variant.quantity_price_breaks -%}
@@ -397,7 +401,11 @@
                                         {{- price_break.minimum_quantity -}}
                                         <span aria-hidden="true">+</span></span
                                       >
-                                      {%- assign price = price_break.price | money_with_currency -%}
+                                      {%- if settings.currency_code_enabled -%}
+                                        {%- assign price = price_break.price | money_with_currency -%}
+                                      {%- else -%}
+                                        {%- assign price = price_break.price | money -%}
+                                      {%- endif -%}
                                       <span> {{ 'sections.quick_order_list.each' | t: money: price }}</span>
                                     </li>
                                   {%- endfor -%}

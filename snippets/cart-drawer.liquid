@@ -459,7 +459,13 @@
                                     <ul class="list-unstyled">
                                       <li>
                                         <span>{{ item.variant.quantity_rule.min }}+</span>
-                                        <span>{{ item.variant.price | money_with_currency }}/ea</span>
+                                        <span>
+                                          {%- if settings.currency_code_enabled -%}
+                                            {{ item.variant.price | money_with_currency }}
+                                          {%- else -%}
+                                            {{ item.variant.price | money }}
+                                          {%- endif -%}/ea
+                                        </span>
                                       </li>
                                       {%- for price_break in item.variant.quantity_price_breaks -%}
                                         <li>
@@ -467,7 +473,13 @@
                                             {{- price_break.minimum_quantity -}}
                                             <span aria-hidden="true">+</span></span
                                           >
-                                          <span>{{ price_break.price | money_with_currency }}/ea</span>
+                                          <span>
+                                            {%- if settings.currency_code_enabled -%}
+                                              {{ price_break.price | money_with_currency }}
+                                            {%- else -%}
+                                              {{ price_break.price | money }}
+                                            {%- endif -%}/ea
+                                          </span>
                                         </li>
                                       {%- endfor -%}
                                     </ul>
@@ -571,7 +583,13 @@
 
           <div class="totals" role="status">
             <h2 class="totals__total">{{ 'studio3.cart.subtotal' | t }}</h2>
-            <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+            <p class="totals__total-value">
+              {%- if settings.currency_code_enabled -%}
+                {{ cart.total_price | money_with_currency }}
+              {%- else -%}
+                {{ cart.total_price | money }}
+              {%- endif -%}
+            </p>
           </div>
 
           {%- comment -%}

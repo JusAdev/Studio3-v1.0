@@ -264,7 +264,10 @@ product-component {
   /* "Faça login ou cadastre-se" quebra em 2 linhas, "Compra rápida" fica numa só —
      min-height reserva o espaço da variante de 2 linhas nas duas, senão o "Ver
      Produto" (empurrado por margin-top: auto) fica em alturas diferentes entre um
-     card com quick-add normal e um card exclusivo/login na mesma fileira. */
+     card com quick-add normal e um card exclusivo/login na mesma fileira. Esse
+     min-height sozinho só aproxima a altura do `.quick-add` real (56px) — faltava
+     considerar margin-top/margin-bottom também; ver o `margin-bottom` acrescentado em
+     `.studio3-card__cta-buy--login` abaixo, que fecha o resto da diferença (~10px). */
   min-height: 5rem;
   background: none;
   border: none;
@@ -306,6 +309,20 @@ product-component {
   color: var(--studio3-color-ink);
   font-weight: 400;
   font-size: 1.1rem;
+  /* "Ver Produto" (empurrado por margin-top: auto, ver acima) ficava ~10px mais alto
+     nos cards com esta variante do que nos cards com quick-add normal, na MESMA
+     fileira — o `min-height: 5rem` (50px) herdado de `.studio3-card__cta-buy` só
+     aproxima a altura do `.quick-add` (medido: 56px de altura + 0 de margin-top + 10px
+     de margin-bottom = 66px de espaço vertical total ocupado), enquanto esta variante
+     (6px de margin-top + 50px de min-height + 0 de margin-bottom = 56px) ficava 10px
+     mais curta no total — sobrava espaço extra pro `margin-top: auto` do
+     `.studio3-card__cta-ver` absorver, empurrando-o mais pra baixo do que no card com
+     quick-add. `margin-bottom: 1rem` fecha exatamente essa diferença (56px + 10px =
+     66px, igual ao `.quick-add`) sem alterar a aparência do próprio botão. Só nesta
+     variante (`--login`), não na classe base `.studio3-card__cta-buy` — essa também é
+     usada dentro do `.quick-add__submit` real, que já tem seu próprio espaçamento
+     correto. */
+  margin-bottom: 1rem;
 }
 
 /* Variante "Faça login ou cadastre-se": na referência o hover vai pro verde de ação
