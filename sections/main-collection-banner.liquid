@@ -15,6 +15,19 @@
   .collection-hero__title + .collection-hero__description {
     font-size: 1.44rem;
   }
+
+  /* Auditoria MOBILE-only de font-size (ver CLAUDE.md 1.3.37): título da coleção
+     (<h1 class="collection-hero__title">, sem font-size próprio, herda o `h1`
+     nativo do Dawn em base.css: calc(scale*3rem) mobile / calc(scale*4rem)
+     desktop). Referência (tulipia.com.br/queridinhos, .categoria-header__title,
+     medido via Playwright): 32px em 390px, 40px em 1440px. Nosso desktop já batia
+     exato (40px); só o mobile ficava abaixo (30px). Fix escopado só a
+     max-width:749px — desktop intocado. */
+  @media screen and (max-width: 749px) {
+    .collection-hero__title {
+      font-size: 3.2rem;
+    }
+  }
 {%- endstyle -%}
 
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">

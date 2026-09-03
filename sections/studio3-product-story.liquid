@@ -66,6 +66,17 @@
       color: var(--studio3-color-ink-muted);
     }
 
+    /* Auditoria mobile de font-size (CLAUDE.md 1.3.37): referência mede
+       15.2px (flat) pro subtítulo em negrito e pro parágrafo em 390px — o
+       valor base (1.472rem = 14.72px) não bate exato. Mobile-only, sem
+       tocar no desktop (fora de escopo desta auditoria). */
+    @media screen and (max-width: 749px) {
+      .studio3-product-story__subheading,
+      .studio3-product-story__text {
+        font-size: 1.52rem;
+      }
+    }
+
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
       padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;

@@ -35,6 +35,17 @@
     padding: 0 0.4rem;
   }
 
+  /* Auditoria mobile de font-size (CLAUDE.md 1.3.37): referência
+     (parágrafo de "Modo de usar") mede 15.2px em 390px — o valor base
+     (1.472rem = 14.72px) não bate exato. Mesmo padrão do texto de
+     studio3-product-story.liquid (mesmo valor copiado nos dois arquivos
+     originalmente). Mobile-only, desktop não tocado. */
+  @media screen and (max-width: 749px) {
+    .studio3-product-details__text {
+      font-size: 1.52rem;
+    }
+  }
+
   .studio3-product-details__allergy {
     display: flex;
     align-items: flex-start;

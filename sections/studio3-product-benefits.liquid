@@ -80,8 +80,13 @@
         grid-template-columns: 1fr;
       }
 
+      /* font-size acrescentado aqui (auditoria mobile de font-size, CLAUDE.md
+         1.3.37) — referência mede os bullets em 14.4px flat (1920px e 390px);
+         nosso valor base (1.34rem = 13.4px) não batia. Mobile-only, desktop
+         mantido em 13.4px (fora de escopo desta auditoria). */
       .studio3-product-benefits__list li {
         padding: 2rem 1.6rem;
+        font-size: 1.44rem;
       }
     }
 

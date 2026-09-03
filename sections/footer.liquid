@@ -49,6 +49,40 @@
     text-decoration: underline;
   }
 
+  /* Auditoria MOBILE-only de font-size (ver CLAUDE.md 1.3.37). Referência
+     (tulipia.com.br, rodapé, medido via Playwright em 390px):
+     - itens de link_list (Institucional/Para Profissionais): 13.12px flat
+       (390px e 1440px) — nosso valor nativo do Dawn (`.link`/`list-menu__item`)
+       é 14px flat nos dois. Fix só no lado mobile (desktop permanece 14px,
+       também diverge da referência mas fica fora do escopo desta auditoria
+       mobile-only).
+     - tagline da marca (settings.brand_description, div.rte dentro de
+       .footer-block__brand-info): 16.8px em 390px / 17.6px em 1440px na
+       referência; nosso valor nativo (.rte herda font-body-scale) era 15px/
+       16px. Fix só mobile (1.68rem); desktop permanece 16px (diverge de
+       17.6px, fora do escopo mobile-only).
+     - bloco "Fale Conosco" (texto rico do block `text`, mesma classe .rte):
+       a referência usa DOIS tamanhos ali — telefone em <a> bold 14.4px e
+       rótulo de endereço 11.52px — algo que não dá pra reproduzir só com CSS
+       aqui porque o conteúdo é um único richtext sem marcação distinta entre
+       telefone/endereço (settings do block, sections/footer-group.json).
+       Aplicado 1.44rem (14.4px) como aproximação de melhor esforço — mais
+       perto do texto predominante (telefone) — só no mobile; desktop mantido
+       intocado (16px). */
+  @media screen and (max-width: 749px) {
+    .footer .footer-block__details-content .link {
+      font-size: 1.312rem;
+    }
+
+    .footer .footer-block__brand-info .rte {
+      font-size: 1.68rem;
+    }
+
+    .footer .footer-block__details-content.rte {
+      font-size: 1.44rem;
+    }
+  }
+
   /* Referência: .site-footer__bottom tem um tom mais escuro que o resto do rodapé
      (#CFBA9B vs #E4D3BC do scheme-6) — não é a mesma cor do color_scheme herdado. */
   .footer__content-bottom {
@@ -78,6 +112,29 @@
     display: block;
     max-width: 2.4rem;
     max-height: 2.4rem;
+  }
+
+  /* Auditoria MOBILE-only de font-size (ver CLAUDE.md 1.3.37). Referência
+     (tulipia.com.br, medido via Playwright em 390px): copyright/políticas
+     (.site-footer__copyright + links "Termos de Uso"/"Política de
+     Privacidade") 11.52px flat, CNPJ (.site-footer__cnpj) 10.4px flat — nos
+     dois casos SEM variação entre 390px e 1440px na referência. Nosso
+     `.copyright__content` nativo do Dawn (section-footer.css) é 1.1rem
+     (11px) flat nos dois; `.studio3-footer__cnpj` usa a classe utilitária
+     `.caption` nativa do Dawn, que tem seu PRÓPRIO breakpoint responsivo
+     (1rem=10px <750px, 1.2rem=12px >=750px, base.css) — diferente do padrão
+     flat da referência. Fix escopado só ao mobile (max-width:749px); no
+     desktop os dois continuam como estavam (11px / 12px), mesmo sabendo que
+     também divergem um pouco da referência — fora do escopo desta auditoria
+     mobile-only. */
+  @media screen and (max-width: 749px) {
+    .footer .copyright__content {
+      font-size: 1.152rem;
+    }
+
+    .footer .studio3-footer__cnpj {
+      font-size: 1.04rem;
+    }
   }
 {%- endstyle -%}
 

@@ -170,3 +170,38 @@
 .studio3-mega-menu__see-all:hover {
   text-decoration: underline;
 }
+
+/* Auditoria MOBILE-only de font-size do menu drawer (ver CLAUDE.md 1.3.37) —
+   snippets/header-drawer.liquid. Todos os níveis do menu (`.menu-drawer__menu-item`,
+   component-menu-drawer.css nativo do Dawn) compartilham a MESMA regra flat
+   (font-size: 1.8rem = 18px), sem diferenciar nível ou contexto. Referência
+   (tulipia.com.br, menu hambúrguer aberto em 390px, medido via Playwright):
+   - itens de 1º nível (Profissional/Home Care/Queridinhos/Lançamentos/Oferta do
+     mês, `.mobile-menu__item`): 16.8px.
+   - itens de 2º/3º nível dentro de um submenu aberto (`.mobile-menu__link`,
+     ex. Categorias > Acessórios, Linhas > Hialux): 13.6px flat nos dois níveis.
+   - links de conta (Entrar/Cadastre-se, `.mobile-menu__auth-btn`): 11.2px —
+     a referência estiliza esses dois como botões pill (fundo/borda próprios),
+     não como itens de lista simples; replicar o visual de botão é mudança de
+     layout, fora do escopo desta auditoria (só font-size) — aplicado só o
+     tamanho de fonte, mantendo a apresentação de link atual.
+   Fix escopado só a max-width:749px (breakpoint mobile padrão do projeto) —
+   o botão "Voltar"/título do submenu (`.menu-drawer__close-button`, 14px
+   nativo) NÃO foi tocado: a referência separa isso em dois elementos
+   distintos (um "Voltar" pequeno de 12.48px + um título de painel de 18.4px),
+   sem equivalente 1:1 limpo na nossa estrutura (um único botão fazendo as
+   duas coisas) — mudar exigiria reestruturar o markup, não só o font-size. */
+@media screen and (max-width: 749px) {
+  .menu-drawer__menu.has-submenu > li > .menu-drawer__menu-item,
+  .menu-drawer__menu.has-submenu > li > details > summary.menu-drawer__menu-item {
+    font-size: 1.68rem;
+  }
+
+  .menu-drawer__submenu .menu-drawer__menu-item {
+    font-size: 1.36rem;
+  }
+
+  .studio3-menu-drawer__account .menu-drawer__menu-item {
+    font-size: 1.12rem;
+  }
+}

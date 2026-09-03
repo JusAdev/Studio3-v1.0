@@ -161,6 +161,22 @@
       opacity: 0.85;
     }
 
+    /* Auditoria MOBILE-only de font-size (ver CLAUDE.md 1.3.37): __eyebrow,
+       __subtitle, __description, __price-was e __price-current já batiam a
+       referência (medido de novo via Playwright — ver tabela do 1.3.37), não
+       tocados. Só __cta ("Ver produto") tinha um resíduo pequeno de conversão:
+       referência (tulipia.com.br/queridinhos, botão "Ver produto", mobile
+       390px) mede 14.4px, nosso valor base era 1.4rem (14px, sem converter o
+       ".4" — mesma família de bug do 1.3.12/1.3.28). Fix escopado só ao
+       mobile; base desktop (1.4rem = 14px) mantida intocada mesmo sabendo que
+       também diverge um pouco da referência (fora do escopo desta auditoria,
+       que é mobile-only). */
+    @media screen and (max-width: 749px) {
+      .studio3-collection-spotlight__cta {
+        font-size: 1.44rem;
+      }
+    }
+
     @media screen and (min-width: 750px) {
       .studio3-collection-spotlight__grid {
         grid-template-columns: 2fr 1fr;
