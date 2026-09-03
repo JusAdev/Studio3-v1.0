@@ -77,6 +77,45 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  {% comment %}
+    [[1.3.31]] Mobile-only (<=749px, breakpoint padrão do projeto):
+    1) `.studio3-cat-icon__label` herdava `letter-spacing: 0.06rem` (0.6px) do
+       `body` global (layout/theme.liquid) — a referência (tulipia.com.br) usa
+       `letter-spacing: normal` no rótulo equivalente. `font-size` já batia
+       (14px nos dois lados, medido via getComputedStyle), mas o letter-spacing
+       extra alargava cada rótulo ~6-8px (mais visível nos rótulos longos:
+       "Mais Vendidos" 108.5px nosso vs 100.7px na referência, mesma fonte/peso).
+       Zerado aqui só pra este rótulo (não no `body` global, que afeta o tema
+       inteiro fora de escopo).
+    2) Reduz `gap` da nav (item-a-item) e o tamanho do ícone o suficiente pra
+       caber ~4.3 ícones (4 inteiros + ~30% do 5º) na largura de tela, usando
+       os itens reais já configurados ("Mais Vendidos"/"Ofertas do mês"/
+       "Sensoriais"/"Alta Tecnologia" — nomes de categoria reais, alguns bem
+       compridos). Medido via Playwright em 375/390/414/430px.
+  {% endcomment %}
+  @media screen and (max-width: 749px) {
+    .studio3-cat-icon__label {
+      letter-spacing: normal;
+    }
+
+    /* Alvo: ~4.3 ícones visíveis na primeira tela (4 inteiros + ~30% do 5º,
+       sinalizando que dá pra arrastar) — com os rótulos reais deste site (alguns
+       compridos: "Mais Vendidos", "Ofertas do mês", "Alta Tecnologia", ~100-107px
+       cada em uma linha só), a largura de cada item era ditada pelo rótulo, não
+       pelo ícone (64px) — só 3 inteiros + ~77% do 4º cabiam em 390px. Trava a
+       largura de cada item em 8.2rem (82px) e deixa os rótulos compridos
+       quebrarem em 2 linhas (em vez de nowrap) — os curtos ("Sensoriais",
+       "Máscaras", "Séruns") continuam numa linha só, já cabem dentro do limite. */
+    .studio3-cat-icon {
+      width: 8.2rem;
+    }
+
+    .studio3-cat-icon__label {
+      width: 100%;
+      white-space: normal;
+    }
+  }
 {%- endstyle -%}
 
 <div id="studio3-categories-nav-{{ section.id }}" class="page-width">

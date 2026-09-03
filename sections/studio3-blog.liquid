@@ -133,6 +133,51 @@
     letter-spacing: 0.05em;
   }
 
+  /* Mobile: card vira image-left/content-right (pedido explícito do cliente — a
+     referência tulipia.com.br NÃO usa esse layout no mobile, ver CLAUDE.md 1.3.31;
+     valores abaixo são proporção própria, não copiados de medição externa). Grid
+     puro reflui o MESMO markup (sem wrapper novo): a imagem ocupa a coluna 1
+     spanning todas as linhas de texto; category/title/excerpt/meta (sem
+     grid-column/-row explícito) caem em auto-placement na coluna 2, uma
+     embaixo da outra, na mesma ordem do DOM. */
+  @media screen and (max-width: 749px) {
+    .studio3-blog-card {
+      display: grid;
+      grid-template-columns: min(36%, 13rem) 1fr;
+      grid-template-rows: repeat(4, auto);
+      column-gap: 1.2rem;
+      row-gap: 0.3rem;
+      align-items: start;
+    }
+
+    .studio3-blog-card__image-wrapper {
+      grid-column: 1;
+      grid-row: 1 / -1;
+      align-self: start;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      margin-bottom: 0;
+    }
+
+    .studio3-blog-card__category {
+      margin-bottom: 0.3rem;
+    }
+
+    .studio3-blog-card__title {
+      display: -webkit-box;
+      margin-bottom: 0.3rem;
+      font-size: 1.5rem;
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .studio3-blog-card__excerpt {
+      margin-bottom: 0.3rem;
+      font-size: 1.2rem;
+    }
+  }
+
   .studio3-blog__cta-row {
     display: flex;
     justify-content: flex-end;

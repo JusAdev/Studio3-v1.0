@@ -69,6 +69,13 @@
                   </p>
                 </div>
 
+                {%- comment -%}
+                  [[1.3.31]] Removido a pedido do cliente: nota "Tributos incluídos.
+                  Descontos e frete calculados no checkout." (bloco <small class="tax-note">).
+                  Mantido comentado (não apagado) pra facilitar reverter se o pedido mudar.
+                  Aplica-se a desktop E mobile (cliente não escopou só pra mobile).
+                {%- endcomment -%}
+                {%- comment -%}
                 <small class="tax-note caption-large rte">
                   {%- if cart.duties_included and cart.taxes_included -%}
                     {%- if shop.shipping_policy.body == blank -%}
@@ -108,6 +115,7 @@
                     {%- endif -%}
                   {%- endif -%}
                 </small>
+                {%- endcomment -%}
               </div>
             {%- else -%}
               <div class="cart__ctas" {{ block.shopify_attributes }}>

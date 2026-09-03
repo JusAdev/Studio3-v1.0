@@ -37,7 +37,7 @@
   assign alt_text = section.settings.alt_text
 -%}
 
-<div id="studio3-promo-banner-{{ section.id }}">
+<div id="studio3-promo-banner-{{ section.id }}"{% if section.settings.hide_on_mobile %} class="small-hide"{% endif %}>
   {%- if section.settings.image != blank -%}
     {%- capture mobile_srcset -%}
       {%- if section.settings.mobile_image != blank -%}
@@ -108,6 +108,17 @@
       "id": "alt_text",
       "label": "Texto alternativo (opcional)",
       "info": "Descrição da imagem para leitores de tela. Se vazio, usa o texto alternativo do arquivo enviado."
+    },
+    {
+      "type": "header",
+      "content": "Visibilidade"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Ocultar esta seção no celular",
+      "default": false,
+      "info": "Quando ativado, a faixa some em telas de celular (abaixo de 750px). No desktop continua aparecendo normalmente."
     },
     {
       "type": "header",

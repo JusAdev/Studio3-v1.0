@@ -39,12 +39,22 @@
   }
 
   .studio3-experts__subtitle {
+    /* Escondido no mobile igual à referência (que usa classes Bootstrap `d-none
+       d-md-block` no subtítulo equivalente) — mesmo padrão já usado em
+       `.studio3-skin-types-header__subtitle`, ver [[1.3.35]]. */
+    display: none;
     margin: 0;
     color: var(--studio3-color-ink-muted);
     font-family: var(--font-body-family);
     font-size: 1.76rem;
     font-weight: 400;
     letter-spacing: 0.05em;
+  }
+
+  @media screen and (min-width: 768px) {
+    .studio3-experts__subtitle {
+      display: block;
+    }
   }
 
   .studio3-experts__row {

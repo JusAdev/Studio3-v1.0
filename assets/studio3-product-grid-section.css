@@ -14,24 +14,38 @@
   font-family: var(--font-heading-family);
   color: var(--studio3-color-ink);
   /* Referência (home2026-section-header__title, medido via Playwright em
-     tulipia.com.br 01/09/2026): 36px tanto em 1920px quanto em 390px de viewport —
-     não encolhe entre breakpoints. O valor antigo (2.25rem) era o número em REM
-     copiado direto do CSS da referência (root 16px deles) sem converter pro nosso
+     tulipia.com.br): 36px flat em TODA a faixa de viewport testada (390, 480,
+     600, 750, 900, 1200, 1440, 1920px) — não encolhe em nenhum breakpoint,
+     nem mobile pequeno. O valor antigo (2.25rem) era o número em REM copiado
+     direto do CSS da referência (root 16px deles) sem converter pro nosso
      root de 10px (ver CLAUDE.md 1.3.12) — 22.5px em vez dos 36px pretendidos.
-     Clamp usado a pedido do cliente (em vez de fixar 3.6rem cru, igual às outras
-     seções da home que já usam esse valor: blog/experts/skin-types), mas o
-     intervalo é propositalmente estreito pra o mobile ficar perto do desktop,
-     como a referência: ~34.2px em 390px, 36px a partir de 1000px+. */
-  font-size: clamp(3.4rem, 3.3rem + 0.3vw, 3.6rem);
+     Um clamp(3.4rem, 3.3rem + 0.3vw, 3.6rem) foi tentado num passo anterior
+     (auditoria focada em desktop, ver 1.3.28) pra deixar o mobile "perto" do
+     desktop sem bater o valor exato (~34.2px em 390px) — releitura mobile-
+     focused (ver 1.3.31) confirmou que a referência não tem NENHUMA
+     fluidez real aqui, então o fix correto é o valor fixo, não um clamp com
+     intervalo estreito. */
+  font-size: 3.6rem;
   font-weight: 400;
   letter-spacing: 0.045em;
   margin: 0;
 }
 
 .studio3-grid-section__subtitle {
+  /* Escondido no mobile igual à referência (que usa classes Bootstrap `d-none
+     d-md-block` no subtítulo equivalente) — mesmo padrão já usado em
+     `.studio3-skin-types-header__subtitle`/`.studio3-experts__subtitle`, ver
+     [[1.3.35]]. */
+  display: none;
   font-family: var(--font-body-family);
   color: var(--studio3-color-ink-muted);
   margin: 0.5rem 0 0;
+}
+
+@media screen and (min-width: 768px) {
+  .studio3-grid-section__subtitle {
+    display: block;
+  }
 }
 
 .studio3-grid-section__banner {
@@ -83,6 +97,18 @@
 
 .studio3-grid-section__cta:hover {
   text-decoration: underline;
+}
+
+@media screen and (max-width: 749px) {
+  /* Referência (home2026-section-header__cta, "Ver todos..."): 16px flat em
+     toda a faixa mobile/desktop testada. A regra base acima (1.4rem = 14px)
+     já estava abaixo disso nos dois lados — mas esta é uma auditoria
+     MOBILE-ONLY (ver CLAUDE.md 1.3.31): corrigido só o lado mobile aqui via
+     override no breakpoint já existente no projeto (749px), sem tocar no
+     valor desktop (fora de escopo desta passada). */
+  .studio3-grid-section__cta {
+    font-size: 1.6rem;
+  }
 }
 
 /* ---- Variante da página de produto ("Complete Seu Protocolo" / "Produtos

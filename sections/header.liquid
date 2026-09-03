@@ -114,6 +114,33 @@
     padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem;
   }
 
+  {% comment %}
+    [[1.3.31]] Ícones do header colados demais pra dentro no mobile (hamburguer/
+    busca/carrinho), comparado à referência (tulipia.com.br em ~390px: hamburguer
+    a 16px da borda esquerda, carrinho a só 4px da borda direita — GAP assimétrico
+    de propósito no design deles). Antes do fix, nosso carrinho ficava a 26px da
+    borda direita (18px no hambúrguer à esquerda, já bem próximo do alvo). Raiz:
+    o `padding: ... 3rem` acima (herdado do Dawn, aplica em TODAS as larguras já
+    que só o padding-top/bottom ganha override em 990px+ mais abaixo) soma 30px de
+    cada lado; a compensação nativa do Dawn (`header-drawer{margin-left:-1.2rem}`
+    em <style> logo acima, e `.header__icon--cart{margin-right:-1.2rem}` em
+    base.css) já cobre boa parte da esquerda mas não o bastante da direita, porque
+    o container `.header__icons` ainda soma seu próprio `padding-right:0.8rem`
+    nativo do Dawn (base.css) por cima. Fix mobile-only (<=749px, breakpoint já
+    padrão do projeto): reduzir só o padding horizontal do `.header` nesse
+    intervalo — 2.8rem esquerda (28px - 12px de margin compensa pra 16px, batendo
+    a referência) e 0.8rem direita (8px - 8px do padding do .header__icons + 12px
+    do margin do carrinho = 4px, batendo a referência). NÃO mexe no padding-top/
+    padding-bottom (regra separada, já corrigida antes — ver comentário em
+    studio3-header.css) nem em nada >=750px (desktop/tablet inalterados).
+  {% endcomment %}
+  @media screen and (max-width: 749px) {
+    .header {
+      padding-left: 2.8rem;
+      padding-right: 0.8rem;
+    }
+  }
+
   .section-header {
     position: sticky; /* This is for fixing a Safari z-index issue. PR #2147 */
     margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
