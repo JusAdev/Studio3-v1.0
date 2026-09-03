@@ -13,6 +13,7 @@
       "type": "studio3-hero",
       "settings": {
         "image": "shopify://shop_images/Home_-_Banner_Principal_2720_x_1186px_-_PROFISSIONAL-desktop_1x_dfafe241-ddd0-488a-bb28-dc7250d49a54.jpg",
+        "mobile_image": "shopify://shop_images/Menu-Desktop---DropDown-Profissional---572-x-764px-desktop_1x_55762cfc-88e9-4be8-af8d-b1e01c36799c.jpg",
         "link": "shopify://collections/all",
         "heading": "",
         "subtitle": "",
@@ -172,6 +173,7 @@
         "image": "shopify://shop_images/faixa-promo-immortalite-desk-desktop_1x_59d1e9e7-23c9-43f3-9774-16cce0ca892d.jpg",
         "link": "shopify://collections/all",
         "alt_text": "Sérum de Vitamina C com textura leve e rápida absorção",
+        "hide_on_mobile": false,
         "padding_top": 24,
         "padding_bottom": 24
       }
