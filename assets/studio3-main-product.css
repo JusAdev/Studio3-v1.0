@@ -241,6 +241,50 @@
   font-family: var(--font-body-family);
 }
 
+/* Mensagem que substitui o preço quando o produto tem a tag `exclusivo-profissional`
+   e quem está vendo não é um cliente B2B de verdade (customer.b2b? != true) — mesmo gate
+   do card (studio3-card-price.liquid), aplicado aqui na PDP. Ocupa o mesmo espaço visual
+   do preço grande (font-size 3.6rem acima), então precisa de peso parecido sem ficar do
+   tamanho literal de um número de preço. */
+.product__info-container .studio3-product__exclusive-msg {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--studio3-color-accent);
+}
+
+/* Mesmo tratamento do divisor de `.product-form` (botão de compra real) abaixo — o link
+   de login ocupa o mesmo slot visual quando o produto é exclusivo-profissional. */
+.product__info-container .studio3-product__login-cta-wrapper {
+  margin-top: 1.6rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid #e8e0d8;
+}
+
+/* Mesmo visual de `.product-form__submit` (botão real de compra) abaixo, pra não parecer
+   um botão "diferente"/secundário só porque é um link de login em vez de um <button>. */
+.product__info-container .studio3-product__login-cta {
+  background: var(--studio3-color-accent);
+  color: #fff;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-body-family);
+  font-size: 1.44rem;
+  font-weight: 500;
+  padding: 1.44rem 2.4rem;
+  box-shadow: none;
+  transition: background-color 0.2s;
+}
+
+.product__info-container .studio3-product__login-cta:hover {
+  background: var(--studio3-color-accent-strong);
+  color: #fff;
+}
+
 /* Preço no Brasil já é exibido com imposto incluído por padrão (CDC) — a referência
    não mostra esse aviso, então escondemos em vez de traduzir. */
 .product__info-container .product__tax {

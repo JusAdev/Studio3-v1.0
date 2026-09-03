@@ -17,7 +17,21 @@
   Usage:
   {% render 'studio3-sticky-bar', product: product, section_id: section.id %}
 {% endcomment %}
-{%- if product != blank -%}
+{%- liquid
+  assign studio3_sticky_exclusive = false
+  if product.tags contains 'exclusivo-profissional' and customer.b2b? != true
+    assign studio3_sticky_exclusive = true
+  endif
+-%}
+{%- comment -%}
+  Produto exclusivo-profissional sem sessão B2B: o botão real de compra
+  (buy-buttons.liquid, dentro de main-product.liquid) não é renderizado nesse caso — vira
+  um link de login sem o id `ProductSubmitButton-{{ section_id }}` que studio3-sticky-bar.js
+  usa como alvo do IntersectionObserver e do encaminhamento de clique. Sem esse alvo a barra
+  nunca ganharia a classe `--visible`, então nem vale renderizar (evitaria também expor o
+  preço aqui, que já está oculto no bloco de preço da PDP).
+{%- endcomment -%}
+{%- if product != blank and studio3_sticky_exclusive != true -%}
   {%- liquid
     assign sticky_variant = product.selected_or_first_available_variant
     assign sticky_cta_unavailable = false
