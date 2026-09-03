@@ -56,9 +56,61 @@
   }
 }
 
-/* ---- Galeria: thumbnails em coluna, cantos arredondados, borda dourada ativa ---- */
+/* ---- Galeria: thumbnails em coluna, cantos arredondados, borda dourada ativa ----
+   O gap/raio/cor abaixo já existiam, mas nunca havia nenhuma regra reposicionando
+   de verdade os thumbnails pra esquerda — `gallery_layout: "thumbnail"` (setting
+   nativo do Dawn, `templates/product.json`) só controla QUAIS elementos aparecem
+   (thumbnails vs. sem), não ONDE: `.product__media-wrapper` continua `display:
+   block` puro no Dawn nativo (`section-main-product.css`, conferido — nenhuma
+   regra ali torna `<media-gallery>` ou seus filhos flex/grid), então o
+   `<slider-component class="thumbnail-slider">` (thumbnails) só ficava empilhado
+   embaixo do `<slider-component>` da imagem principal (ordem natural do DOM), como
+   reportado ("thumbnails abaixo da imagem principal"). Referência
+   (tulipia.com.br): coluna de thumbnails de 70px (7rem) cada, quadrados, gap de
+   12px (1.2rem) até a imagem principal — medido via Playwright. */
 .studio3-product__media-wrapper {
   position: relative;
+}
+
+@media screen and (min-width: 990px) {
+  .product--thumbnail .studio3-product__media-wrapper media-gallery {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+
+  /* A imagem principal (`<slider-component>` sem a classe `.thumbnail-slider`) é
+     o filho de flex que deve crescer pra preencher o espaço restante. */
+  .product--thumbnail .studio3-product__media-wrapper media-gallery > slider-component:not(.thumbnail-slider) {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* `order: -1` põe a coluna de thumbnails ANTES da imagem principal visualmente,
+     mesmo vindo DEPOIS dela no DOM (ordem exigida pelo próprio `product-media-
+     gallery.liquid` nativo do Dawn — não reordenei o markup, só a ordem visual). */
+  .product--thumbnail .thumbnail-slider {
+    order: -1;
+    flex: 0 0 7rem;
+    width: 7rem;
+  }
+
+  /* O Dawn nativo (`section-main-product.css`) define `.thumbnail-list {
+     grid-template-columns: repeat(4, 1fr) }` em telas ≥990px — um grid de 4
+     colunas pensado pra thumbnails EMBAIXO da imagem, incompatível com uma coluna
+     estreita de 7rem. Troca pra flex-column (empilhado verticalmente), com
+     especificidade maior (`.product--thumbnail .thumbnail-list`, 2 classes) que
+     bate a regra nativa de 1 classe independente da ordem de carregamento (mesma
+     lição de [[1.3.29]]/[[1.4]]). */
+  .product--thumbnail .thumbnail-list {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: none;
+  }
+
+  .product--thumbnail .thumbnail-list__item.slider__slide {
+    width: 7rem;
+  }
 }
 
 .product--thumbnail .product__media-list {
@@ -163,11 +215,30 @@
   color: var(--studio3-color-ink);
 }
 
+/* IMPORTANTE: `.price-item--regular` é usado pelo `price.liquid` nativo do Dawn em
+   DOIS contextos diferentes — o preço normal (sem desconto, `.price__regular
+   .price-item--regular`, deve ficar grande) E o preço ANTIGO riscado quando o
+   produto está em promoção (`.price--on-sale .price-item--regular`, dentro de
+   `.price__sale`, deve ficar pequeno/riscado — é assim que o Dawn nativo já
+   estiliza via `.price--on-sale .price-item--regular { text-decoration: line-
+   through; font-size: 1.3rem }` em component-price.css). Um seletor genérico
+   `.price .price-item--regular` (3 classes) tem MAIS especificidade que a regra
+   nativa do Dawn (2 classes) e vencia nos dois contextos — o preço "De: R$X"
+   riscado ficava do MESMO tamanho gigante do preço principal, competindo
+   visualmente e escondendo o preço "Por: R$Y" de verdade (que não tinha estilo
+   nenhum aplicado, ficava pequeno/nativo). Escopado agora só pro preço que
+   realmente deve ficar grande: sem desconto (`.price__regular`) OU o preço NOVO
+   quando em promoção (`.price-item--sale`, não `--regular`). */
 .product__info-container .price__container,
-.product__info-container .price .price-item--regular {
+.product__info-container .price__regular .price-item--regular,
+.product__info-container .price-item--sale {
   font-family: var(--font-body-family);
   font-size: 3.6rem;
   font-weight: 600;
+}
+
+.product__info-container .price--on-sale .price-item--regular {
+  font-family: var(--font-body-family);
 }
 
 /* Preço no Brasil já é exibido com imposto incluído por padrão (CDC) — a referência

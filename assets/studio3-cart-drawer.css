@@ -369,9 +369,25 @@ cart-drawer.drawer {
 /* Dawn deixa `.cart__ctas { display:flex; flex-direction:row; flex-wrap:nowrap }`
    (component-cart.css) — com os 2 botões tendo `width:100%` cada, isso os espreme lado a
    lado numa linha só (flex-shrink permite os dois encolherem pra caber), em vez de
-   empilhados como a referência (botão verde em cima, link "continuar" embaixo). */
+   empilhados como a referência (botão verde em cima, link "continuar" embaixo).
+
+   `gap: 0` é necessário: o Dawn nativo já dá espaçamento entre os dois CTAs por DOIS
+   mecanismos ao mesmo tempo em telas ≥750px — `.cart__ctas > * + * { margin-top: 1rem }`
+   (sempre ativo, qualquer largura) E `.cart__ctas { display:flex; gap: 1rem }` (só
+   ≥750px, component-cart.css). Como o `flex-direction: column` aqui só reorienta o eixo
+   (não desliga o `display:flex` nem o `gap` herdado), os dois mecanismos somavam — o
+   "Continuar comprando" ficava com quase o dobro do respiro do necessário no desktop.
+   Zerando o gap, sobra só o `margin-top` nativo (1rem, consistente em qualquer
+   largura) fazendo esse trabalho. */
 .cart-drawer .cart__ctas {
+  /* `.cart-drawer__footer` (parcelas/subtotal) e `.cart__ctas` são divs irmãs sem
+     nenhum espaçamento nativo entre elas — o respiro visual que existia antes vinha
+     de tabela por acidente do bloco de nota fiscal (removido a pedido do cliente, ver
+     [[1.3.31]]), não de uma regra de espaçamento de verdade. Sem ele, "em até Nx..."
+     e o botão "Finalizar Compra" ficavam colados. */
+  margin-top: 1.2rem;
   flex-direction: column;
+  gap: 0;
 }
 
 .cart-drawer .cart__checkout-button {
@@ -391,9 +407,12 @@ cart-drawer.drawer {
 }
 
 .studio3-cart-drawer__continue {
+  /* Sem margin-top próprio — o `.cart__ctas > * + * { margin-top: 1rem }` nativo do
+     Dawn (component-cart.css) já dá o espaçamento entre este link e o botão "Finalizar
+     Compra" acima; um segundo margin-top aqui somava com aquele (ver comentário em
+     `.cart-drawer .cart__ctas` acima), deixando o respiro maior do que o previsto. */
   display: block;
   width: 100%;
-  margin-top: 0.8rem;
   padding: 0.8rem 1.2rem;
   background: none;
   border: none;
