@@ -141,6 +141,67 @@
     }
   }
 
+  {% comment %}
+    Logo do header não ficava centralizada de verdade no mobile. Causa raiz: o Dawn
+    nativo (base.css, `@media max-width: 989px`), quando `.header` tem
+    `.header--has-account.header--has-menu` E NÃO tem `.header--mobile-left` nem
+    `.header--has-app` (exatamente a combinação de classes deste tema, incluindo
+    `.header--mobile-center`), insere o ícone de busca como uma 4ª coluna PRÓPRIA
+    entre o hambúrguer e a logo (`grid-template-areas: 'left-icons search heading
+    icons'`, `grid-template-columns: auto auto 1fr auto`) — em vez do layout de 3
+    colunas simétrico (hambúrguer | logo | ícones) que a maioria dos temas Dawn usa.
+    Medido: lado esquerdo (hambúrguer 44px + busca 44px = 88px) MUITO mais largo que
+    o lado direito (carrinho sozinho, 40px, já que "Cadastre-se"/"Entrar"/conta
+    ficam `small-hide` no mobile) — a logo, centralizada só DENTRO da área "heading"
+    (que sobra do que os outros 3 ocupam), ficava ~28px deslocada pra direita do
+    centro real da viewport. Fix (a pedido do cliente, que sugeriu esconder a busca
+    se necessário): reproduz a MESMA cadeia de seletores que o Dawn usa pra ativar
+    esse layout de 4 colunas, sobrescrevendo pra voltar a 3 colunas simétricas
+    (`auto 1fr auto`) sem a coluna dedicada de busca — a busca continua acessível
+    normalmente no desktop (≥750px, onde esse bloco do Dawn nem se aplica), só some
+    do mobile.
+  {% endcomment %}
+  @media screen and (max-width: 749px) {
+    .header--has-account.header--has-menu:not(.header--mobile-left):not(.header--has-app) {
+      grid-template-areas: 'left-icons heading icons';
+      grid-template-columns: auto 1fr auto;
+    }
+
+    .header--has-account.header--has-menu:not(.header--mobile-left):not(.header--has-app) > .header__search {
+      display: none;
+    }
+
+    {% comment %}
+      Mesmo depois do fix acima, sobrava ~6px de deslocamento — resíduo da combinação
+      do padding assimétrico do .header (2.8rem esquerda / 0.8rem direita, de
+      propósito, ver comentário logo acima sobre encostar os ícones nas bordas) com a
+      diferença de largura entre as colunas do hambúrguer (32px) e dos ícones (40px).
+      Com pixels de sobra tão pequenos, dá pra "quase" bater centralizando só via
+      grid — mas a exigência aqui é SEMPRE centralizada de verdade, não "quase".
+      `position: absolute` desacopla a logo completamente da largura das colunas
+      vizinhas — passa a centralizar contra a viewport real (via .header como
+      containing block), não contra o que sobra depois do hambúrguer/ícones. Testado
+      sem sobreposição: logo renderiza a 200px de largura, hambúrguer termina ~60px,
+      carrinho começa ~342px numa tela de 390px — a logo centralizada (95px-295px)
+      fica com folga dos dois lados.
+    {% endcomment %}
+    .header {
+      position: relative;
+    }
+
+    .header--has-account.header--has-menu:not(.header--mobile-left):not(.header--has-app) .header__heading {
+      /* `grid-area: unset` é essencial: sem isso, mesmo com `position: absolute`, o
+         item continua participando da célula nomeada "heading" do grid — o
+         containing block do `left: 50%` vira a CÉLULA (que ainda carrega a
+         assimetria hambúrguer/carrinho), não o `.header` inteiro. */
+      position: absolute;
+      grid-area: unset;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
   .section-header {
     position: sticky; /* This is for fixing a Safari z-index issue. PR #2147 */
     margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
