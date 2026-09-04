@@ -83,10 +83,14 @@
     }
   }
 
-  /* Referência: .site-footer__bottom tem um tom mais escuro que o resto do rodapé
-     (#CFBA9B vs #E4D3BC do scheme-6) — não é a mesma cor do color_scheme herdado. */
+  /* Pedido do cliente: rodapé de bege pra tons de preto (scheme-6 em
+     config/settings_data.json: background e4d3bc -> 1a1a1a, text/links/button trocados
+     de lugar com o antigo bege pra manter contraste). Esta barra inferior mantinha um
+     tom mais escuro que o resto do rodapé na referência (#cfba9b vs #e4d3bc do
+     scheme-6) — preservada a mesma relação "mais escuro que o resto", agora #000 vs
+     #1a1a1a. */
   .footer__content-bottom {
-    background-color: #cfba9b;
+    background-color: #000;
   }
 
   .studio3-footer__payment-list {

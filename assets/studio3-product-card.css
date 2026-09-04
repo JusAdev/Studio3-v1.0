@@ -243,11 +243,10 @@ product-component {
    descendente conta como hover no ancestor), então isso não perde nenhum caso do
    `:hover` isolado que tinha antes. */
 .card-wrapper:hover .studio3-card__cta-ver {
-  /* Pedido do cliente: trocar o hover de bege (--studio3-color-gold, usado antes) pra
-     preto — sem token de design pra "preto puro" neste tema, hardcoded como nos outros
-     hex ad-hoc de hover deste arquivo (ex.: #1e5511 em .studio3-card__cta-buy abaixo). */
-  background: #000;
-  border-color: #000;
+  /* Pedido do cliente: bege (--studio3-color-gold) -> preto -> verde de ação
+     (--studio3-color-accent, mesmo token do hover de "Compra rápida" abaixo). */
+  background: var(--studio3-color-accent);
+  border-color: var(--studio3-color-accent);
   color: rgb(var(--color-background));
 }
 
