@@ -11,6 +11,7 @@
   "current": {
     "logo": "shopify://shop_images/Studio3-logo-black-boxed.png",
     "logo_width": 170,
+    "logo_width_mobile": 130,
     "type_header_font": "assistant_n4",
     "heading_scale": 100,
     "type_body_font": "assistant_n4",
@@ -224,9 +225,9 @@
       },
       "scheme-dad009bc-9a4a-426f-a9a2-90d3398eb50e": {
         "settings": {
-          "background": "#1A1A1A",
+          "background": "#1a1a1a",
           "background_gradient": "",
-          "text": "#FFFFFF",
+          "text": "#ffffff",
           "button": "#2d8019",
           "button_label": "#ffffff",
           "secondary_button_label": "#4c5154",
