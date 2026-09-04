@@ -51,10 +51,22 @@ cart-drawer.drawer {
   color: var(--studio3-color-ink);
 }
 
+/* Nativo do Dawn (component-cart-drawer.css) posiciona `.drawer__close` com
+   `right: -10px` — calibrado pra um `.drawer__header` recuado dentro do padding de
+   `.drawer__inner` (1.5rem). `.cart-drawer .drawer__header` acima usa `margin: 0
+   -1.5rem` pra virar full-bleed (o fundo/blur do cabeçalho encosta nas bordas do
+   painel) — isso desloca a borda direita do header pra FORA do padding, até a borda
+   do próprio `.drawer__inner`. Com o `-10px` nativo ainda em vigor, o botão passava
+   a transbordar 10px além do painel (visível/cortado pelo `overflow: hidden` do
+   `.drawer__inner`, mas efetivamente "sumindo" pra fora da área clicável/visível —
+   pior ainda no mobile, onde `.drawer__inner` vira `100vw` sem nenhuma folga
+   lateral). `right: 0.6rem` reposiciona o botão de volta pra dentro da área visível
+   do cabeçalho full-bleed. */
 .cart-drawer .drawer__close {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  right: 0.6rem;
   font-family: var(--font-body-family);
   font-size: 1.44rem;
   letter-spacing: 0.03rem;

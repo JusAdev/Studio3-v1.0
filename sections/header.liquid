@@ -294,6 +294,27 @@
       endif
     -%}
 
+    {%- comment -%}
+      Pedido do cliente: logotipo customizado (imagem diferente, não só tamanho —
+      ver logo_width_mobile na entrada anterior) pro celular. Mesmo padrão de
+      art-direction (<picture>/<source media>) já usado em studio3-hero.liquid pro
+      mobile_image. `settings.logo_mobile` é opcional — sem ele, `logo_mobile_srcset`
+      fica em branco e nenhum `<source>` é renderizado, então o `<img>` de sempre
+      (settings.logo) continua valendo em toda largura de tela, sem mudança de
+      comportamento. Usa logo_width_mobile (setting anterior) como base de tamanho
+      pro srcset 1x/2x, já que a logo mobile também deveria respeitar esse controle.
+    {%- endcomment -%}
+    {%- liquid
+      assign logo_mobile_width = settings.logo_width_mobile | default: settings.logo_width
+      assign logo_mobile_width_2x = logo_mobile_width | times: 2
+      assign logo_mobile_srcset = blank
+      if settings.logo_mobile != blank
+        assign logo_mobile_url_1x = settings.logo_mobile | image_url: width: logo_mobile_width
+        assign logo_mobile_url_2x = settings.logo_mobile | image_url: width: logo_mobile_width_2x
+        assign logo_mobile_srcset = logo_mobile_url_1x | append: ' 1x, ' | append: logo_mobile_url_2x | append: ' 2x'
+      endif
+    -%}
+
     {%- if section.settings.logo_position != 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
@@ -305,18 +326,23 @@
             {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
             {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
             {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-            {{
-              settings.logo
-              | image_url: width: 600
-              | image_tag:
-                class: 'header__heading-logo motion-reduce',
-                widths: widths,
-                height: logo_height,
-                width: settings.logo_width,
-                alt: logo_alt,
-                sizes: sizes,
-                preload: true
-            }}
+            <picture>
+              {%- if logo_mobile_srcset != blank -%}
+                <source media="(max-width: 749px)" srcset="{{ logo_mobile_srcset }}">
+              {%- endif -%}
+              {{
+                settings.logo
+                | image_url: width: 600
+                | image_tag:
+                  class: 'header__heading-logo motion-reduce',
+                  widths: widths,
+                  height: logo_height,
+                  width: settings.logo_width,
+                  alt: logo_alt,
+                  sizes: sizes,
+                  preload: true
+              }}
+            </picture>
           </div>
         {%- else -%}
           <span class="h2">{{ shop.name }}</span>
@@ -348,18 +374,23 @@
             {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
             {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
             {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-            {{
-              settings.logo
-              | image_url: width: 600
-              | image_tag:
-                class: 'header__heading-logo',
-                widths: widths,
-                height: logo_height,
-                width: settings.logo_width,
-                alt: logo_alt,
-                sizes: sizes,
-                preload: true
-            }}
+            <picture>
+              {%- if logo_mobile_srcset != blank -%}
+                <source media="(max-width: 749px)" srcset="{{ logo_mobile_srcset }}">
+              {%- endif -%}
+              {{
+                settings.logo
+                | image_url: width: 600
+                | image_tag:
+                  class: 'header__heading-logo',
+                  widths: widths,
+                  height: logo_height,
+                  width: settings.logo_width,
+                  alt: logo_alt,
+                  sizes: sizes,
+                  preload: true
+              }}
+            </picture>
           </div>
         {%- else -%}
           <span class="h2">{{ shop.name }}</span>

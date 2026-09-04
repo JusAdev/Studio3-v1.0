@@ -16,6 +16,12 @@
         "label": "t:settings_schema.logo.settings.logo_image.label"
       },
       {
+        "type": "image_picker",
+        "id": "logo_mobile",
+        "label": "Logotipo customizado para o celular",
+        "info": "Opcional. Quando definido, substitui o logotipo acima em telas de celular (abaixo de 750px) — útil pra uma versão simplificada/quadrada da marca. Se deixado em branco, o celular continua usando o mesmo logotipo do desktop."
+      },
+      {
         "type": "range",
         "id": "logo_width",
         "min": 50,
