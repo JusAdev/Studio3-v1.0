@@ -159,7 +159,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="{{ routes.account_register_url }}" class="menu-drawer__menu-item list-menu__item link link--text focus-inset">
+                  <a href="{{ pages['cadastro'].url | default: routes.account_register_url }}" class="menu-drawer__menu-item list-menu__item link link--text focus-inset">
                     {{ 'studio3.header.register' | t }}
                   </a>
                 </li>

@@ -569,7 +569,7 @@
                 {%- when 'buy_buttons' -%}
                   {%- if studio3_exclusive -%}
                     <div class="studio3-product__login-cta-wrapper" {{ block.shopify_attributes }}>
-                      <a href="{{ routes.account_login_url }}" class="button button--full-width studio3-product__login-cta">
+                      <a href="{{ pages['cadastro'].url | default: routes.account_register_url }}" class="button button--full-width studio3-product__login-cta">
                         {{ 'studio3.product.login_to_buy' | t }}
                       </a>
                     </div>
