@@ -37,6 +37,23 @@
     }
   {%- endif -%}
 
+  {%- comment -%}
+    Pedido do cliente: opção de tamanho de logo separada pro mobile (antes usava
+    settings.logo_width em toda largura de tela — o Dawn nativo (.header__heading-logo,
+    base.css) só tem `height: auto; max-width: 100%`, sem `width` próprio, então quem
+    define a largura de verdade é o atributo HTML `width="{{ settings.logo_width }}"` do
+    <img> (sections/header.liquid). Um `width` explícito aqui, escopado só ao mobile,
+    tem precedência sobre esse atributo sem precisar duplicar o markup do <img> pros 2
+    layouts de logo_position existentes (top-center/middle-center). `| default:
+    settings.logo_width` cobre o instante entre o deploy deste setting novo e o Admin
+    materializar o valor default dele em config/settings_data.json (ver CLAUDE.md 1.3.18).
+  {%- endcomment -%}
+  @media screen and (max-width: 749px) {
+    .header__heading-logo {
+      width: {{ settings.logo_width_mobile | default: settings.logo_width }}px;
+    }
+  }
+
   {%- if section.settings.menu_type_desktop != "drawer" -%}
     @media screen and (min-width: 990px) {
       header-drawer {

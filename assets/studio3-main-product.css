@@ -91,8 +91,10 @@
      gallery.liquid` nativo do Dawn — não reordenei o markup, só a ordem visual). */
   .product--thumbnail .thumbnail-slider {
     order: -1;
-    flex: 0 0 7rem;
-    width: 7rem;
+    /* Pedido do cliente: thumbnails muito grandes (eram 7rem/70px). Reduzido pra
+       5.6rem/56px — ainda confortável pra clicar, ~20% menor. */
+    flex: 0 0 5.6rem;
+    width: 5.6rem;
   }
 
   /* O Dawn nativo (`section-main-product.css`) define `.thumbnail-list {
@@ -109,7 +111,7 @@
   }
 
   .product--thumbnail .thumbnail-list__item.slider__slide {
-    width: 7rem;
+    width: 5.6rem;
   }
 }
 
@@ -388,6 +390,30 @@
   line-height: 1.2;
   color: #6f6f75;
   white-space: nowrap;
+}
+
+/* Pedido do cliente: badges desalinhados no mobile. Causa: `flex-wrap: wrap` (acima)
+   com um divisor em `border-left` que só é removido no `:first-child` do DOM — quando
+   um badge quebra pra segunda linha (viewport estreito + labels longas, ex. "Frete
+   grátis acima de R$500"), ele é visualmente o primeiro da SUA linha mas ainda carrega
+   a borda/margem/padding esquerdos como se tivesse um vizinho antes dele, ficando
+   "pendurado" fora do alinhamento do resto do conteúdo da PDP. Sem seletor CSS nativo
+   pra "primeiro item de uma linha do wrap", a correção é trocar pra empilhado vertical
+   no mobile (sem depender de quantos cabem por linha) e remover o divisor horizontal,
+   que não faz sentido numa lista vertical. */
+@media screen and (max-width: 749px) {
+  .studio3-product__trust-badges {
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 0.8rem;
+  }
+
+  .studio3-product__trust-badge {
+    padding-left: 0;
+    margin-left: 0;
+    border-left: none;
+  }
 }
 
 /* ---- Descrição ---- */
