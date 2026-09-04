@@ -243,12 +243,11 @@ product-component {
    descendente conta como hover no ancestor), então isso não perde nenhum caso do
    `:hover` isolado que tinha antes. */
 .card-wrapper:hover .studio3-card__cta-ver {
-  /* Referência (tulipia.com.br): hover de `.product-card__cta-ver` vira
-     rgb(174, 149, 112) = #ae9570 (fundo E borda), que já existe como
-     --studio3-color-gold — antes usava --studio3-color-ink (cinza), sem bater com a
-     referência. */
-  background: var(--studio3-color-gold);
-  border-color: var(--studio3-color-gold);
+  /* Pedido do cliente: trocar o hover de bege (--studio3-color-gold, usado antes) pra
+     preto — sem token de design pra "preto puro" neste tema, hardcoded como nos outros
+     hex ad-hoc de hover deste arquivo (ex.: #1e5511 em .studio3-card__cta-buy abaixo). */
+  background: #000;
+  border-color: #000;
   color: rgb(var(--color-background));
 }
 
