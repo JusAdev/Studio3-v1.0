@@ -42,7 +42,12 @@
           }
         }
       },
-      "block_order": ["brand", "institucional", "profissionais", "contato"],
+      "block_order": [
+        "brand",
+        "institucional",
+        "profissionais",
+        "contato"
+      ],
       "settings": {
         "color_scheme": "scheme-6",
         "newsletter_enable": false,
@@ -52,6 +57,14 @@
         "enable_country_selector": false,
         "enable_language_selector": false,
         "payment_enable": true,
+        "payment_visa": true,
+        "payment_mastercard": true,
+        "payment_american": true,
+        "payment_elo": true,
+        "payment_diners": true,
+        "payment_discover": true,
+        "payment_aura": true,
+        "payment_jbc": true,
         "show_policy": true,
         "cnpj_address": "CNPJ: 02.944.683/0001-60 · Rua 15, 1969 — Setor Marista, Goiânia/GO",
         "margin_top": 0,
