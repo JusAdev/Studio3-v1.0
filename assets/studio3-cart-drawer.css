@@ -23,9 +23,13 @@ cart-drawer.drawer {
   background-color: transparent;
 }
 
+/* Pedido do cliente: cor "principal" do cart drawer alinhada à nova paleta — o vidro
+   translúcido usava rgba(146,163,164,...) (#92A3A4), medido direto da referência, sem
+   ligação com nenhum token nosso. Trocado pro cobalto (79,100,120 = #4F6478, ver
+   CLAUDE.md 1.3.46), mesma opacidade. */
 .cart-drawer .drawer__inner {
   width: 42rem;
-  background: rgba(146, 163, 164, 0.43);
+  background: rgba(79, 100, 120, 0.43);
   -webkit-backdrop-filter: blur(20px) saturate(1.8);
   backdrop-filter: blur(20px) saturate(1.8);
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.08);

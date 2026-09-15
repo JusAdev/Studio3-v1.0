@@ -233,12 +233,12 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
    do header, ver header-search.liquid) pra NÃO afetar
    ".predictive-search--search-template" (sugestões inline da página
    /search cheia, sections/main-search.liquid — fora do escopo desta
-   tarefa). #ebdad3 é o mesmo tom extraído do input, ver
-   component-search.css. */
+   tarefa). Cor da borda trocada pro token cobalto (mesmo do input,
+   ver component-search.css e CLAUDE.md 1.3.46). */
 .predictive-search--header {
   top: calc(100% + 0.8rem);
   border-radius: 1.4rem;
-  border-color: #ebdad3;
+  border-color: var(--studio3-color-cobalt-light);
   box-shadow: 0 0.8rem 2rem rgba(76, 81, 84, 0.12);
 }
 

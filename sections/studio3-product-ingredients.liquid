@@ -12,7 +12,7 @@
 {%- if ingredients_detail != blank or indications != blank -%}
   {%- style -%}
     .studio3-product-ingredients {
-      background: #f8f5f0;
+      background: var(--studio3-color-cobalt-light);
     }
 
     .studio3-product-ingredients__inner {
@@ -64,7 +64,7 @@
       align-items: flex-start;
       gap: 2rem;
       padding: 2rem 0;
-      border-bottom: 1px solid #e8e0d8;
+      border-bottom: 1px solid var(--studio3-border-subtle);
     }
 
     .studio3-product-ingredients__number {
@@ -106,13 +106,13 @@
       align-items: center;
       white-space: nowrap;
       padding: 0.64rem 1.6rem;
-      background: rgba(174, 149, 112, 0.12);
-      border: 1px solid rgba(174, 149, 112, 0.25);
+      background: rgba(79, 100, 120, 0.12);
+      border: 1px solid rgba(79, 100, 120, 0.25);
       border-radius: 20px;
       font-family: var(--font-body-family);
       font-size: 1.25rem;
       letter-spacing: 0.02em;
-      color: #635241;
+      color: var(--studio3-color-cobalt);
     }
 
     @media screen and (max-width: 749px) {
