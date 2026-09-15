@@ -300,8 +300,8 @@ cart-drawer.drawer {
 .studio3-cart-drawer-shipping-bar {
   position: relative;
   margin: 0 -1.5rem 1.6rem;
-  background: #e4d3bc;
-  color: #3a3a3a;
+  background: var(--studio3-shipping-bar-bg);
+  color: var(--studio3-shipping-bar-text);
   overflow: hidden;
 }
 
@@ -309,7 +309,7 @@ cart-drawer.drawer {
   position: absolute;
   inset: 0;
   width: 0%;
-  background: linear-gradient(90deg, #91f25f 1%, #00c6ab);
+  background: var(--studio3-shipping-bar-gradient);
   transition: width 0.4s ease;
   /* O &nbsp; dentro (necessário pra escapar do `div:empty` do Dawn, ver comentário no
      liquid) não pode aparecer visualmente — zera a fonte pra ele nunca ocupar espaço. */

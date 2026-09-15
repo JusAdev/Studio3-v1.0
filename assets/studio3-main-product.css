@@ -129,7 +129,7 @@
 
 .product--thumbnail .thumbnail-list__item.is-active .thumbnail,
 .product--thumbnail .thumbnail-list__item .thumbnail[aria-current='true'] {
-  border-color: var(--studio3-color-gold);
+  border-color: var(--studio3-color-cobalt);
 }
 
 .product__media-item .media,

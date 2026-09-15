@@ -62,13 +62,17 @@
     --studio3-color-accent: #2d8019;
     --studio3-color-accent-strong: #1d9001;
 
-    /* Dourado/taupe usado em selos "exclusivo" */
-    --studio3-color-gold: #ae9570;
+    /* Cinza-azulado ("Cobalto Acinzentado", nova paleta) usado em selos "exclusivo" e
+       detalhes de destaque — antes era dourado/bege (--studio3-color-gold: #ae9570),
+       substituído a pedido do cliente (paleta sem bege/amarelo, só preto/branco/cinza-
+       azulado + o verde de ação acima, que continua intocado). */
+    --studio3-color-cobalt: #4f6478;
+    --studio3-color-cobalt-light: #d6dee3;
 
-    /* Barra de frete grátis */
-    --studio3-shipping-bar-bg: #e4d3bc;
+    /* Barra de frete grátis — mesma dupla acima (claro no fundo, sólido no degradê) */
+    --studio3-shipping-bar-bg: #d6dee3;
     --studio3-shipping-bar-text: #3a3a3a;
-    --studio3-shipping-bar-gradient: linear-gradient(90deg, #91f25f 1%, #00c6ab);
+    --studio3-shipping-bar-gradient: linear-gradient(90deg, #d6dee3, #4f6478);
 
     /* Gradiente animado do item de menu promocional ("Oferta do mês") — extraído via
        getComputedStyle do span.gradient-animated-text real em tulipia.com.br. Paleta própria
