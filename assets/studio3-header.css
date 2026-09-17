@@ -45,6 +45,17 @@
   background-color: rgba(255, 255, 255, 0.14);
 }
 
+/* `.search-modal` (header-search.liquid) não tem `color-scheme-N` própria — ao
+   contrário do menu-drawer mobile e do painel do mega menu (cada um com sua própria
+   classe `.color-scheme-1`, que já reseta sozinha), ela só herda o contexto ambiente.
+   Com o header escuro, herdava --color-background/--color-foreground escuro/branco e
+   ficava com texto/produtos da busca preditiva ilegíveis. Resetada pros mesmos valores
+   claros do scheme-1 (config/settings_data.json), igual o resto do site. */
+.header-wrapper .search-modal {
+  --color-background: 255, 255, 255;
+  --color-foreground: 76, 81, 84;
+}
+
 /* "Oferta do mês" — texto com gradiente animado igual ao span.gradient-animated-text da
    referência (background-clip:text + keyframes de background-position; NÃO é o mesmo
    gradiente verde/turquesa da barra de frete — cores próprias, ver --studio3-promo-gradient
