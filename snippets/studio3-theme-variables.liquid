@@ -7,37 +7,52 @@
   custom properties.
 {% endcomment %}
 <style>
+  /* Troca de fonte (pedido do cliente: "substitua as fontes por outras", depois de
+     rejeitar a primeira leva do redesign visual por achar mirabolante/Arsenal
+     inadequada). Manrope (títulos) + Inter (texto) — pares neutros, bem estabelecidos,
+     sem personalidade "decorativa" como a serifada Arsenal. Cada arquivo é uma fonte
+     variável (a Google serve o MESMO arquivo pros pesos 400/700/800 — ou 400/600/700 —
+     só varia o `font-weight` declarado; o navegador escolhe a instância certa dentro
+     do próprio arquivo). Só o peso "latin" foi baixado (cobre os acentos do
+     português — U+0000-00FF já inclui á/ã/ç/é/etc.). */
   @font-face {
-    font-family: 'Studio3 Arsenal';
-    src: url({{ 'studio3-arsenal-400.woff2' | asset_url }}) format('woff2');
+    font-family: 'Studio3 Manrope';
+    src: url({{ 'studio3-manrope-variable.woff2' | asset_url }}) format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
-    font-family: 'Studio3 Arsenal';
-    src: url({{ 'studio3-arsenal-700.woff2' | asset_url }}) format('woff2');
+    font-family: 'Studio3 Manrope';
+    src: url({{ 'studio3-manrope-variable.woff2' | asset_url }}) format('woff2');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
-    font-family: 'Studio3 Open Sans';
-    src: url({{ 'studio3-open-sans-400.woff2' | asset_url }}) format('woff2');
+    font-family: 'Studio3 Manrope';
+    src: url({{ 'studio3-manrope-variable.woff2' | asset_url }}) format('woff2');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Studio3 Inter';
+    src: url({{ 'studio3-inter-variable.woff2' | asset_url }}) format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
-    font-family: 'Studio3 Open Sans';
-    src: url({{ 'studio3-open-sans-600.woff2' | asset_url }}) format('woff2');
+    font-family: 'Studio3 Inter';
+    src: url({{ 'studio3-inter-variable.woff2' | asset_url }}) format('woff2');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
-    font-family: 'Studio3 Open Sans';
-    src: url({{ 'studio3-open-sans-700.woff2' | asset_url }}) format('woff2');
+    font-family: 'Studio3 Inter';
+    src: url({{ 'studio3-inter-variable.woff2' | asset_url }}) format('woff2');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -46,13 +61,13 @@
   :root {
     /* Tipografia — sobrescreve as variáveis nativas do Dawn (font_picker) para usar as
        fontes reais do site de referência em vez da fonte padrão do tema. */
-    --font-heading-family: 'Studio3 Arsenal', serif;
+    --font-heading-family: 'Studio3 Manrope', sans-serif;
     --font-heading-style: normal;
-    --font-heading-weight: 400;
-    --font-body-family: 'Studio3 Open Sans', sans-serif;
+    --font-heading-weight: 700;
+    --font-body-family: 'Studio3 Inter', sans-serif;
     --font-body-style: normal;
     --font-body-weight: 400;
-    --font-body-weight-bold: 700;
+    --font-body-weight-bold: 600;
 
     /* Cor de tinta principal (texto/ícones) — usada em quase todo o site de referência */
     --studio3-color-ink: #4c5154;

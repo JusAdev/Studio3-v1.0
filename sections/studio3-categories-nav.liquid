@@ -30,19 +30,29 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  /* Selo neutro atrás do ícone: círculo liso (sem gradiente/forma orgânica — pedido
+     do cliente foi "novo visual, sem mirabolância"), mesma cor de fundo já usada nos
+     badges do card (.studio3-card__price-discount etc., rgba(76,81,84,0.08)) pra não
+     introduzir um tom novo. */
   .studio3-cat-icon__img {
     display: block;
+    box-sizing: border-box;
     width: 64px;
     height: 64px;
+    padding: 12px;
+    border-radius: 50%;
+    background-color: rgba(76, 81, 84, 0.06);
     object-fit: contain;
-    opacity: 0.82;
+    opacity: 0.9;
     transition:
       transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      opacity 0.3s;
+      opacity 0.3s,
+      background-color 0.3s;
   }
 
   .studio3-cat-icon:hover .studio3-cat-icon__img {
     opacity: 1;
+    background-color: var(--studio3-color-cobalt-light);
     transform: translateY(-2px);
   }
 

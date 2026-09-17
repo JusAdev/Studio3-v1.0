@@ -93,6 +93,14 @@
   height: 2rem;
 }
 
+/* Halo circular sutil no hover — mesmo tom neutro do selo dos ícones de categoria
+   (rgba(76,81,84,0.08)), pra dar um toque de "novo visual" consistente sem introduzir
+   cor ou forma decorativa nova. */
+.header__icon:hover {
+  background-color: rgba(76, 81, 84, 0.08);
+  border-radius: 50%;
+}
+
 .mega-menu__link--level-2 {
   font-family: var(--font-heading-family);
   font-size: 1.6rem;

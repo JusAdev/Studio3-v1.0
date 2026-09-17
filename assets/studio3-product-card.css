@@ -164,31 +164,24 @@ product-component {
   margin: 0.4rem 0;
 }
 
-/* Referência (`.product-card__price-row`, tulipia.com.br): quando existe preço "De/por",
-   é flex-row com `justify-content: space-between; align-items: flex-end` — preço antigo
-   na ponta esquerda, preço atual na ponta direita (não empilhado/centralizado). O caso de
-   preço único (sem `.price-row`, só `.price-current` direto dentro de `.pricing`) continua
-   centralizado herdando o `text-align: center` de `.card__content`/`.card__information`
-   acima — conferido que a referência também centraliza esse caso
-   (`.product-card__price-single`: `align-items: center; text-align: center`). */
+/* Preço "De/por": empilhado (antigo em cima, atual embaixo), nunca lado a lado.
+   Antes era flex-row com `justify-content: space-between` (preço antigo na ponta
+   esquerda, atual na direita, igual à referência tulipia.com.br) — mas com nome de
+   produto/preço grandes no mobile isso espremia ou estourava a linha. Empilhado,
+   cada preço ocupa a largura cheia do card e quebra sozinho, sem duas colunas
+   disputando espaço. Preço único (sem desconto) continua centralizado, herdando o
+   `text-align: center` de `.card__content`/`.card__information`. */
 .studio3-card__price-row {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
 }
 
 .studio3-card__price-was {
   font-family: var(--font-body-family);
   font-size: 1.1rem;
   color: var(--studio3-color-ink-muted);
-  text-align: left;
-}
-
-/* Só dentro do price-row (caso "De/por") o preço atual vai pra ponta direita — no caso de
-   preço único ele deve continuar centralizado (herdado, ver comentário acima). */
-.studio3-card__price-row .studio3-card__price-current {
-  text-align: right;
 }
 
 .studio3-card__price-current {
@@ -216,7 +209,7 @@ product-component {
   margin-top: auto;
   padding: 0.45rem 0.75rem;
   border: 1px solid var(--studio3-color-ink);
-  border-radius: 0.7rem;
+  border-radius: 0.8rem;
   color: var(--studio3-color-ink);
   font-family: var(--font-body-family);
   font-size: 1.3rem;
