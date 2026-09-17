@@ -61,7 +61,7 @@
         "cat-5": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/seruns.png",
+            "icon": "shopify://shop_images/mascaras.png",
             "label": "Máscaras",
             "link": "shopify://collections/mascaras"
           }
