@@ -37,6 +37,16 @@
 .header-wrapper.color-scheme-1 {
   --color-background: 26, 26, 26;
   --color-foreground: 255, 255, 255;
+  /* .header-wrapper também carrega a classe `.gradient` (base.css), que define
+     `background` DUAS vezes de propósito — primeiro com --color-background (fallback),
+     depois com --gradient-background (só existe quando o scheme tem um gradiente de
+     fundo configurado, o que NÃO é o caso do scheme-1). Uma var() que aponta pra uma
+     custom property inexistente deixa a declaração inteira inválida — e por spec do
+     CSS isso NÃO faz o navegador "voltar" pra declaração anterior, e sim resolver pro
+     valor INICIAL da propriedade (`transparent`, no caso de `background`). Resultado:
+     o header renderizava sempre transparente/branco, nunca escuro, não importa o que
+     --color-background dissesse. Precisa fornecer --gradient-background também. */
+  --gradient-background: #1a1a1a;
 }
 
 /* Halo do ícone no hover (cart/busca/conta) — tinha sido pensado pra fundo claro
