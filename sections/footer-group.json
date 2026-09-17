@@ -42,12 +42,7 @@
           }
         }
       },
-      "block_order": [
-        "brand",
-        "institucional",
-        "profissionais",
-        "contato"
-      ],
+      "block_order": ["brand", "institucional", "profissionais", "contato"],
       "settings": {
         "color_scheme": "scheme-dad009bc-9a4a-426f-a9a2-90d3398eb50e",
         "newsletter_enable": false,
