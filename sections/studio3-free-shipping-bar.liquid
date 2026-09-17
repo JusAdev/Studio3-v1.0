@@ -16,36 +16,30 @@
     z-index: 4;
   }
 
+  /* Remodelagem (pedido do cliente: "criativa e moderna", não só cores) — saiu o
+     modelo antigo (bloco de cor sólida cobrindo a barra inteira, tipo "balde
+     enchendo") e entrou o padrão de barra de progresso real: texto numa linha,
+     trilho fino com preenchimento em degradê numa segunda linha abaixo, com uma
+     "bolinha" marcando a ponta do progresso. Ícone troca pra um check quando o
+     frete grátis é liberado (`.is-complete`, ver JS) e o preenchimento vira verde
+     de ação (--studio3-color-accent) nesse estado, reaproveitando cor já
+     estabelecida em vez de inventar uma nova. Altura final (ver cálculo abaixo)
+     precisa bater com o `top` do header sticky em studio3-header.css — os dois
+     ficam visíveis empilhados ao rolar (ver comentário lá). */
   .studio3-shipping-bar {
     position: relative;
-    height: 2.8rem;
     background-color: {{ section.settings.background_color }};
     color: {{ section.settings.text_color }};
     font-family: var(--font-body-family);
-    overflow: hidden;
+    padding: 0.8rem 1.5rem 0.9rem;
   }
 
-  .studio3-shipping-bar__progress {
-    position: absolute;
-    inset: 0;
-    width: 0%;
-    background: linear-gradient(90deg, {{ section.settings.progress_start_color }} 1%, {{ section.settings.progress_middle_color }} 50%, {{ section.settings.progress_end_color }});
-    transition: width 0.4s ease;
-    /* O &nbsp; dentro (necessário pra escapar do `div:empty` do Dawn) não pode aparecer
-       visualmente — zera a fonte pra ele nunca ocupar espaço. */
-    font-size: 0;
-    line-height: 0;
-  }
-
-  .studio3-shipping-bar__text {
-    position: relative;
-    z-index: 1;
+  .studio3-shipping-bar__row {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.6rem;
-    height: 100%;
-    padding: 0 1.5rem;
+    margin-bottom: 0.6rem;
     font-size: 1.3rem;
     letter-spacing: 0.02em;
     text-align: center;
@@ -55,10 +49,72 @@
     font-weight: 700;
   }
 
-  .studio3-shipping-bar__icon {
+  .studio3-shipping-bar__icon-incomplete,
+  .studio3-shipping-bar__icon-complete {
     flex-shrink: 0;
-    width: 2rem;
-    height: 2rem;
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .studio3-shipping-bar__icon-complete {
+    display: none;
+  }
+
+  .studio3-shipping-bar.is-complete .studio3-shipping-bar__icon-incomplete {
+    display: none;
+  }
+
+  .studio3-shipping-bar.is-complete .studio3-shipping-bar__icon-complete {
+    display: block;
+  }
+
+  .studio3-shipping-bar__track {
+    position: relative;
+    max-width: 44rem;
+    height: 0.4rem;
+    margin: 0 auto;
+    border-radius: 0.4rem;
+    background: rgba(
+      {{ section.settings.text_color.red }},
+      {{ section.settings.text_color.green }},
+      {{ section.settings.text_color.blue }},
+      0.18
+    );
+  }
+
+  .studio3-shipping-bar__fill {
+    position: absolute;
+    inset: 0;
+    width: 0%;
+    border-radius: 0.4rem;
+    background: linear-gradient(90deg, {{ section.settings.progress_start_color }} 1%, {{ section.settings.progress_middle_color }} 50%, {{ section.settings.progress_end_color }});
+    transition: width 0.5s ease, background 0.3s ease;
+    /* O &nbsp; dentro (necessário pra escapar do `div:empty` do Dawn) não pode aparecer
+       visualmente — zera a fonte pra ele nunca ocupar espaço. */
+    font-size: 0;
+    line-height: 0;
+  }
+
+  .studio3-shipping-bar__fill::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+    transform: translate(50%, -50%);
+    transition: opacity 0.2s ease;
+  }
+
+  .studio3-shipping-bar.is-complete .studio3-shipping-bar__fill {
+    background: var(--studio3-color-accent);
+  }
+
+  .studio3-shipping-bar.is-complete .studio3-shipping-bar__fill::after {
+    opacity: 0;
   }
 {%- endstyle -%}
 
@@ -69,22 +125,27 @@
   data-text-incomplete="{{ section.settings.text_incomplete | escape }}"
   data-text-complete="{{ section.settings.text_complete | escape }}"
 >
-  {%- comment -%}
-    O &nbsp; é necessário: `div:empty { display: none }` do próprio Dawn (base.css) esconde
-    qualquer div sem NENHUM nó de texto dentro — essa barra de progresso é só uma cor de
-    fundo via CSS, sem conteúdo nenhum, então caía exatamente nessa regra e ficava
-    completamente invisível (largura sempre computava 0, mesmo com o `style="width: X%"`
-    certo aplicado pelo JS). Já documentado como gotcha recorrente do Dawn no CLAUDE.md.
-  {%- endcomment -%}
-  <div class="studio3-shipping-bar__progress" data-studio3-shipping-bar-progress>&nbsp;</div>
-  <div class="studio3-shipping-bar__text">
-    <svg class="studio3-shipping-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <div class="studio3-shipping-bar__row">
+    <svg class="studio3-shipping-bar__icon-incomplete" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M16 3H1v13h15V3z"></path>
       <path d="M16 8h4l3 3v5h-7V8z"></path>
       <circle cx="5.5" cy="18.5" r="2.5"></circle>
       <circle cx="18.5" cy="18.5" r="2.5"></circle>
     </svg>
-    <span data-studio3-shipping-bar-text>{{ section.settings.text_incomplete }}</span>
+    <svg class="studio3-shipping-bar__icon-complete" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 12.5 9.5 18 20 6"></path>
+    </svg>
+    <span class="studio3-shipping-bar__text" data-studio3-shipping-bar-text>{{ section.settings.text_incomplete }}</span>
+  </div>
+  {%- comment -%}
+    O &nbsp; é necessário: `div:empty { display: none }` do próprio Dawn (base.css) esconde
+    qualquer div sem NENHUM nó de texto dentro — o preenchimento é só uma cor de fundo via
+    CSS, sem conteúdo nenhum, então cairia exatamente nessa regra e ficaria completamente
+    invisível (largura sempre computaria 0, mesmo com o `style="width: X%"` certo aplicado
+    pelo JS). Já documentado como gotcha recorrente do Dawn no CLAUDE.md.
+  {%- endcomment -%}
+  <div class="studio3-shipping-bar__track">
+    <div class="studio3-shipping-bar__fill" data-studio3-shipping-bar-progress>&nbsp;</div>
   </div>
 </div>
 

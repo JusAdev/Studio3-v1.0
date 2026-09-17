@@ -23,8 +23,10 @@
     progressEl.style.width = percent + '%';
 
     if (cartTotalCents >= thresholdCents) {
+      bar.classList.add('is-complete');
       textEl.textContent = bar.getAttribute('data-text-complete');
     } else {
+      bar.classList.remove('is-complete');
       var remaining = formatMoney(thresholdCents - cartTotalCents);
       var template = bar.getAttribute('data-text-incomplete');
       textEl.innerHTML = template.replace('[valor]', '<strong>' + remaining + '</strong>');
