@@ -26,13 +26,14 @@
     flex: 0 0 40%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     padding: 5.2rem;
     /* Degradê com o trio de azuis da paleta 07 (ver CLAUDE.md 1.3.46/1.3.48) — mesmo
-       tom médio/escuro usado na barra de frete, aqui compondo com o preto/ink do tema
-       em vez de ficar 100% azul. */
+       tom médio/escuro usado na barra de frete, aqui compondo com o preto de verdade
+       (#1a1a1a, mesmo tom do rodapé/logo — NÃO é --studio3-color-ink, que é um cinza
+       #4c5154 usado pra TEXTO, papel diferente de "superfície escura"; usar a variável
+       aqui deixava o canto inferior do degradê cinza-claro em vez de quase-preto). */
     background: radial-gradient(circle at 15% 15%, #3783cc 0%, transparent 45%),
-      linear-gradient(165deg, #1b3e69 0%, var(--studio3-color-ink) 78%);
+      linear-gradient(165deg, #1b3e69 0%, #1a1a1a 78%);
     color: #fff;
   }
 
@@ -40,9 +41,19 @@
     display: block;
     height: auto;
     max-width: 15rem;
+    flex-shrink: 0;
   }
 
+  /* flex:1 + justify-content:center centraliza o bloco de texto no espaço restante
+     ABAIXO da logo (que fica presa no topo, primeiro item do flex-column acima) — sem
+     isso (só `justify-content: space-between` no container pai, como estava antes), com
+     apenas 2 filhos (logo + copy) o segundo item ia pro fim absoluto do painel de
+     100vh, não pro centro. */
   .studio3-register-brand__copy {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     max-width: 42rem;
   }
 
@@ -95,9 +106,14 @@
   }
 
   .studio3-register__dot {
-    width: 3.2rem;
+    /* Era width:3.2rem fixo (pill pequena) — no protótipo os dots são barras que
+       dividem a largura toda do progresso em partes iguais (flex:1), não pontos
+       pequenos. border-radius também volta a ser em px (4px), igual ao protótipo —
+       numa barra de só 4px de altura o raio já satura no arredondamento total de
+       qualquer jeito, mas mantém o valor idêntico por precisão. */
+    flex: 1;
     height: 0.4rem;
-    border-radius: 1rem;
+    border-radius: 4px;
     background: rgba(76, 81, 84, 0.15);
     transition: background 0.2s;
   }
@@ -357,6 +373,13 @@
     }
 
     .studio3-register-brand__copy {
+      /* Desfaz o flex:1 + justify-content:center do desktop (que centraliza o texto
+         no espaço vertical restante) — no hero curto do mobile o conteúdo deve ficar
+         empilhado no fluxo normal, não tentando ocupar/centralizar num espaço que já
+         não existe (o painel aqui não tem altura fixa, é só o conteúdo). */
+      flex: none;
+      display: block;
+      justify-content: normal;
       max-width: none;
     }
 
