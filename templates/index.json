@@ -169,6 +169,7 @@
     },
     "promo-banner": {
       "type": "studio3-promo-banner",
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/faixa-promo-immortalite-desk-desktop_1x_59d1e9e7-23c9-43f3-9774-16cce0ca892d.jpg",
         "link": "shopify://collections/all",
