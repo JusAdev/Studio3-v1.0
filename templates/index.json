@@ -249,7 +249,7 @@
         "tile-3": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/ampolas-microagulhamento.jpg",
+            "image": "shopify://shop_images/banner-ampolas-v1.jpg",
             "link": "shopify://collections/ampolas",
             "button_label": "Ver Produto",
             "alt_text": "Ampolas para uso de microagulhamento",
