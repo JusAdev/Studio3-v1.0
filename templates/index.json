@@ -229,7 +229,7 @@
         "tile-1": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/home-grid_ProSkin-sem-botao.jpg",
+            "image": "shopify://shop_images/banner-proskin-v1.jpg",
             "link": "shopify://collections/all",
             "button_label": "Ver Produto",
             "alt_text": "ProSkin Repair - Onde a pele reencontra sua força",
@@ -239,7 +239,7 @@
         "tile-2": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/home-grid_dermo-estetic_desk.jpg",
+            "image": "shopify://shop_images/banner-mini-dermo-v1.jpg",
             "link": "shopify://products/linha-dermo-estetic",
             "button_label": "Ver Produto",
             "alt_text": "Linha Dermo Estetic para Limpeza de pele",
