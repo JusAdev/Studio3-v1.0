@@ -23,6 +23,28 @@
   box-shadow: var(--studio3-shadow-soft);
 }
 
+/* Novo visual do header: fundo escuro (mesma cor quase-preta já usada no rodapé e no
+   painel de marca do cadastro, --surface-dark #1a1a1a — este projeto não tem token
+   dedicado pra essa cor, ver CLAUDE.md). Sobrescreve --color-background/--color-foreground
+   só na instância do header-wrapper (duas classes, mais específico que `.color-scheme-1`
+   sozinho) — não mexe no scheme-1 global, que os cards de produto também usam. Todo
+   texto/ícone do header já lê `rgb(var(--color-foreground))`/`rgba(var(--color-foreground),X)`
+   (convenção nativa do Dawn), então vira branco automaticamente sem precisar tocar em
+   cada elemento. O painel do mega menu (`.mega-menu__content.color-scheme-1`, elemento
+   separado) fica de fora dessa regra — continua claro, pra manter a leitura do menu
+   extenso. A logo também precisa trocar pra versão clara: ver logo_image em
+   header.liquid (usa settings.logo_dark_bg). */
+.header-wrapper.color-scheme-1 {
+  --color-background: 26, 26, 26;
+  --color-foreground: 255, 255, 255;
+}
+
+/* Halo do ícone no hover (cart/busca/conta) — tinha sido pensado pra fundo claro
+   (rgba(76,81,84,...), tom escuro) e ficava invisível no header agora escuro. */
+.header-wrapper .header__icon:hover {
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
 /* "Oferta do mês" — texto com gradiente animado igual ao span.gradient-animated-text da
    referência (background-clip:text + keyframes de background-position; NÃO é o mesmo
    gradiente verde/turquesa da barra de frete — cores próprias, ver --studio3-promo-gradient
@@ -93,11 +115,9 @@
   height: 2rem;
 }
 
-/* Halo circular sutil no hover — mesmo tom neutro do selo dos ícones de categoria
-   (rgba(76,81,84,0.08)), pra dar um toque de "novo visual" consistente sem introduzir
-   cor ou forma decorativa nova. */
+/* Halo circular sutil no hover (cor real definida mais abaixo, junto com o fundo
+   escuro do header — precisa ser clara pra aparecer nesse fundo). */
 .header__icon:hover {
-  background-color: rgba(76, 81, 84, 0.08);
   border-radius: 50%;
 }
 
