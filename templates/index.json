@@ -29,7 +29,7 @@
         "cat-1": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/mais-vendidos.svg",
+            "icon": "shopify://shop_images/mais-vendidos.png",
             "label": "Mais Vendidos",
             "link": "shopify://collections/all"
           }
@@ -37,7 +37,7 @@
         "cat-2": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/ofertas-mes.svg",
+            "icon": "shopify://shop_images/ofertas-mes.png",
             "label": "Ofertas do mês",
             "link": "shopify://collections/all"
           }
@@ -45,7 +45,7 @@
         "cat-3": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/sensoriais.svg",
+            "icon": "shopify://shop_images/sensoriais.png",
             "label": "Sensoriais",
             "link": "shopify://collections/all"
           }
@@ -53,7 +53,7 @@
         "cat-4": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/alta-tecnologia.svg",
+            "icon": "shopify://shop_images/alta-tecnologia.png",
             "label": "Alta Tecnologia",
             "link": "shopify://collections/all"
           }
@@ -61,7 +61,7 @@
         "cat-5": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/mascaras.svg",
+            "icon": "shopify://shop_images/seruns.png",
             "label": "Máscaras",
             "link": "shopify://collections/mascaras"
           }
@@ -69,7 +69,7 @@
         "cat-6": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/seruns.svg",
+            "icon": "shopify://shop_images/seruns.png",
             "label": "Séruns",
             "link": "shopify://collections/seruns"
           }
@@ -77,7 +77,7 @@
         "cat-7": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/sabonetes.svg",
+            "icon": "shopify://shop_images/sabonetes.png",
             "label": "Sabonetes",
             "link": "shopify://collections/limpeza"
           }
@@ -85,7 +85,7 @@
         "cat-8": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/protocolos.svg",
+            "icon": "shopify://shop_images/protocolos.png",
             "label": "Protocolos",
             "link": "shopify://collections/kits"
           }
@@ -93,7 +93,7 @@
         "cat-9": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/top-skincare.svg",
+            "icon": "shopify://shop_images/top-skincare.png",
             "label": "Top Skincare",
             "link": "shopify://collections/all"
           }
@@ -101,7 +101,7 @@
         "cat-10": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/vitamina-c.svg",
+            "icon": "shopify://shop_images/vitamina-c.png",
             "label": "Vitamina C",
             "link": "shopify://collections/vitamina-c"
           }
