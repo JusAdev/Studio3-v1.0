@@ -22,6 +22,12 @@
         "info": "Opcional. Quando definido, substitui o logotipo acima em telas de celular (abaixo de 750px) — útil pra uma versão simplificada/quadrada da marca. Se deixado em branco, o celular continua usando o mesmo logotipo do desktop."
       },
       {
+        "type": "image_picker",
+        "id": "logo_dark_bg",
+        "label": "Logotipo para fundo escuro",
+        "info": "Opcional — versão clara/branca do logotipo, usada em painéis com fundo escuro (ex.: painel de marca da página de cadastro). Se deixado em branco, usa o logotipo padrão acima."
+      },
+      {
         "type": "range",
         "id": "logo_width",
         "min": 50,

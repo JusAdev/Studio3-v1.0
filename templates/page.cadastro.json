@@ -5,9 +5,7 @@
       "type": "studio3-register",
       "settings": {
         "storefront_access_token": "9b0ad76c0d037d0f036b4c4ee7672ab6",
-        "worker_url": "https://studio3-b2b-register.finndsnetwork.workers.dev",
-        "padding_top": 64,
-        "padding_bottom": 64
+        "worker_url": "https://studio3-b2b-register.finndsnetwork.workers.dev"
       }
     }
   },

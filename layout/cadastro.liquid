@@ -125,23 +125,6 @@
         }
       }
 
-      /* Header mínimo desta página — só a logo, sem menu/busca/carrinho, igual à
-         referência (tulipia.com.br/register): nav branca com sombra suave, logo
-         centralizada. Medido direto na referência: nav 64px de altura, logo 192x48px —
-         convertido pro nosso root de 10px: 6.4rem / 19.2x4.8rem. */
-      .studio3-cadastro-header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 6.4rem;
-        background: #fff;
-        box-shadow: var(--studio3-shadow-soft);
-      }
-
-      .studio3-cadastro-header img {
-        display: block;
-        height: auto;
-      }
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
@@ -163,22 +146,6 @@
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
-
-    <header class="studio3-cadastro-header">
-      <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
-        {%- if settings.logo != blank -%}
-          {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-          {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-          {{
-            settings.logo
-            | image_url: width: 400
-            | image_tag: width: settings.logo_width, height: logo_height, alt: logo_alt
-          }}
-        {%- else -%}
-          <span style="font-family: var(--font-heading-family); font-size: 2.4rem;">{{ shop.name }}</span>
-        {%- endif -%}
-      </a>
-    </header>
 
     <main
       id="MainContent"
