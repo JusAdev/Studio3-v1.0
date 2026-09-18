@@ -14,7 +14,7 @@
    fica transparente e sem sombra própria — ele só posiciona; quem "flutua" visualmente
    é o `.header` de dentro. */
 .header-wrapper.shopify-section-header-sticky:not(.shopify-section-header-hidden) {
-  top: 1rem;
+  top: 2rem;
 }
 
 .header-wrapper {
@@ -24,9 +24,10 @@
 
 .header-wrapper .header {
   background: rgb(var(--color-background));
+  border: 1px solid #7bacdc;
   border-radius: 14px;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
-  margin: 0.8rem auto;
+  margin: 2rem auto 0.8rem;
 }
 
 @media screen and (max-width: 749px) {
@@ -36,7 +37,11 @@
 
   .header-wrapper .header {
     border-radius: 12px;
-    margin: 0.5rem auto;
+    /* Margem lateral explícita: `auto` só centraliza quando o conteúdo é mais
+       estreito que o pai (max-width entra em jogo) — no mobile --page-width
+       (1400px) nunca restringe nada, então "auto" colapsava pra 0 e o header
+       ficava colado nas bordas da tela. */
+    margin: 0.5rem 0.8rem;
   }
 }
 
@@ -124,8 +129,9 @@
 
 /* Abaixo de 990px não sobra espaço ao lado dos ícones (hambúrguer + logo + busca +
    conta + carrinho já disputam a largura) — a instância de dentro de .header__icons
-   some, e a instância "pendurada" (.studio3-shipping-badge-wrap, renderizada como
-   segunda linha logo abaixo do header boxed) assume no lugar dela. */
+   some, e a instância de baixo (.studio3-shipping-badge-wrap, renderizada como
+   segunda linha abaixo do header boxed, com espaço real entre os dois — não mais
+   sobreposta) assume no lugar dela. */
 .header__icons .studio3-shipping-badge {
   margin-right: 0.8rem;
 }
@@ -145,7 +151,7 @@
     display: flex;
     justify-content: center;
     padding: 0 1.5rem;
-    margin-top: -0.9rem;
+    margin-top: 1.2rem;
     position: relative;
     z-index: 2;
   }
@@ -154,7 +160,7 @@
 @media screen and (max-width: 749px) {
   .studio3-shipping-badge-wrap {
     padding: 0 1rem;
-    margin-top: -0.7rem;
+    margin-top: 1rem;
   }
 }
 
