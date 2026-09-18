@@ -57,15 +57,15 @@
 .studio3-shipping-badge {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.96rem;
   flex-shrink: 0;
   background: var(--studio3-color-cobalt-light);
-  color: var(--studio3-color-cobalt);
+  color: #1b3e69;
   border-radius: 30px;
-  padding: 0.5rem 1.1rem 0.5rem 0.5rem;
-  box-shadow: 0 4px 14px rgba(79, 100, 120, 0.16);
+  padding: 0.64rem 1.44rem 0.64rem 0.64rem;
+  box-shadow: 0 4px 14px rgba(27, 62, 105, 0.16);
   font-family: var(--font-body-family);
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 600;
   white-space: nowrap;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -77,11 +77,11 @@
 }
 
 .studio3-shipping-badge__icon {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   background: #fff;
-  color: var(--studio3-color-cobalt);
+  color: #1b3e69;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,10 +100,10 @@
 
 .studio3-shipping-badge__track {
   position: relative;
-  width: 4.4rem;
+  width: 5.8rem;
   height: 4px;
   border-radius: 4px;
-  background: rgba(79, 100, 120, 0.22);
+  background: rgba(27, 62, 105, 0.16);
   flex-shrink: 0;
 }
 
@@ -127,7 +127,6 @@
    some, e a instância "pendurada" (.studio3-shipping-badge-wrap, renderizada como
    segunda linha logo abaixo do header boxed) assume no lugar dela. */
 .header__icons .studio3-shipping-badge {
-  font-size: 1.1rem;
   margin-right: 0.8rem;
 }
 
