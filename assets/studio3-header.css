@@ -3,71 +3,160 @@
    aqui só o que é específico do header: links de cadastro/login, título de coluna do
    mega menu em Arsenal, grid de 2 colunas pra listas longas, e o tile promocional. */
 
-/* Empilhamento com a barra de frete grátis (sections/studio3-free-shipping-bar.liquid).
-   Confirmado na referência (tulipia.com.br): .cart-frete-widget fica sticky top:0 e o
-   <nav> do header fica sticky top:20px (exatamente a altura da barra) — as duas visíveis
-   juntas ao rolar, uma embaixo da outra, nunca sobrepostas. Reproduzimos o mesmo padrão:
-   quando a barra (.studio3-shipping-bar-section) existe antes do header no DOM, o header
-   sticky (.section-header.shopify-section-header-sticky, ver base.css) ganha um top igual
-   à altura da barra em vez de 0. :not(.shopify-section-header-hidden) evita interferir no
-   modo "esconder ao rolar pra baixo" (sticky_header_type diferente de "always"), que já
-   usa um top negativo próprio pra sumir de vez.
-   Altura recalculada na remodelagem da barra (studio3-free-shipping-bar.liquid, texto +
-   trilho de progresso em vez do bloco de cor único): 0.8rem padding-top + ~1.8rem da
-   linha de ícone/texto + 0.6rem de margem + 0.4rem do trilho + 0.9rem padding-bottom =
-   4.5rem. Precisa ser atualizado junto se o padding/tamanho da barra mudar de novo. */
-.studio3-shipping-bar-section ~ .section-header.shopify-section-header-sticky:not(.shopify-section-header-hidden) {
-  top: 4.5rem;
+/* Header "boxed" flutuante (pedido do cliente, implementando o modelo 11 do protótipo
+   header+barra-de-frete): voltou pro esquema de cor claro padrão (removida a versão
+   escura de fundo/logo/ícones usada antes — sem override de --color-background aqui,
+   o header simplesmente herda o branco nativo do scheme-1). O "boxed" mora no `.header`
+   interno (que JÁ tem `.page-width` nativo do Dawn, então já fica centralizado/contido
+   em --page-width com o mesmo respiro lateral do resto do site) — só adicionamos fundo,
+   cantos arredondados, sombra e uma margem vertical pra parecer um cartão flutuando,
+   em vez de uma barra colada de ponta a ponta. O `.header-wrapper` (elemento sticky)
+   fica transparente e sem sombra própria — ele só posiciona; quem "flutua" visualmente
+   é o `.header` de dentro. */
+.header-wrapper.shopify-section-header-sticky:not(.shopify-section-header-hidden) {
+  top: 1rem;
 }
 
-/* Sombra do header — valor extraído via getComputedStyle do <nav> sticky da referência
-   (box-shadow: rgba(0,0,0,0.1) 1px 1px 4px 0px), presente mesmo sem scroll. Bate com o
-   token --studio3-shadow-soft já definido (sem uso até então) em studio3-theme-variables. */
 .header-wrapper {
-  box-shadow: var(--studio3-shadow-soft);
+  background: transparent;
+  box-shadow: none;
 }
 
-/* Novo visual do header: fundo escuro (mesma cor quase-preta já usada no rodapé e no
-   painel de marca do cadastro, --surface-dark #1a1a1a — este projeto não tem token
-   dedicado pra essa cor, ver CLAUDE.md). Sobrescreve --color-background/--color-foreground
-   só na instância do header-wrapper (duas classes, mais específico que `.color-scheme-1`
-   sozinho) — não mexe no scheme-1 global, que os cards de produto também usam. Todo
-   texto/ícone do header já lê `rgb(var(--color-foreground))`/`rgba(var(--color-foreground),X)`
-   (convenção nativa do Dawn), então vira branco automaticamente sem precisar tocar em
-   cada elemento. O painel do mega menu (`.mega-menu__content.color-scheme-1`, elemento
-   separado) fica de fora dessa regra — continua claro, pra manter a leitura do menu
-   extenso. A logo também precisa trocar pra versão clara: ver logo_image em
-   header.liquid (usa settings.logo_dark_bg). */
-.header-wrapper.color-scheme-1 {
-  --color-background: 26, 26, 26;
-  --color-foreground: 255, 255, 255;
-  /* .header-wrapper também carrega a classe `.gradient` (base.css), que define
-     `background` DUAS vezes de propósito — primeiro com --color-background (fallback),
-     depois com --gradient-background (só existe quando o scheme tem um gradiente de
-     fundo configurado, o que NÃO é o caso do scheme-1). Uma var() que aponta pra uma
-     custom property inexistente deixa a declaração inteira inválida — e por spec do
-     CSS isso NÃO faz o navegador "voltar" pra declaração anterior, e sim resolver pro
-     valor INICIAL da propriedade (`transparent`, no caso de `background`). Resultado:
-     o header renderizava sempre transparente/branco, nunca escuro, não importa o que
-     --color-background dissesse. Precisa fornecer --gradient-background também. */
-  --gradient-background: #1a1a1a;
+.header-wrapper .header {
+  background: rgb(var(--color-background));
+  border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  margin: 0.8rem auto;
 }
 
-/* Halo do ícone no hover (cart/busca/conta) — tinha sido pensado pra fundo claro
-   (rgba(76,81,84,...), tom escuro) e ficava invisível no header agora escuro. */
+@media screen and (max-width: 749px) {
+  .header-wrapper.shopify-section-header-sticky:not(.shopify-section-header-hidden) {
+    top: 0.6rem;
+  }
+
+  .header-wrapper .header {
+    border-radius: 12px;
+    margin: 0.5rem auto;
+  }
+}
+
+/* Halo circular sutil no hover dos ícones — mesmo tom neutro já usado no hover dos
+   ícones de categoria (rgba(76,81,84,0.08)), agora que o header voltou a ser claro. */
 .header-wrapper .header__icon:hover {
-  background-color: rgba(255, 255, 255, 0.14);
+  background-color: rgba(76, 81, 84, 0.08);
 }
 
-/* `.search-modal` (header-search.liquid) não tem `color-scheme-N` própria — ao
-   contrário do menu-drawer mobile e do painel do mega menu (cada um com sua própria
-   classe `.color-scheme-1`, que já reseta sozinha), ela só herda o contexto ambiente.
-   Com o header escuro, herdava --color-background/--color-foreground escuro/branco e
-   ficava com texto/produtos da busca preditiva ilegíveis. Resetada pros mesmos valores
-   claros do scheme-1 (config/settings_data.json), igual o resto do site. */
-.header-wrapper .search-modal {
-  --color-background: 255, 255, 255;
-  --color-foreground: 76, 81, 84;
+/* ---- Selo de frete grátis ao lado dos ícones (modelo 11 do protótipo) ----
+   Reaproveita o mesmo script genérico da antiga barra no topo do site
+   (assets/studio3-free-shipping-bar.js só faz querySelectorAll de
+   `[data-studio3-shipping-bar]` e atualiza qualquer quantidade de barras/selos
+   encontrados) — só precisa dos mesmos atributos/data-attributes de marcação,
+   sem tocar no JS. A barra de topo (studio3-free-shipping-bar section) foi
+   removida do "order" de sections/header-group.json (config preservada, só
+   desativada) — este selo é agora a única UI de progresso de frete. */
+.studio3-shipping-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+  background: var(--studio3-color-cobalt-light);
+  color: var(--studio3-color-cobalt);
+  border-radius: 30px;
+  padding: 0.5rem 1.1rem 0.5rem 0.5rem;
+  box-shadow: 0 4px 14px rgba(79, 100, 120, 0.16);
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.studio3-shipping-badge.is-complete {
+  background: rgba(45, 128, 25, 0.14);
+  color: var(--studio3-color-accent-strong);
+}
+
+.studio3-shipping-badge__icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--studio3-color-cobalt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.studio3-shipping-badge.is-complete .studio3-shipping-badge__icon {
+  background: var(--studio3-color-accent);
+  color: #fff;
+}
+
+.studio3-shipping-badge__icon svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.studio3-shipping-badge__track {
+  position: relative;
+  width: 4.4rem;
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(79, 100, 120, 0.22);
+  flex-shrink: 0;
+}
+
+.studio3-shipping-badge__fill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #7bacdc, #3783cc, #1b3e69);
+  transition: width 0.5s ease, background 0.4s ease;
+  font-size: 0;
+  line-height: 0;
+}
+
+.studio3-shipping-badge.is-complete .studio3-shipping-badge__fill {
+  background: var(--studio3-color-accent);
+}
+
+/* Abaixo de 990px não sobra espaço ao lado dos ícones (hambúrguer + logo + busca +
+   conta + carrinho já disputam a largura) — a instância de dentro de .header__icons
+   some, e a instância "pendurada" (.studio3-shipping-badge-wrap, renderizada como
+   segunda linha logo abaixo do header boxed) assume no lugar dela. */
+.header__icons .studio3-shipping-badge {
+  font-size: 1.1rem;
+  margin-right: 0.8rem;
+}
+
+@media screen and (max-width: 989px) {
+  .header__icons .studio3-shipping-badge {
+    display: none;
+  }
+}
+
+.studio3-shipping-badge-wrap {
+  display: none;
+}
+
+@media screen and (max-width: 989px) {
+  .studio3-shipping-badge-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 0 1.5rem;
+    margin-top: -0.9rem;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .studio3-shipping-badge-wrap {
+    padding: 0 1rem;
+    margin-top: -0.7rem;
+  }
 }
 
 /* "Oferta do mês" — texto com gradiente animado igual ao span.gradient-animated-text da

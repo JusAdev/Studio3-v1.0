@@ -2,20 +2,6 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "studio3-free-shipping-bar": {
-      "type": "studio3-free-shipping-bar",
-      "settings": {
-        "threshold": 500,
-        "text_incomplete": "Faltam [valor] para o frete grátis",
-        "text_complete": "Você ganhou frete grátis!",
-        "color_scheme": "",
-        "background_color": "#7bacdc",
-        "text_color": "#3a3a3a",
-        "progress_start_color": "#7bacdc",
-        "progress_middle_color": "#3783cc",
-        "progress_end_color": "#1b3e69"
-      }
-    },
     "header": {
       "type": "header",
       "blocks": {
@@ -42,6 +28,9 @@
       },
       "block_order": ["promo-profissional", "promo-homecare"],
       "settings": {
+        "shipping_threshold": 500,
+        "shipping_text_incomplete": "Faltam [valor] para o frete grátis",
+        "shipping_text_complete": "Você ganhou frete grátis!",
         "color_scheme": "scheme-1",
         "menu_color_scheme": "scheme-1",
         "logo_position": "middle-left",
@@ -59,7 +48,6 @@
     }
   },
   "order": [
-    "studio3-free-shipping-bar",
     "header"
   ]
 }

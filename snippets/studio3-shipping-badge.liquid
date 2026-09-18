@@ -1,0 +1,38 @@
+{% comment %}
+  Selo de progresso de frete grátis (ícone + texto + trilho), ao lado dos ícones do
+  header — substitui a antiga barra de ponta a ponta no topo do site (modelo 11 do
+  protótipo header+barra-de-frete). Usa os MESMOS data-attributes que
+  assets/studio3-free-shipping-bar.js já espera: o script é genérico (faz
+  querySelectorAll de [data-studio3-shipping-bar] e atualiza quantos encontrar), então
+  renderizar este snippet mais de uma vez (desktop + variante mobile) funciona sem
+  tocar no JS.
+
+  Accepts:
+  - section: {Object} a section atual (header), pra ler as settings de frete grátis
+  - wrapper_class: {String} classe extra no elemento raiz (opcional — diferencia a
+    instância desktop da instância mobile via CSS, ver studio3-header.css)
+
+  Usage:
+  {% render 'studio3-shipping-badge', section: section %}
+  {% render 'studio3-shipping-badge', section: section, wrapper_class: 'studio3-shipping-badge--mobile' %}
+{% endcomment %}
+<div
+  class="studio3-shipping-badge{% if wrapper_class %} {{ wrapper_class }}{% endif %}"
+  data-studio3-shipping-bar
+  data-threshold-cents="{{ section.settings.shipping_threshold | times: 100 }}"
+  data-text-incomplete="{{ section.settings.shipping_text_incomplete | escape }}"
+  data-text-complete="{{ section.settings.shipping_text_complete | escape }}"
+>
+  <span class="studio3-shipping-badge__icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M16 3H1v13h15V3z"></path>
+      <path d="M16 8h4l3 3v5h-7V8z"></path>
+      <circle cx="5.5" cy="18.5" r="2.5"></circle>
+      <circle cx="18.5" cy="18.5" r="2.5"></circle>
+    </svg>
+  </span>
+  <span data-studio3-shipping-bar-text>{{ section.settings.shipping_text_incomplete }}</span>
+  <span class="studio3-shipping-badge__track">
+    <span class="studio3-shipping-badge__fill" data-studio3-shipping-bar-progress>&nbsp;</span>
+  </span>
+</div>

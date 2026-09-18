@@ -25,6 +25,15 @@
 {%- endcomment -%}
 {{ 'studio3-header.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+  Movido pra cá de sections/studio3-free-shipping-bar.liquid: aquela section saiu do
+  "order" de header-group.json (o selo de frete grátis agora mora aqui no header, ver
+  snippets/studio3-shipping-badge.liquid), então o script não seria mais carregado se
+  continuasse só lá. O script é genérico — atualiza qualquer elemento
+  [data-studio3-shipping-bar] que encontrar, sem saber/importar onde ele está.
+{%- endcomment -%}
+<script src="{{ 'studio3-free-shipping-bar.js' | asset_url }}" defer="defer"></script>
+
 <style>
   header-drawer {
     justify-self: start;
@@ -315,13 +324,11 @@
       endif
 
       comment
-        Novo visual do header: fundo escuro (ver studio3-header.css, override
-        escopado de --color-background/--color-foreground só pro header-wrapper,
-        sem mexer no scheme-1 compartilhado com os cards). Nesse fundo a logo
-        preta padrão fica invisível — usa a versão clara (logo_dark_bg, já
-        existente desde a página de cadastro) em vez de settings.logo.
+        Header voltou pro esquema de cor claro (ver studio3-header.css) — logo
+        padrão (settings.logo) de novo, não precisa mais da versão clara
+        (logo_dark_bg, que continua em uso só no painel escuro do cadastro).
       endcomment
-      assign logo_image = settings.logo_dark_bg | default: settings.logo
+      assign logo_image = settings.logo
     -%}
 
     {%- if section.settings.logo_position != 'middle-center' -%}
@@ -411,6 +418,7 @@
     {%- endif -%}
 
     <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
+      {%- render 'studio3-shipping-badge', section: section -%}
       <div class="desktop-localization-wrapper">
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
           <localization-form class="small-hide medium-hide" data-prevent-hide>
@@ -480,6 +488,16 @@
       </a>
     </div>
   </header>
+
+  {%- comment -%}
+    Variante mobile do selo de frete grátis: não cabe ao lado dos ícones em telas
+    estreitas (ver @media max-width:989px em studio3-header.css, que esconde a
+    instância de cima), então "pendura" numa segunda linha logo abaixo do header
+    boxed, centralizada — mesmo mecanismo do modelo 2/11 do protótipo.
+  {%- endcomment -%}
+  <div class="studio3-shipping-badge-wrap">
+    {%- render 'studio3-shipping-badge', section: section, wrapper_class: 'studio3-shipping-badge--mobile' -%}
+  </div>
 </{{ header_tag }}>
 
 {%- if settings.cart_type == 'notification' -%}
@@ -667,6 +685,30 @@
   "class": "section-header",
   "max_blocks": 12,
   "settings": [
+    {
+      "type": "header",
+      "content": "Selo de frete grátis"
+    },
+    {
+      "type": "number",
+      "id": "shipping_threshold",
+      "label": "Valor mínimo para frete grátis",
+      "info": "Em reais (ex.: 500 para R$ 500,00). Sem casas decimais.",
+      "default": 500
+    },
+    {
+      "type": "text",
+      "id": "shipping_text_incomplete",
+      "label": "Texto (faltando valor)",
+      "info": "Use [valor] no lugar do valor restante formatado.",
+      "default": "Faltam [valor] para o frete grátis"
+    },
+    {
+      "type": "text",
+      "id": "shipping_text_complete",
+      "label": "Texto (frete grátis liberado)",
+      "default": "Você ganhou frete grátis!"
+    },
     {
       "type": "select",
       "id": "logo_position",
