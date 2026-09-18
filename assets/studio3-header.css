@@ -204,22 +204,6 @@
   padding-bottom: 0;
 }
 
-.studio3-header__text-link {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 1.3rem;
-  color: rgb(var(--color-foreground));
-  text-decoration: none;
-  white-space: nowrap;
-  padding: 0 1rem;
-}
-
-.studio3-header__text-link .svg-wrapper svg {
-  width: 1.8rem;
-  height: 1.8rem;
-}
-
 /* Dawn's `.header__icon--cart .icon { height/width: 4.4rem }` (base.css) forces the cart
    icon to 44px — fine for Dawn's stock glyph (which has built-in padding inside its
    viewBox), but the reference's trolley path fills its viewBox edge-to-edge, so the same

@@ -444,23 +444,33 @@
       </div>
       {% render 'header-search', input_id: 'Search-In-Modal' %}
 
+      {%- comment -%}
+        Pedido do cliente: dispensar os links de texto separados ("Cadastre-se" /
+        "Entre") — o ícone de usuário sozinho já cumpre essa função. Deslogado, o
+        ícone vira um link direto pra página de cadastro customizada (nunca abre o
+        modal/fluxo nativo de login do <shopify-account>, que levaria pro cadastro
+        padrão do Shopify em vez do fluxo segmentado profissional/cliente final que
+        construímos). Logado, mantém o <shopify-account> original — abre o menu de
+        conta de verdade (pedidos, sair etc.), isso não muda.
+      {%- endcomment -%}
       {%- if shop.customer_accounts_enabled -%}
-        {%- unless customer -%}
-          <a href="{{ pages['cadastro'].url | default: routes.account_register_url }}" class="studio3-header__text-link link focus-inset small-hide">
-            {{ 'studio3.header.register' | t }}
-          </a>
-          <a href="{{ routes.account_login_url }}" class="studio3-header__text-link studio3-header__text-link--login link focus-inset small-hide">
+        {%- if customer -%}
+          <shopify-account
+            menu="{{ settings.customer_account_menu | default: 'customer-account-main-menu' }}"
+            class="header__icon header__icon--account link focus-inset small-hide"
+          >
+            <span slot="signed-out-avatar" class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
+            <span slot="signed-out-avatar" class="visually-hidden">{{ 'customer.log_in' | t }}</span>
+          </shopify-account>
+        {%- else -%}
+          <a
+            href="{{ pages['cadastro'].url | default: routes.account_register_url }}"
+            class="header__icon header__icon--account link focus-inset small-hide"
+          >
             <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
-            {{ 'studio3.header.login' | t }}
+            <span class="visually-hidden">{{ 'studio3.header.register' | t }}</span>
           </a>
-        {%- endunless -%}
-        <shopify-account
-          menu="{{ settings.customer_account_menu | default: 'customer-account-main-menu' }}"
-          class="header__icon header__icon--account link focus-inset small-hide"
-        >
-          <span slot="signed-out-avatar" class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
-          <span slot="signed-out-avatar" class="visually-hidden">{{ 'customer.log_in' | t }}</span>
-        </shopify-account>
+        {%- endif -%}
       {%- endif -%}
 
       {%- for block in section.blocks -%}
