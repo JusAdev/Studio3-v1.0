@@ -37,6 +37,10 @@
 
   .header-wrapper .header {
     border-radius: 12px;
+    /* No mobile só a borda de cima — as laterais/inferior competiam
+       visualmente com a margem lateral já estreita nessa largura. */
+    border: none;
+    border-top: 1px solid #7bacdc;
     /* Margem lateral explícita: `auto` só centraliza quando o conteúdo é mais
        estreito que o pai (max-width entra em jogo) — no mobile --page-width
        (1400px) nunca restringe nada, então "auto" colapsava pra 0 e o header
