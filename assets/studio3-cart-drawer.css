@@ -43,7 +43,9 @@ cart-drawer.drawer {
   backdrop-filter: blur(16px) saturate(1.8);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   margin: 0 -1.5rem;
-  padding: 1.6rem 1.5rem;
+  /* Vertical reduzido de 1.6rem pra 0.8rem (pedido do cliente: mais espaço pra lista
+     de itens do carrinho). */
+  padding: 0.8rem 1.5rem;
 }
 
 .cart-drawer .drawer__heading {
@@ -82,9 +84,10 @@ cart-drawer.drawer {
 }
 
 /* Os itens do carrinho ficavam colados direto embaixo do cabeçalho (0px de espaço) —
-   margem separando visualmente as duas áreas. */
+   margem separando visualmente as duas áreas (reduzida de 1.6rem pra 1rem: pedido do
+   cliente, mais espaço pra lista). */
 .cart-drawer .drawer__contents {
-  margin-top: 1.6rem;
+  margin-top: 1rem;
 }
 
 /* Dawn mostra "PRODUCT"/"TOTAL" como cabeçalho de tabela visível (`.caption-with-letter-
@@ -113,7 +116,9 @@ cart-drawer.drawer {
   backdrop-filter: blur(12px) saturate(1.5);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   padding: 1.2rem;
-  margin-bottom: 1.2rem !important;
+  /* Reduzido de 1.2rem pra 0.9rem (pedido do cliente: menos margem onde razoável,
+     mais espaço pra lista — ainda separa os cards com folga visível). */
+  margin-bottom: 0.9rem !important;
 }
 
 .cart-drawer .cart-item__image {
@@ -297,59 +302,15 @@ cart-drawer.drawer {
 }
 
 /* ---- Barra de frete grátis (rodapé, acima do subtotal) ---- */
-/* Mesma técnica da barra do topo do site (studio3-free-shipping-bar.liquid): o
-   preenchimento é uma camada absoluta cobrindo a barra INTEIRA (não uma tira fina
-   separada embaixo do texto) — dá efeito de "encher" o fundo, consistente entre as
-   duas barras do site. */
+/* Pedido do cliente: mesmo visual do selo do header (.studio3-shipping-badge,
+   definida em studio3-header.css — já carregado em toda página via o header, então
+   as regras de ícone/trilho/preenchimento/estado "is-complete" já existem, só
+   reaproveitadas aqui). Esta regra só centraliza o selo dentro do rodapé do drawer;
+   o visual do selo em si mora inteiramente em studio3-header.css. */
 .studio3-cart-drawer-shipping-bar {
-  position: relative;
-  margin: 0 -1.5rem 1.6rem;
-  background: var(--studio3-shipping-bar-bg);
-  color: var(--studio3-shipping-bar-text);
-  overflow: hidden;
-}
-
-.studio3-cart-drawer-shipping-bar__progress {
-  position: absolute;
-  inset: 0;
-  width: 0%;
-  background: var(--studio3-shipping-bar-gradient);
-  transition: width 0.4s ease;
-  /* O &nbsp; dentro (necessário pra escapar do `div:empty` do Dawn, ver comentário no
-     liquid) não pode aparecer visualmente — zera a fonte pra ele nunca ocupar espaço. */
-  font-size: 0;
-  line-height: 0;
-}
-
-.studio3-cart-drawer-shipping-bar__text {
-  position: relative;
-  z-index: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 0.8rem;
-  /* Vertical padding reduzido de 1rem pra 0.4rem: com o ícone/line-height originais, a
-     barra renderizava ~40px de altura total contra ~28px da referência (medido via
-     Playwright nos dois lados) — o excesso vinha inteiro do padding vertical, não do
-     conteúdo (o line-height do texto já é maior que o ícone e sozinho dita a altura da
-     linha). Ver CLAUDE.md 1.3.25. */
-  padding: 0.4rem 1.5rem;
-  font-family: var(--font-body-family);
-  font-size: 1.12rem;
-  letter-spacing: 0.029rem;
-}
-
-.studio3-cart-drawer-shipping-bar__text svg {
-  flex-shrink: 0;
-  /* 1.6rem (16px) em vez de 2rem (20px) pra bater com o tamanho real do ícone da
-     referência (16x16 renderizado, apesar do atributo width/height="20" no próprio
-     SVG) — ver CLAUDE.md 1.3.25. */
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
-.studio3-cart-drawer-shipping-bar__text strong {
-  font-weight: 700;
+  margin: 0 0 1.2rem;
 }
 
 /* "Em até Nx de R$Y sem juros" — `.totals` (label+preço) é flex `justify-content:
@@ -383,25 +344,18 @@ cart-drawer.drawer {
 }
 
 /* Dawn deixa `.cart__ctas { display:flex; flex-direction:row; flex-wrap:nowrap }`
-   (component-cart.css) — com os 2 botões tendo `width:100%` cada, isso os espreme lado a
-   lado numa linha só (flex-shrink permite os dois encolherem pra caber), em vez de
-   empilhados como a referência (botão verde em cima, link "continuar" embaixo).
-
-   `gap: 0` é necessário: o Dawn nativo já dá espaçamento entre os dois CTAs por DOIS
-   mecanismos ao mesmo tempo em telas ≥750px — `.cart__ctas > * + * { margin-top: 1rem }`
-   (sempre ativo, qualquer largura) E `.cart__ctas { display:flex; gap: 1rem }` (só
-   ≥750px, component-cart.css). Como o `flex-direction: column` aqui só reorienta o eixo
-   (não desliga o `display:flex` nem o `gap` herdado), os dois mecanismos somavam — o
-   "Continuar comprando" ficava com quase o dobro do respiro do necessário no desktop.
-   Zerando o gap, sobra só o `margin-top` nativo (1rem, consistente em qualquer
-   largura) fazendo esse trabalho. */
+   (component-cart.css). `flex-direction: column` só neutraliza isso (agora há só um
+   botão — "Finalizar Compra" — desde que "Continuar comprando" foi removido a pedido
+   do cliente; a coluna/gap:0 seguem inofensivos, sem efeito visível com um filho só,
+   mas mantidos por segurança caso um bloco de app entre aqui no futuro). */
 .cart-drawer .cart__ctas {
   /* `.cart-drawer__footer` (parcelas/subtotal) e `.cart__ctas` são divs irmãs sem
      nenhum espaçamento nativo entre elas — o respiro visual que existia antes vinha
      de tabela por acidente do bloco de nota fiscal (removido a pedido do cliente, ver
      [[1.3.31]]), não de uma regra de espaçamento de verdade. Sem ele, "em até Nx..."
-     e o botão "Finalizar Compra" ficavam colados. */
-  margin-top: 1.2rem;
+     e o botão "Finalizar Compra" ficavam colados. Reduzido de 1.2rem pra 1rem (pedido
+     do cliente: menos margem onde razoável, mais espaço pra lista de itens). */
+  margin-top: 1rem;
   flex-direction: column;
   gap: 0;
 }
@@ -420,26 +374,6 @@ cart-drawer.drawer {
 
 .cart-drawer .cart__checkout-button:hover {
   background: var(--studio3-color-accent-strong);
-}
-
-.studio3-cart-drawer__continue {
-  /* Sem margin-top próprio — o `.cart__ctas > * + * { margin-top: 1rem }` nativo do
-     Dawn (component-cart.css) já dá o espaçamento entre este link e o botão "Finalizar
-     Compra" acima; um segundo margin-top aqui somava com aquele (ver comentário em
-     `.cart-drawer .cart__ctas` acima), deixando o respiro maior do que o previsto. */
-  display: block;
-  width: 100%;
-  padding: 0.8rem 1.2rem;
-  background: none;
-  border: none;
-  border-radius: 0.45rem;
-  font-family: var(--font-body-family);
-  font-size: 1.28rem;
-  font-weight: 600;
-  text-decoration: underline;
-  text-align: center;
-  color: var(--studio3-color-ink);
-  cursor: pointer;
 }
 
 @media screen and (max-width: 749px) {

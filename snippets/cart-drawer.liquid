@@ -515,31 +515,34 @@
       </cart-drawer-items>
       <div class="drawer__footer">
         {%- unless cart == empty -%}
-          <div
-            class="studio3-cart-drawer-shipping-bar"
-            data-studio3-shipping-bar
-            data-threshold-cents="{{ 500 | times: 100 }}"
-            data-text-incomplete="{{ 'studio3.cart.shipping_bar_incomplete' | t | escape }}"
-            data-text-complete="{{ 'studio3.cart.shipping_bar_complete' | t | escape }}"
-          >
-            {%- comment -%}
-              &nbsp; necessário: `div:empty { display: none }` do Dawn (base.css) escondia
-              essa div inteira por não ter nenhum nó de texto — ver mesmo comentário em
-              studio3-free-shipping-bar.liquid. Estrutura igual à barra do topo do site
-              (studio3-free-shipping-bar.liquid): o preenchimento é uma camada ABSOLUTA
-              cobrindo a barra INTEIRA (não uma tira fina separada embaixo do texto), com
-              o texto por cima (z-index) — dá o efeito de "encher" o fundo conforme o
-              carrinho se aproxima do frete grátis, igual ao padrão já usado no topo.
-            {%- endcomment -%}
-            <div class="studio3-cart-drawer-shipping-bar__progress" data-studio3-shipping-bar-progress>&nbsp;</div>
-            <div class="studio3-cart-drawer-shipping-bar__text">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M16 3H1v13h15V3z"></path>
-                <path d="M16 8h4l3 3v5h-7V8z"></path>
-                <circle cx="5.5" cy="18.5" r="2.5"></circle>
-                <circle cx="18.5" cy="18.5" r="2.5"></circle>
-              </svg>
+          {%- comment -%}
+            Mesmo visual do selo de frete grátis do header (snippets/studio3-shipping-badge.liquid
+            / .studio3-shipping-badge em studio3-header.css, já carregado em toda página via o
+            header) — reaproveita as MESMAS classes CSS em vez de duplicar estilo, só que com
+            threshold/textos próprios do carrinho (locale studio3.cart.*, existentes antes desta
+            mudança). O script genérico (studio3-free-shipping-bar.js) já cobre qualquer elemento
+            [data-studio3-shipping-bar] que encontrar, então funciona sem alteração.
+          {%- endcomment -%}
+          <div class="studio3-cart-drawer-shipping-bar">
+            <div
+              class="studio3-shipping-badge"
+              data-studio3-shipping-bar
+              data-threshold-cents="{{ 500 | times: 100 }}"
+              data-text-incomplete="{{ 'studio3.cart.shipping_bar_incomplete' | t | escape }}"
+              data-text-complete="{{ 'studio3.cart.shipping_bar_complete' | t | escape }}"
+            >
+              <span class="studio3-shipping-badge__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M16 3H1v13h15V3z"></path>
+                  <path d="M16 8h4l3 3v5h-7V8z"></path>
+                  <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                  <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                </svg>
+              </span>
               <span data-studio3-shipping-bar-text>{{ 'studio3.cart.shipping_bar_incomplete' | t }}</span>
+              <span class="studio3-shipping-badge__track">
+                <span class="studio3-shipping-badge__fill" data-studio3-shipping-bar-progress>&nbsp;</span>
+              </span>
             </div>
           </div>
         {%- endunless -%}
@@ -673,13 +676,6 @@
             {% endif %}
           >
             {{ 'sections.cart.checkout' | t }}
-          </button>
-          <button
-            type="button"
-            class="studio3-cart-drawer__continue"
-            onclick="this.closest('cart-drawer').close()"
-          >
-            {{ 'studio3.cart.continue_shopping' | t }}
           </button>
         </div>
       </div>
