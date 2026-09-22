@@ -68,8 +68,8 @@
   align-items: center;
   gap: 0.96rem;
   flex-shrink: 0;
-  background: var(--studio3-color-cobalt-light);
-  color: #1b3e69;
+  background: var(--studio3-shipping-badge-bg, var(--studio3-color-cobalt-light));
+  color: var(--studio3-shipping-badge-text, #1b3e69);
   border-radius: 30px;
   padding: 0.64rem 1.44rem 0.64rem 0.64rem;
   box-shadow: 0 4px 14px rgba(27, 62, 105, 0.16);
@@ -80,9 +80,14 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Pedido do cliente: fundo sólido/opaco no estado "completo" (era rgba com 14% de
+   opacidade — ficava com aparência diferente dependendo do que estivesse atrás,
+   já que este selo aparece tanto sobre o header quanto dentro do cart drawer, dois
+   fundos diferentes). Cor vem de --studio3-shipping-badge-bg-complete (setting real
+   em sections/header.liquid agora), com fallback só de segurança. */
 .studio3-shipping-badge.is-complete {
-  background: rgba(45, 128, 25, 0.14);
-  color: var(--studio3-color-accent-strong);
+  background: var(--studio3-shipping-badge-bg-complete, #e2eddf);
+  color: var(--studio3-shipping-badge-text-complete, var(--studio3-color-accent-strong));
 }
 
 .studio3-shipping-badge__icon {
@@ -121,14 +126,19 @@
   inset: 0;
   width: 0%;
   border-radius: 4px;
-  background: linear-gradient(90deg, #7bacdc, #3783cc, #1b3e69);
+  background: linear-gradient(
+    90deg,
+    var(--studio3-shipping-badge-progress-start, #7bacdc),
+    var(--studio3-shipping-badge-progress-middle, #3783cc),
+    var(--studio3-shipping-badge-progress-end, #1b3e69)
+  );
   transition: width 0.5s ease, background 0.4s ease;
   font-size: 0;
   line-height: 0;
 }
 
 .studio3-shipping-badge.is-complete .studio3-shipping-badge__fill {
-  background: var(--studio3-color-accent);
+  background: var(--studio3-shipping-badge-progress-complete, var(--studio3-color-accent));
 }
 
 /* Abaixo de 990px não sobra espaço ao lado dos ícones (hambúrguer + logo + busca +

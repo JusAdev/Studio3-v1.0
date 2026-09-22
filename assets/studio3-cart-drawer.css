@@ -381,4 +381,25 @@ cart-drawer.drawer {
     width: 100vw;
     max-width: 100vw;
   }
+
+  /* Pedido do cliente: preço unitário ("R$X / unidade") escondido no mobile — a
+     linha de item já fica apertada nesse breakpoint, e o preço total (studio3-
+     cart-item__totals) já cobre a informação essencial. */
+  .studio3-cart-item__unit-price {
+    display: none;
+  }
+
+  /* Alinhamento do cabeçalho do drawer: `.drawer__heading` (fluxo normal, com
+     `margin: 0 0 1rem` nativo do Dawn) e `.drawer__close` (`position: absolute;
+     top: 10px`, valor fixo nativo independente do padding do header) não ficavam
+     no mesmo eixo vertical no mobile — o botão de fechar (44px de altura mínima,
+     ver component-cart-drawer.css) ficava mais baixo que o centro do texto do
+     heading. `top: 50%; transform: translateY(-50%)` centraliza o botão contra a
+     altura REAL do header (`position: relative` já herdado do nativo), em vez de
+     um valor fixo calibrado pro padding vertical original (1.5rem, maior que o
+     nosso 0.8rem custom). */
+  .cart-drawer .drawer__close {
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }

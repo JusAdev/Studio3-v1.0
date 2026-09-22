@@ -293,9 +293,12 @@ product-component {
    `:hover` isolado que tinha antes. */
 .card-wrapper:hover .studio3-card__cta-ver {
   /* Pedido do cliente: bege (--studio3-color-gold) -> preto -> verde de ação
-     (--studio3-color-accent, mesmo token do hover de "Compra rápida" abaixo). */
-  background: var(--studio3-color-accent);
-  border-color: var(--studio3-color-accent);
+     (--studio3-color-accent) -> cobalto acinzentado, o MESMO tom de
+     .studio3-card__cta-buy--login ("Faça login ou cadastre-se") — "Ver Produto"
+     não é uma ação de compra, então não devia usar o verde de ação; "Adicionar"
+     continua verde, intocado. */
+  background: var(--studio3-color-cobalt);
+  border-color: var(--studio3-color-cobalt);
   color: rgb(var(--color-background));
 }
 

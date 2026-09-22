@@ -32,6 +32,16 @@
     color: {{ section.settings.text_color }};
     font-family: var(--font-body-family);
     padding: 0.8rem 1.5rem 0.9rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Pedido do cliente: fundo sólido/opaco no estado "frete grátis liberado" (cor
+     própria, não reaproveita background_color — o estado incompleto pode ser
+     qualquer cor que o lojista escolher, mas o completo precisa continuar lendo
+     como "sucesso/verde" independente disso). */
+  .studio3-shipping-bar.is-complete {
+    background-color: {{ section.settings.background_color_complete }};
+    color: {{ section.settings.text_color_complete }};
   }
 
   .studio3-shipping-bar__row {
@@ -193,6 +203,19 @@
       "id": "text_color",
       "label": "Cor do texto",
       "default": "#3A3A3A"
+    },
+    {
+      "type": "color",
+      "id": "background_color_complete",
+      "label": "Cor de fundo (frete grátis liberado)",
+      "info": "Sólida, sem transparência.",
+      "default": "#E2EDDF"
+    },
+    {
+      "type": "color",
+      "id": "text_color_complete",
+      "label": "Cor do texto (frete grátis liberado)",
+      "default": "#1D9001"
     },
     {
       "type": "color",

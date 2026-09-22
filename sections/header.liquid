@@ -141,6 +141,27 @@
   }
 
   {% comment %}
+    Cores do selo de frete grátis (.studio3-shipping-badge, studio3-header.css) via
+    CSS custom property em :root (não escopado a `.header`) — o mesmo selo também é
+    reaproveitado DENTRO do cart drawer (studio3-cart-drawer.css,
+    .studio3-cart-drawer-shipping-bar), que fica fora da árvore do `<header>`, então
+    a variável precisa estar disponível pra página inteira. Pedido do cliente: fundo
+    do estado "completo" vira sólido/opaco (era rgba com 14% de opacidade) — vira
+    setting de cor de verdade em vez de hardcoded, junto com o resto das cores desse
+    componente que também nunca tinham sido expostas no editor.
+  {% endcomment %}
+  :root {
+    --studio3-shipping-badge-bg: {{ section.settings.shipping_bg_incomplete }};
+    --studio3-shipping-badge-text: {{ section.settings.shipping_text_color_incomplete }};
+    --studio3-shipping-badge-bg-complete: {{ section.settings.shipping_bg_complete }};
+    --studio3-shipping-badge-text-complete: {{ section.settings.shipping_text_color_complete }};
+    --studio3-shipping-badge-progress-start: {{ section.settings.shipping_progress_start_color }};
+    --studio3-shipping-badge-progress-middle: {{ section.settings.shipping_progress_middle_color }};
+    --studio3-shipping-badge-progress-end: {{ section.settings.shipping_progress_end_color }};
+    --studio3-shipping-badge-progress-complete: {{ section.settings.shipping_progress_complete_color }};
+  }
+
+  {% comment %}
     [[1.3.31]] Ícones do header colados demais pra dentro no mobile (hamburguer/
     busca/carrinho), comparado à referência (tulipia.com.br em ~390px: hamburguer
     a 16px da borda esquerda, carrinho a só 4px da borda direita — GAP assimétrico
@@ -718,6 +739,55 @@
       "id": "shipping_text_complete",
       "label": "Texto (frete grátis liberado)",
       "default": "Você ganhou frete grátis!"
+    },
+    {
+      "type": "color",
+      "id": "shipping_bg_incomplete",
+      "label": "Cor de fundo (faltando valor)",
+      "default": "#D6DEE3"
+    },
+    {
+      "type": "color",
+      "id": "shipping_text_color_incomplete",
+      "label": "Cor do texto (faltando valor)",
+      "default": "#1B3E69"
+    },
+    {
+      "type": "color",
+      "id": "shipping_bg_complete",
+      "label": "Cor de fundo (frete grátis liberado)",
+      "info": "Sólida, sem transparência.",
+      "default": "#E2EDDF"
+    },
+    {
+      "type": "color",
+      "id": "shipping_text_color_complete",
+      "label": "Cor do texto (frete grátis liberado)",
+      "default": "#1D9001"
+    },
+    {
+      "type": "color",
+      "id": "shipping_progress_start_color",
+      "label": "Trilho de progresso — início do gradiente",
+      "default": "#7BACDC"
+    },
+    {
+      "type": "color",
+      "id": "shipping_progress_middle_color",
+      "label": "Trilho de progresso — meio do gradiente",
+      "default": "#3783CC"
+    },
+    {
+      "type": "color",
+      "id": "shipping_progress_end_color",
+      "label": "Trilho de progresso — fim do gradiente",
+      "default": "#1B3E69"
+    },
+    {
+      "type": "color",
+      "id": "shipping_progress_complete_color",
+      "label": "Trilho de progresso — frete grátis liberado",
+      "default": "#2D8019"
     },
     {
       "type": "select",
