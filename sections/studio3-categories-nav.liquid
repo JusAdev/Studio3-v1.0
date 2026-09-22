@@ -4,20 +4,19 @@
   ícone pequeno + rótulo lado a lado, em vez do círculo grande + rótulo embaixo do
   modelo anterior.
 
-  Nunca quebra pra 2ª linha, em NENHUMA largura — reaproveita o `<slider-component>`
-  nativo do Dawn (já carregado globalmente via assets/global.js em layout/theme.liquid;
-  só o CSS do componente precisa ser importado aqui, como toda seção que usa slider
-  já faz: ver sections/featured-collection.liquid, collection-list.liquid etc.) com a
-  variante `.slider--everywhere`, que vira scroll horizontal com scroll-snap assim que
-  os itens não cabem mais na largura disponível, em qualquer breakpoint — sem inventar
-  um carrossel próprio do zero. As setas prev/next (`.slider-buttons`) continuam no
-  markup (mantém o mecanismo de scroll por clique disponível) mas ficam ocultas via
-  CSS a pedido do cliente — arrastar/tocar continua funcionando normalmente, só a
-  seta visível some. Quando os itens cabem todos na largura disponível (sem
-  overflow), a fileira fica centralizada (`justify-content: safe center` — o `safe`
-  evita que o navegador esconda o primeiro item ao rolar quando a lista É maior que
-  o espaço disponível; sem o `safe`, centralizar uma lista que estoura a largura
-  pode cortar o início dela do lado de fora do scroll).
+  Nunca quebra pra 2ª linha, em NENHUMA largura — a rolagem em si (scroll-snap,
+  arraste/toque) reaproveita o CSS do `<slider-component>` nativo do Dawn
+  (`.slider`/`.slider--everywhere`, component-slider.css, mesmo import de sempre:
+  ver sections/featured-collection.liquid, collection-list.liquid etc.), mas quem
+  controla a navegação é um custom element PRÓPRIO
+  (assets/studio3-categories-nav.js, `<studio3-categories-slider>`) — pedido do
+  cliente foi autoplay + loop infinito + um ÚNICO botão "avançar" flutuante (não o
+  par prev/next com contador do Dawn), o que a `SliderComponent` nativa não faz e
+  não dá pra configurar via atributo. Quando os itens cabem todos na largura
+  disponível (sem overflow), a fileira fica centralizada (`justify-content: safe
+  center` — o `safe` evita que o navegador esconda o primeiro item ao rolar quando
+  a lista É maior que o espaço disponível; sem o `safe`, centralizar uma lista que
+  estoura a largura pode cortar o início dela do lado de fora do scroll).
 
   Cada categoria pode usar uma imagem própria (image_picker, upload do lojista) OU um
   ícone pronto de uma biblioteca de 7 ícones de linha (mesmo conjunto do protótipo,
@@ -25,7 +24,13 @@
   no block, com `visible_if` mostrando só o campo relevante no editor.
 {% endcomment %}
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'studio3-categories-nav.js' | asset_url }}" defer="defer"></script>
 {%- style -%}
+  .studio3-categories-nav-slider {
+    position: relative;
+    display: block;
+  }
+
   .studio3-categories-nav {
     display: flex;
     flex-wrap: nowrap;
@@ -34,11 +39,40 @@
     justify-content: safe center;
   }
 
-  /* Oculta as setas de navegação (pedido do cliente) — o mecanismo de scroll do
-     <slider-component> continua ativo (arraste/toque/scroll do trackpad), só o
-     par de botões visível some. */
-  .studio3-categories-nav-slider .slider-buttons {
-    display: none;
+  /* Botão único de avançar, flutuante sobre a borda direita da fileira (não um
+     par prev/next alinhado embaixo) — fica por cima de parte do último item
+     visível de propósito (pedido do cliente), não colado do lado de fora. */
+  .studio3-categories-nav__next {
+    position: absolute;
+    top: 50%;
+    right: 0.4rem;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 4rem;
+    height: 4rem;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgb(var(--color-background));
+    box-shadow: var(--studio3-shadow-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--studio3-color-ink);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .studio3-categories-nav__next:hover {
+    background-color: var(--studio3-color-cobalt-light);
+  }
+
+  .studio3-categories-nav__next .icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    /* Mesma técnica do slider-button--next nativo do Dawn: icon-caret.svg
+       aponta pra baixo por padrão, rotacionado pra apontar pra direita aqui. */
+    transform: rotate(-90deg);
   }
 
   .studio3-cat-icon {
@@ -109,7 +143,7 @@
 
 <div id="studio3-categories-nav-{{ section.id }}" class="page-width">
   <nav aria-label="Categorias de produtos">
-    <slider-component class="studio3-categories-nav-slider">
+    <studio3-categories-slider class="studio3-categories-nav-slider" data-speed="4">
       <ul
         id="Slider-{{ section.id }}"
         class="studio3-categories-nav slider slider--everywhere list-unstyled"
@@ -148,26 +182,16 @@
         {%- endfor -%}
       </ul>
       {%- if section.blocks.size > 1 -%}
-        <div class="slider-buttons">
-          <button
-            type="button"
-            class="slider-button slider-button--prev"
-            name="previous"
-            aria-label="{{ 'general.slider.previous_slide' | t }}"
-          >
-            <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
-          </button>
-          <button
-            type="button"
-            class="slider-button slider-button--next"
-            name="next"
-            aria-label="{{ 'general.slider.next_slide' | t }}"
-          >
-            <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          class="studio3-categories-nav__next"
+          data-studio3-categories-next
+          aria-label="{{ 'general.slider.next_slide' | t }}"
+        >
+          <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+        </button>
       {%- endif -%}
-    </slider-component>
+    </studio3-categories-slider>
   </nav>
 </div>
 
