@@ -361,3 +361,24 @@ product-component {
 .card-wrapper:hover .studio3-card__cta-buy--login {
   background: var(--studio3-color-ink);
 }
+
+/* Pedido do cliente: no mobile, "Ver Produto" e "Adicionar" ficam um embaixo do
+   outro (não lado a lado) — o card fica estreito demais nesse breakpoint pra 2
+   pílulas em linha sem espremer. `.quick-add` é o item de flex de verdade (não o
+   botão, que fica 2 níveis dentro dele — ver comentário acima sobre o wrapper
+   nativo do Dawn), então precisa de `width: 100%` junto com o botão. A variante
+   `--stacked` (exclusivo-profissional) já empilha em qualquer largura — essa regra
+   só repete a mesma coisa pra ela, sem efeito adicional. */
+@media screen and (max-width: 749px) {
+  .studio3-card__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .studio3-card__actions .studio3-card__cta-ver,
+  .studio3-card__actions .quick-add,
+  .studio3-card__actions .studio3-card__cta-buy {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}

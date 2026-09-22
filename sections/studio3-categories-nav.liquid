@@ -2,19 +2,32 @@
   Navegação de categorias por ícone — modelo 3 do protótipo
   prototipo-categories-nav.html ("chips/pills compactos"): pastilha horizontal com
   ícone pequeno + rótulo lado a lado, em vez do círculo grande + rótulo embaixo do
-  modelo anterior. `flex-wrap` deixa todas as categorias visíveis sem exigir scroll
-  horizontal (ao contrário do modelo 1, que este substitui).
+  modelo anterior.
+
+  Nunca quebra pra 2ª linha, em NENHUMA largura — reaproveita o `<slider-component>`
+  nativo do Dawn (já carregado globalmente via assets/global.js em layout/theme.liquid;
+  só o CSS do componente precisa ser importado aqui, como toda seção que usa slider
+  já faz: ver sections/featured-collection.liquid, collection-list.liquid etc.) com a
+  variante `.slider--everywhere`, que vira scroll horizontal com scroll-snap assim que
+  os itens não cabem mais na largura disponível, em qualquer breakpoint — sem inventar
+  um carrossel próprio do zero. Setas prev/next (`.slider-buttons`) reaproveitam o
+  mesmo ícone/classe usados no carrossel de mídia da PDP.
 
   Cada categoria pode usar uma imagem própria (image_picker, upload do lojista) OU um
   ícone pronto de uma biblioteca de 7 ícones de linha (mesmo conjunto do protótipo,
   ver snippets/studio3-category-icon.liquid) — settings `icon_source`/`icon_preset`
   no block, com `visible_if` mostrando só o campo relevante no editor.
 {% endcomment %}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
 {%- style -%}
   .studio3-categories-nav {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 1rem;
+  }
+
+  .studio3-categories-nav-slider .slider-buttons {
+    margin-top: 0.6rem;
   }
 
   .studio3-cat-icon {
@@ -79,36 +92,66 @@
 {%- endstyle -%}
 
 <div id="studio3-categories-nav-{{ section.id }}" class="page-width">
-  <nav class="studio3-categories-nav" aria-label="Categorias de produtos">
-    {%- for block in section.blocks -%}
-      <a
-        {%- if block.settings.link != blank %}
-          href="{{ block.settings.link }}"
-        {%- else %}
-          role="link" aria-disabled="true"
-        {%- endif %}
-        class="studio3-cat-icon"
-        {%- if block.settings.label != blank %}
-          aria-label="Acesse {{ block.settings.label | escape }}"
-        {%- endif %}
-        {{ block.shopify_attributes }}
+  <nav aria-label="Categorias de produtos">
+    <slider-component class="studio3-categories-nav-slider">
+      <ul
+        id="Slider-{{ section.id }}"
+        class="studio3-categories-nav slider slider--everywhere list-unstyled"
+        role="list"
       >
-        {%- if block.settings.icon_source == 'library' -%}
-          {%- render 'studio3-category-icon', icon: block.settings.icon_preset -%}
-        {%- elsif block.settings.icon != blank -%}
-          {{
-            block.settings.icon
-            | image_url: width: 64
-            | image_tag: width: 32, height: 32, loading: 'lazy', class: 'studio3-cat-icon__img'
-          }}
-        {%- else -%}
-          {{ 'collection-1' | placeholder_svg_tag: 'studio3-cat-icon__img' }}
-        {%- endif -%}
-        {%- if block.settings.label != blank -%}
-          <span class="studio3-cat-icon__label">{{ block.settings.label | escape }}</span>
-        {%- endif -%}
-      </a>
-    {%- endfor -%}
+        {%- for block in section.blocks -%}
+          <li id="Slide-{{ section.id }}-{{ forloop.index }}" class="slider__slide">
+            <a
+              {%- if block.settings.link != blank %}
+                href="{{ block.settings.link }}"
+              {%- else %}
+                role="link" aria-disabled="true"
+              {%- endif %}
+              class="studio3-cat-icon"
+              {%- if block.settings.label != blank %}
+                aria-label="Acesse {{ block.settings.label | escape }}"
+              {%- endif %}
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.icon_source == 'library' -%}
+                {%- render 'studio3-category-icon', icon: block.settings.icon_preset -%}
+              {%- elsif block.settings.icon != blank -%}
+                {{
+                  block.settings.icon
+                  | image_url: width: 64
+                  | image_tag: width: 32, height: 32, loading: 'lazy', class: 'studio3-cat-icon__img'
+                }}
+              {%- else -%}
+                {{ 'collection-1' | placeholder_svg_tag: 'studio3-cat-icon__img' }}
+              {%- endif -%}
+              {%- if block.settings.label != blank -%}
+                <span class="studio3-cat-icon__label">{{ block.settings.label | escape }}</span>
+              {%- endif -%}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- if section.blocks.size > 1 -%}
+        <div class="slider-buttons">
+          <button
+            type="button"
+            class="slider-button slider-button--prev"
+            name="previous"
+            aria-label="{{ 'general.slider.previous_slide' | t }}"
+          >
+            <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+          </button>
+          <button
+            type="button"
+            class="slider-button slider-button--next"
+            name="next"
+            aria-label="{{ 'general.slider.next_slide' | t }}"
+          >
+            <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+          </button>
+        </div>
+      {%- endif -%}
+    </slider-component>
   </nav>
 </div>
 
