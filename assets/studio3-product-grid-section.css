@@ -8,6 +8,7 @@
 
 .studio3-grid-section__header {
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .studio3-grid-section__title {
@@ -125,9 +126,9 @@
 
 .studio3-grid-section--pdp .studio3-grid-section__header {
   /* Referência: .product-page__section-title { margin-bottom: 2rem } = 32px.
-     32 / 10 = 3.2rem. */
+     32 / 10 = 3.2rem. `text-align: center` não precisa mais ser repetido aqui —
+     já é o padrão da classe base `.studio3-grid-section__header` acima. */
   margin-bottom: 3.2rem;
-  text-align: center;
 }
 
 .studio3-grid-section--pdp .studio3-grid-section__title {

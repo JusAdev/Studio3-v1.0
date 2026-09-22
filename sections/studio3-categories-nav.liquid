@@ -10,8 +10,14 @@
   já faz: ver sections/featured-collection.liquid, collection-list.liquid etc.) com a
   variante `.slider--everywhere`, que vira scroll horizontal com scroll-snap assim que
   os itens não cabem mais na largura disponível, em qualquer breakpoint — sem inventar
-  um carrossel próprio do zero. Setas prev/next (`.slider-buttons`) reaproveitam o
-  mesmo ícone/classe usados no carrossel de mídia da PDP.
+  um carrossel próprio do zero. As setas prev/next (`.slider-buttons`) continuam no
+  markup (mantém o mecanismo de scroll por clique disponível) mas ficam ocultas via
+  CSS a pedido do cliente — arrastar/tocar continua funcionando normalmente, só a
+  seta visível some. Quando os itens cabem todos na largura disponível (sem
+  overflow), a fileira fica centralizada (`justify-content: safe center` — o `safe`
+  evita que o navegador esconda o primeiro item ao rolar quando a lista É maior que
+  o espaço disponível; sem o `safe`, centralizar uma lista que estoura a largura
+  pode cortar o início dela do lado de fora do scroll).
 
   Cada categoria pode usar uma imagem própria (image_picker, upload do lojista) OU um
   ícone pronto de uma biblioteca de 7 ícones de linha (mesmo conjunto do protótipo,
@@ -24,10 +30,15 @@
     display: flex;
     flex-wrap: nowrap;
     gap: 1rem;
+    justify-content: center;
+    justify-content: safe center;
   }
 
+  /* Oculta as setas de navegação (pedido do cliente) — o mecanismo de scroll do
+     <slider-component> continua ativo (arraste/toque/scroll do trackpad), só o
+     par de botões visível some. */
   .studio3-categories-nav-slider .slider-buttons {
-    margin-top: 0.6rem;
+    display: none;
   }
 
   .studio3-cat-icon {
@@ -35,7 +46,12 @@
     align-items: center;
     gap: 0.8rem;
     padding: 0.9rem 1.6rem 0.9rem 1.2rem;
-    border: 1px solid var(--studio3-border-subtle);
+    /* Opacidade aumentada (0.25 -> ~0.6) só aqui — var(--studio3-border-subtle)
+       (a mesma cor base, rgb 223/223/228) fica quase invisível pra este
+       componente especificamente; manter a alteração local em vez de mudar o
+       token compartilhado, que também é usado em divisores de outras seções já
+       aprovadas com aquela opacidade mais sutil. */
+    border: 1px solid rgba(223, 223, 228, 0.6);
     border-radius: 999px;
     background: rgb(var(--color-background));
     text-decoration: none;
