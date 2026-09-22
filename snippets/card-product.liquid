@@ -315,6 +315,10 @@
               {%- endif -%}
             </div>
           </div>
+          <!-- "Ver Produto" + "Adicionar"/"Faça login" viram um par de pílulas lado a
+               lado (pedido do cliente, modelo 4 do protótipo de grid section) — ver
+               assets/studio3-product-card.css .studio3-card__actions -->
+          <div class="studio3-card__actions">
           <a href="{{ card_product.url }}" class="studio3-card__cta-ver">
             {{ 'studio3.card.view_product' | t }}
           </a>
@@ -399,7 +403,7 @@
                       {% endif %}
                     >
                       {%- unless card_product.selected_or_first_available_variant.available == false -%}
-                        <span class="svg-wrapper studio3-card__cta-buy-icon">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+                        <span class="svg-wrapper studio3-card__cta-buy-icon">{{ 'icon-cart-add.svg' | inline_asset_content }}</span>
                       {%- endunless -%}
                       <span>
                         {%- if card_product.selected_or_first_available_variant.available -%}
@@ -588,6 +592,7 @@
               <span>{{ 'studio3.card.login_to_buy' | t }}</span>
             </a>
           {%- endunless -%}
+          </div>
           <div class="card__badge {{ settings.badge_position }}">
             {%- if card_product.available == false -%}
               <span

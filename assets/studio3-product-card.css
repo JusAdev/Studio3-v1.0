@@ -204,17 +204,31 @@ product-component {
 }
 
 /* "Ver Produto" — botão contorno */
+/* "Ver Produto" + "Adicionar"/"Faça login" — par de pílulas lado a lado (pedido do
+   cliente, modelo 4 do protótipo prototipo-grid-section.html: contorno + sólida
+   verde com ícone de carrinho+"+", não mais empilhados/texto-sem-fundo). O
+   `margin-top: auto` que empurra o bloco pro fim do card (mesmo mecanismo de
+   sempre, ver `.card > .card__content { display: flex }` acima) mora no WRAPPER
+   agora, não em cada botão individualmente — os dois filhos só precisam de
+   `flex`/tamanho próprio. */
+.studio3-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  margin-top: auto;
+}
+
 .studio3-card__cta-ver {
   display: block;
-  margin-top: auto;
-  padding: 0.45rem 0.75rem;
-  border: 1px solid var(--studio3-color-ink);
-  border-radius: 0.8rem;
+  flex: 1 1 auto;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--studio3-color-ink);
+  border-radius: 999px;
   color: var(--studio3-color-ink);
   font-family: var(--font-body-family);
-  font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-size: 1.2rem;
+  font-weight: 700;
   text-align: center;
   text-decoration: none;
   transition: all 0.2s;
@@ -243,34 +257,27 @@ product-component {
   color: rgb(var(--color-background));
 }
 
-/* "Compra rápida" / "Faça login ou cadastre-se" — texto verde maiúsculo com ícone,
-   sem borda/fundo (fica visualmente abaixo do botão "Ver Produto"). */
+/* "Adicionar" — pílula sólida verde ao lado de "Ver Produto", ícone (carrinho+"+",
+   assets/icon-cart-add.svg — dedicado, não o icon-cart.svg do header) + texto
+   SEMPRE juntos, nunca só ícone. */
 .studio3-card__cta-buy {
-  display: flex;
-  justify-content: center;
+  flex: 0 0 auto;
+  display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  margin-top: 0.6rem;
-  padding: 0.5rem 0;
-  /* "Faça login ou cadastre-se" quebra em 2 linhas, "Compra rápida" fica numa só —
-     min-height reserva o espaço da variante de 2 linhas nas duas, senão o "Ver
-     Produto" (empurrado por margin-top: auto) fica em alturas diferentes entre um
-     card com quick-add normal e um card exclusivo/login na mesma fileira. Esse
-     min-height sozinho só aproxima a altura do `.quick-add` real (56px) — faltava
-     considerar margin-top/margin-bottom também; ver o `margin-bottom` acrescentado em
-     `.studio3-card__cta-buy--login` abaixo, que fecha o resto da diferença (~10px). */
-  min-height: 5rem;
-  background: none;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
+  background: var(--studio3-color-accent);
   border: none;
-  color: var(--studio3-color-accent);
+  color: #fff;
   font-family: var(--font-body-family);
   font-size: 1.2rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: background-color 0.2s;
   /* Mesmo problema do link "esticado" documentado em .studio3-card__cta-ver acima —
      este elemento também precisa se elevar acima do overlay do card__heading pra
      receber :hover/click de verdade (o wrapper nativo `.quick-add` do Dawn já resolveria
@@ -282,13 +289,8 @@ product-component {
   z-index: 1;
 }
 
-/* Referência (tulipia.com.br): hover de `.product-card__cta-buy` (variante normal,
-   "Compra rápida") vira rgb(30, 85, 17) = #1e5511 — um verde mais escuro que não bate
-   com nenhum token existente (não é --studio3-color-accent nem --studio3-color-accent-
-   strong), por isso fica hardcoded. Antes usava --studio3-color-ink (cinza), sem bater
-   com a referência. */
 .card-wrapper:hover .studio3-card__cta-buy {
-  color: #1e5511;
+  background: var(--studio3-color-accent-strong);
 }
 
 .studio3-card__cta-buy-icon svg {
@@ -296,31 +298,20 @@ product-component {
   height: 1.4rem;
 }
 
+/* "Faça login ou cadastre-se": mesma pílula, tom cobalto (ação secundária/
+   informativa, não é "comprar") em vez do verde de ação. Pode ser mais comprido
+   que "Adicionar" — permite quebrar em 2 linhas (`white-space: normal`, ao
+   contrário da base) com um teto de largura, em vez de forçar numa linha só
+   e estourar a pílula. */
 .studio3-card__cta-buy--login {
-  color: var(--studio3-color-ink);
-  font-weight: 400;
-  font-size: 1.1rem;
-  /* "Ver Produto" (empurrado por margin-top: auto, ver acima) ficava ~10px mais alto
-     nos cards com esta variante do que nos cards com quick-add normal, na MESMA
-     fileira — o `min-height: 5rem` (50px) herdado de `.studio3-card__cta-buy` só
-     aproxima a altura do `.quick-add` (medido: 56px de altura + 0 de margin-top + 10px
-     de margin-bottom = 66px de espaço vertical total ocupado), enquanto esta variante
-     (6px de margin-top + 50px de min-height + 0 de margin-bottom = 56px) ficava 10px
-     mais curta no total — sobrava espaço extra pro `margin-top: auto` do
-     `.studio3-card__cta-ver` absorver, empurrando-o mais pra baixo do que no card com
-     quick-add. `margin-bottom: 1rem` fecha exatamente essa diferença (56px + 10px =
-     66px, igual ao `.quick-add`) sem alterar a aparência do próprio botão. Só nesta
-     variante (`--login`), não na classe base `.studio3-card__cta-buy` — essa também é
-     usada dentro do `.quick-add__submit` real, que já tem seu próprio espaçamento
-     correto. */
-  margin-bottom: 1rem;
+  background: var(--studio3-color-cobalt);
+  font-size: 1.05rem;
+  white-space: normal;
+  line-height: 1.25;
+  max-width: 11rem;
+  text-align: center;
 }
 
-/* Variante "Faça login ou cadastre-se": na referência o hover vai pro verde de ação
-   (rgb(45, 128, 25) = --studio3-color-accent), diferente do hover mais escuro da
-   variante normal acima — precisa de override específico (senão herdaria o #1e5511
-   escuro de .studio3-card__cta-buy:hover, que não é o que a referência mostra pra esta
-   variante especificamente). */
 .card-wrapper:hover .studio3-card__cta-buy--login {
-  color: var(--studio3-color-accent);
+  background: var(--studio3-color-ink);
 }
