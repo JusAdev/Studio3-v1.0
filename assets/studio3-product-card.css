@@ -236,6 +236,31 @@ product-component {
   width: 100%;
 }
 
+/* O botão "Adicionar" de verdade vem embrulhado em `<div class="quick-add
+   no-js-hidden">` (nativo, quick-add.css) → `<product-form>` → `<form class="form">`
+   — só o `.quick-add` é filho direto do flex `.studio3-card__actions`, os outros 2
+   níveis ficam por dentro. O Dawn dá `margin: 0 1.3rem 1rem` nesse wrapper quando o
+   card é `card--card` (`.card--card .quick-add`, seletor de 2 classes em
+   quick-add.css) — margem assimétrica (só embaixo, e nos lados) que soma na caixa
+   usada pelo `align-items` do wrapper pra alinhar os 2 botões, deixando "Adicionar"
+   visivelmente mais alto/deslocado que "Ver Produto" (o conteúdo real fica colado no
+   topo da própria caixa, já que a margem existe só embaixo). Zerado aqui com um
+   seletor de 3 classes pra garantir que vence essa regra nativa independente da
+   ordem de carregamento dos 2 arquivos CSS. */
+.card--card .studio3-card__actions .quick-add {
+  margin: 0;
+}
+
+/* <product-form> (custom element sem display próprio definido em nenhum CSS do
+   projeto/Dawn) cai no default do navegador (`display: inline`) — mesmo contendo só
+   um <form> (block) dentro, o browser pode deixar uma "tira" de espaço em branco
+   fantasma (formatação de linha ao redor da caixa de bloco). Forçar `block` aqui
+   elimina essa ambiguidade, garantindo que a altura do wrapper seja ditada só pelo
+   conteúdo real (o botão), sem sobra nenhuma. */
+.studio3-card__actions .quick-add product-form {
+  display: block;
+}
+
 .studio3-card__cta-ver {
   display: block;
   flex: 1 1 auto;
@@ -286,7 +311,11 @@ product-component {
   padding: 0.7rem 1.3rem;
   border-radius: 999px;
   background: var(--studio3-color-accent);
-  border: none;
+  /* Borda transparente da MESMA espessura da borda de `.studio3-card__cta-ver`
+     (1.5px) — sem isso, mesmo com padding/font-size idênticos, "Adicionar" ficava
+     ~3px mais baixo que "Ver Produto" (que soma os 1.5px de cima + 1.5px de baixo da
+     própria borda à altura da caixa). */
+  border: 1.5px solid transparent;
   color: #fff;
   font-family: var(--font-body-family);
   font-size: 1.2rem;

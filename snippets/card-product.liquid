@@ -76,7 +76,13 @@
         >
           {%- if card_product.featured_media -%}
             <div class="card__media{% if image_shape and image_shape != 'default' %} shape--{{ image_shape }} color-{{ settings.card_color_scheme }} gradient{% endif %}">
+              {%- comment -%}
+                Favoritos/wishlist desativado a pedido do cliente (não vamos usar).
+                Mantido comentado (não apagado) pra facilitar reverter se o pedido mudar.
+              {%- endcomment -%}
+              {%- comment -%}
               {%- render 'studio3-wishlist-button', product: card_product -%}
+              {%- endcomment -%}
               <div class="media media--transparent media--hover-effect">
                 {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
                 <img

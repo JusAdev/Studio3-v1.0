@@ -284,7 +284,15 @@
     {{ 'quick-add.css' | asset_url | stylesheet_tag }}
     {%- render 'studio3-theme-variables' -%}
     {{ 'studio3-product-card.css' | asset_url | stylesheet_tag }}
+    {%- comment -%}
+      Favoritos/wishlist desativado a pedido do cliente (não vamos usar) — botão não é
+      mais renderizado em nenhum card/PDP (ver card-product.liquid/main-product.liquid),
+      então este JS ficaria sem nenhum [data-studio3-wishlist-toggle] pra escutar.
+      Mantido comentado (não apagado) pra facilitar reverter se o pedido mudar.
+    {%- endcomment -%}
+    {%- comment -%}
     <script src="{{ 'studio3-wishlist.js' | asset_url }}" defer="defer"></script>
+    {%- endcomment -%}
     <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
