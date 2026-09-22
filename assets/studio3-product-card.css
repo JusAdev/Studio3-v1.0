@@ -219,6 +219,23 @@ product-component {
   margin-top: auto;
 }
 
+/* Variante exclusivo-profissional: "Faça login ou cadastre-se" é texto longo
+   demais pra caber ao lado de "Ver Produto" sem espremer as duas pílulas (e
+   sem quebrar em 2 linhas de forma esquisita) — o pedido do cliente foi
+   empilhar embaixo em vez de ao lado. `align-items: stretch` (em vez de
+   `center`, herdado da base) garante que os dois botões fiquem com a mesma
+   largura total do card. */
+.studio3-card__actions--stacked {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.studio3-card__actions--stacked .studio3-card__cta-ver,
+.studio3-card__actions--stacked .studio3-card__cta-buy {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
 .studio3-card__cta-ver {
   display: block;
   flex: 1 1 auto;
@@ -299,16 +316,16 @@ product-component {
 }
 
 /* "Faça login ou cadastre-se": mesma pílula, tom cobalto (ação secundária/
-   informativa, não é "comprar") em vez do verde de ação. Pode ser mais comprido
-   que "Adicionar" — permite quebrar em 2 linhas (`white-space: normal`, ao
-   contrário da base) com um teto de largura, em vez de forçar numa linha só
-   e estourar a pílula. */
+   informativa, não é "comprar") em vez do verde de ação. Empilhada ABAIXO de
+   "Ver Produto" (`.studio3-card__actions--stacked`, ver acima) — já ocupa a
+   largura cheia do card, então o texto mais comprido que "Adicionar" cabe
+   numa linha só na maioria das larguras de card, sem precisar de um teto de
+   largura pra forçar quebra. */
 .studio3-card__cta-buy--login {
   background: var(--studio3-color-cobalt);
   font-size: 1.05rem;
   white-space: normal;
   line-height: 1.25;
-  max-width: 11rem;
   text-align: center;
 }
 

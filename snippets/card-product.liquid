@@ -315,10 +315,13 @@
               {%- endif -%}
             </div>
           </div>
-          <!-- "Ver Produto" + "Adicionar"/"Faça login" viram um par de pílulas lado a
-               lado (pedido do cliente, modelo 4 do protótipo de grid section) — ver
-               assets/studio3-product-card.css .studio3-card__actions -->
-          <div class="studio3-card__actions">
+          <!-- "Ver Produto" + "Adicionar" viram um par de pílulas lado a lado (pedido
+               do cliente, modelo 4 do protótipo de grid section) — ver
+               assets/studio3-product-card.css .studio3-card__actions. Já "Faça login ou
+               cadastre-se" (variante exclusivo-profissional) empilha ABAIXO de "Ver
+               Produto" em vez de ao lado (texto longo demais pra caber numa pílula ao
+               lado sem espremer) — modificador --stacked muda o flex-direction. -->
+          <div class="studio3-card__actions{% if studio3_exclusive %} studio3-card__actions--stacked{% endif %}">
           <a href="{{ card_product.url }}" class="studio3-card__cta-ver">
             {{ 'studio3.card.view_product' | t }}
           </a>
