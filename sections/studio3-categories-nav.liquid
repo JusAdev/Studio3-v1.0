@@ -1,79 +1,68 @@
 {% comment %}
-  Navegação de categorias por ícone — linha de ícone+rótulo, scroll horizontal no
-  mobile, espaçados uniformemente no desktop. Referência: Home-layout.html linhas
-  446-489 (.home2026-categories-nav / .home2026-cat-icon), 10 itens no site real.
-  Ícones enviados via image_picker são <img> — não é possível recolorir via
-  currentColor, então só padronizamos tamanho/espaçamento (ver briefing).
+  Navegação de categorias por ícone — modelo 3 do protótipo
+  prototipo-categories-nav.html ("chips/pills compactos"): pastilha horizontal com
+  ícone pequeno + rótulo lado a lado, em vez do círculo grande + rótulo embaixo do
+  modelo anterior. `flex-wrap` deixa todas as categorias visíveis sem exigir scroll
+  horizontal (ao contrário do modelo 1, que este substitui).
+
+  Cada categoria pode usar uma imagem própria (image_picker, upload do lojista) OU um
+  ícone pronto de uma biblioteca de 7 ícones de linha (mesmo conjunto do protótipo,
+  ver snippets/studio3-category-icon.liquid) — settings `icon_source`/`icon_preset`
+  no block, com `visible_if` mostrando só o campo relevante no editor.
 {% endcomment %}
 {%- style -%}
   .studio3-categories-nav {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.5rem;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .studio3-categories-nav::-webkit-scrollbar {
-    display: none;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
   .studio3-cat-icon {
-    display: flex;
-    flex: none;
-    flex-direction: column;
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.8rem;
+    padding: 0.9rem 1.6rem 0.9rem 1.2rem;
+    border: 1px solid var(--studio3-border-subtle);
+    border-radius: 999px;
+    background: rgb(var(--color-background));
     text-decoration: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Selo neutro atrás do ícone: círculo liso (sem gradiente/forma orgânica — pedido
-     do cliente foi "novo visual, sem mirabolância"), mesma cor de fundo já usada nos
-     badges do card (.studio3-card__price-discount etc., rgba(76,81,84,0.08)) pra não
-     introduzir um tom novo. */
-  .studio3-cat-icon__img {
-    display: block;
-    box-sizing: border-box;
-    width: 64px;
-    height: 64px;
-    padding: 12px;
-    border-radius: 50%;
-    background-color: rgba(76, 81, 84, 0.06);
-    object-fit: contain;
-    opacity: 0.9;
-    transition:
-      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      opacity 0.3s,
-      background-color 0.3s;
-  }
-
-  .studio3-cat-icon:hover .studio3-cat-icon__img {
-    opacity: 1;
+  .studio3-cat-icon:hover {
+    border-color: var(--studio3-color-cobalt);
     background-color: var(--studio3-color-cobalt-light);
-    transform: translateY(-2px);
   }
 
-  .studio3-cat-icon:active .studio3-cat-icon__img {
-    transition-duration: 0.12s;
-    transform: translateY(0) scale(0.97);
+  .studio3-cat-icon__img,
+  .studio3-cat-icon__svg {
+    display: block;
+    flex: none;
+    width: 1.8rem;
+    height: 1.8rem;
+    object-fit: contain;
+  }
+
+  /* Ícone da biblioteca (SVG inline) é recolorável via currentColor — ao contrário
+     do ícone personalizado (<img>, raster), que mantém as cores originais do
+     arquivo enviado pelo lojista. */
+  .studio3-cat-icon__svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    color: var(--studio3-color-ink-muted);
   }
 
   .studio3-cat-icon__label {
     font-family: var(--font-body-family);
+    font-size: 1.3rem;
+    font-weight: 600;
     color: var(--studio3-color-ink);
-    font-size: 1.4rem;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
+    letter-spacing: normal;
     white-space: nowrap;
-    transition: color 0.3s;
-  }
-
-  .studio3-cat-icon:hover .studio3-cat-icon__label {
-    color: var(--studio3-color-cobalt);
   }
 
   #studio3-categories-nav-{{ section.id }} {
@@ -85,45 +74,6 @@
     #studio3-categories-nav-{{ section.id }} {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-
-  {% comment %}
-    [[1.3.31]] Mobile-only (<=749px, breakpoint padrão do projeto):
-    1) `.studio3-cat-icon__label` herdava `letter-spacing: 0.06rem` (0.6px) do
-       `body` global (layout/theme.liquid) — a referência (tulipia.com.br) usa
-       `letter-spacing: normal` no rótulo equivalente. `font-size` já batia
-       (14px nos dois lados, medido via getComputedStyle), mas o letter-spacing
-       extra alargava cada rótulo ~6-8px (mais visível nos rótulos longos:
-       "Mais Vendidos" 108.5px nosso vs 100.7px na referência, mesma fonte/peso).
-       Zerado aqui só pra este rótulo (não no `body` global, que afeta o tema
-       inteiro fora de escopo).
-    2) Reduz `gap` da nav (item-a-item) e o tamanho do ícone o suficiente pra
-       caber ~4.3 ícones (4 inteiros + ~30% do 5º) na largura de tela, usando
-       os itens reais já configurados ("Mais Vendidos"/"Ofertas do mês"/
-       "Sensoriais"/"Alta Tecnologia" — nomes de categoria reais, alguns bem
-       compridos). Medido via Playwright em 375/390/414/430px.
-  {% endcomment %}
-  @media screen and (max-width: 749px) {
-    .studio3-cat-icon__label {
-      letter-spacing: normal;
-    }
-
-    /* Alvo: ~4.3 ícones visíveis na primeira tela (4 inteiros + ~30% do 5º,
-       sinalizando que dá pra arrastar) — com os rótulos reais deste site (alguns
-       compridos: "Mais Vendidos", "Ofertas do mês", "Alta Tecnologia", ~100-107px
-       cada em uma linha só), a largura de cada item era ditada pelo rótulo, não
-       pelo ícone (64px) — só 3 inteiros + ~77% do 4º cabiam em 390px. Trava a
-       largura de cada item em 8.2rem (82px) e deixa os rótulos compridos
-       quebrarem em 2 linhas (em vez de nowrap) — os curtos ("Sensoriais",
-       "Máscaras", "Séruns") continuam numa linha só, já cabem dentro do limite. */
-    .studio3-cat-icon {
-      width: 8.2rem;
-    }
-
-    .studio3-cat-icon__label {
-      width: 100%;
-      white-space: normal;
     }
   }
 {%- endstyle -%}
@@ -143,11 +93,13 @@
         {%- endif %}
         {{ block.shopify_attributes }}
       >
-        {%- if block.settings.icon != blank -%}
+        {%- if block.settings.icon_source == 'library' -%}
+          {%- render 'studio3-category-icon', icon: block.settings.icon_preset -%}
+        {%- elsif block.settings.icon != blank -%}
           {{
             block.settings.icon
-            | image_url: width: 128
-            | image_tag: width: 64, height: 64, loading: 'lazy', class: 'studio3-cat-icon__img'
+            | image_url: width: 64
+            | image_tag: width: 32, height: 32, loading: 'lazy', class: 'studio3-cat-icon__img'
           }}
         {%- else -%}
           {{ 'collection-1' | placeholder_svg_tag: 'studio3-cat-icon__img' }}
@@ -198,9 +150,36 @@
       "name": "Categoria",
       "settings": [
         {
+          "type": "select",
+          "id": "icon_source",
+          "label": "Fonte do ícone",
+          "options": [
+            { "value": "custom", "label": "Imagem personalizada" },
+            { "value": "library", "label": "Ícone da biblioteca" }
+          ],
+          "default": "custom"
+        },
+        {
           "type": "image_picker",
           "id": "icon",
-          "label": "Ícone"
+          "label": "Ícone personalizado",
+          "visible_if": "{{ block.settings.icon_source == 'custom' }}"
+        },
+        {
+          "type": "select",
+          "id": "icon_preset",
+          "label": "Ícone da biblioteca",
+          "options": [
+            { "value": "serum", "label": "Sérum" },
+            { "value": "sun", "label": "Proteção solar" },
+            { "value": "ampoule", "label": "Ampola" },
+            { "value": "home", "label": "Home care" },
+            { "value": "bolt", "label": "Alta tecnologia" },
+            { "value": "leaf", "label": "Sensorial" },
+            { "value": "mask", "label": "Máscara" }
+          ],
+          "default": "serum",
+          "visible_if": "{{ block.settings.icon_source == 'library' }}"
         },
         {
           "type": "text",
