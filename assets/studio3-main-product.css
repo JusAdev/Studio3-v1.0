@@ -243,6 +243,21 @@
   font-family: var(--font-body-family);
 }
 
+/* Pedido do cliente: preço antigo/riscado fica ACIMA do preço atual, não ao lado.
+   `.price--on-sale .price__sale` nativo do Dawn (component-price.css) é `display:
+   initial` (= block, mas SEM ser flex de verdade — o `flex-direction: row` que vem
+   junto não tem efeito nenhum) — sem um container flex real, os dois <span> (preço
+   antigo e preço novo) só fluem lado a lado como texto inline normal. Seletor de 3
+   classes garante que vence a regra nativa de 2 classes independente da ordem de
+   carregamento dos 2 arquivos CSS. A ordem no DOM (price.liquid) já é antigo
+   primeiro, novo depois — só faltava o container virar coluna de verdade. */
+.product__info-container .price--on-sale .price__sale {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
 /* Mensagem que substitui o preço quando o produto tem a tag `exclusivo-profissional`
    e quem está vendo não é um cliente B2B de verdade (customer.b2b? != true) — mesmo gate
    do card (studio3-card-price.liquid), aplicado aqui na PDP. Ocupa o mesmo espaço visual
