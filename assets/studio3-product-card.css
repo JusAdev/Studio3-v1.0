@@ -203,6 +203,36 @@ product-component {
   margin-right: 0.2rem;
 }
 
+/* Selo de desconto (-XX%) — pedido do cliente: o selo nativo do Dawn
+   (.card__badge/.badge, no fim do card, fora do bloco de preço) ficava
+   completamente desconexo do preço; o nativo nem chega a aparecer de verdade
+   (Dawn esconde .card__badge dentro de .card__content quando o card é
+   card--card.card--media, nosso caso comum — ver component-card.css). Substituído
+   por este selo próprio, calculado no snippet (studio3-card-price.liquid) e
+   colado direto ao lado do preço "Por:", não mais um elemento solto no card. */
+.studio3-card__price-current-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.studio3-card__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  font-family: var(--font-body-family);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.studio3-card__badge--sale {
+  background: var(--studio3-color-accent);
+  color: #fff;
+}
+
 /* "Ver Produto" — botão contorno */
 /* "Ver Produto" + "Adicionar"/"Faça login" — par de pílulas lado a lado (pedido do
    cliente, modelo 4 do protótipo prototipo-grid-section.html: contorno + sólida

@@ -21,6 +21,10 @@
     assign target = product.selected_or_first_available_variant
     assign compare_at = target.compare_at_price
     assign price = target.price
+    assign discount_percent = 0
+    if compare_at > price
+      assign discount_percent = compare_at | minus: price | times: 100.0 | divided_by: compare_at | round
+    endif
   -%}
   <div class="studio3-card__pricing">
     {%- if compare_at > price -%}
@@ -28,9 +32,14 @@
         <span class="studio3-card__price-was">
           {{ 'studio3.card.price_from' | t }} <s>{{ compare_at | money }}</s>
         </span>
-        <span class="studio3-card__price-current">
-          <span class="studio3-card__price-prefix">{{ 'studio3.card.price_to' | t }}</span>
-          {%- render 'studio3-price-split', amount: price -%}
+        <span class="studio3-card__price-current-row">
+          <span class="studio3-card__price-current">
+            <span class="studio3-card__price-prefix">{{ 'studio3.card.price_to' | t }}</span>
+            {%- render 'studio3-price-split', amount: price -%}
+          </span>
+          {%- if discount_percent > 0 -%}
+            <span class="studio3-card__badge studio3-card__badge--sale">-{{ discount_percent }}%</span>
+          {%- endif -%}
         </span>
       </div>
     {%- else -%}

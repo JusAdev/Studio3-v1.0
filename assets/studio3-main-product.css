@@ -213,7 +213,19 @@
   border-top: 1px solid var(--studio3-border-subtle);
 }
 
+/* Pedido do cliente: selo "Promoção"/"Esgotado" (`.price__badge-sale`/
+   `-sold-out`, ativado por `show_badges: true` na chamada de `render 'price'`
+   em main-product.liquid) ficava desconexo do preço — é um <span> IRMÃO de
+   `.price__container` (não um filho), e como `.price` nativamente não é flex,
+   o selo caía numa linha própria, abaixo dos dois preços empilhados. Vira
+   flex-row aqui, ancorado na base (`align-items: flex-end`) pra ficar ao lado
+   do preço ATUAL/promocional (a linha de baixo da pilha antigo/atual), não do
+   preço antigo lá em cima. */
 .product__info-container .price {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
   color: var(--studio3-color-ink);
 }
 
