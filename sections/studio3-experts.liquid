@@ -26,6 +26,7 @@
     flex-direction: column;
     gap: 0.25rem;
     padding: 2rem 0 1.5rem;
+    text-align: {{ section.settings.heading_alignment }};
   }
 
   .studio3-experts__title {
@@ -242,6 +243,17 @@
       "id": "subtitle",
       "label": "Subtítulo",
       "default": "Os dermocosméticos que as profissionais da estética mais indicam nos seus protocolos."
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alinhamento do texto",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "left"
     },
     {
       "type": "text",

@@ -18,6 +18,7 @@
     flex-direction: column;
     gap: 0.25rem;
     padding-bottom: 1.5rem;
+    text-align: {{ section.settings.heading_alignment }};
   }
 
   .studio3-blog__title {
@@ -304,7 +305,7 @@
                 {%- endif -%}
               </p>
             {%- endif -%}
-            <span class="studio3-blog-card__meta">Atualizado {{ relative_date }}</span>
+            <span class="studio3-blog-card__meta">{{ section.settings.updated_label }} {{ relative_date }}</span>
           </a>
         {%- endfor -%}
       {%- else -%}
@@ -316,7 +317,7 @@
             <span class="studio3-blog-card__category">Categoria</span>
             <h3 class="studio3-blog-card__title">Título do post do blog</h3>
             <p class="studio3-blog-card__excerpt">Selecione um blog nas configurações desta seção para exibir posts reais aqui.</p>
-            <span class="studio3-blog-card__meta">Atualizado há 1 dia</span>
+            <span class="studio3-blog-card__meta">{{ section.settings.updated_label }} há 1 dia</span>
           </div>
         {%- endfor -%}
       {%- endif -%}
@@ -351,6 +352,17 @@
       "label": "Subtítulo"
     },
     {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alinhamento do texto",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "blog",
       "id": "blog",
       "label": "Blog",
@@ -370,6 +382,12 @@
       "id": "cta_text",
       "label": "Texto do link \"ver todos\"",
       "default": "Ver todos os Blogs"
+    },
+    {
+      "type": "text",
+      "id": "updated_label",
+      "label": "Rótulo de data (ex.: \"Atualizado\")",
+      "default": "Atualizado"
     },
     {
       "type": "color_scheme",

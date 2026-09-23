@@ -11,6 +11,7 @@
     flex-direction: column;
     gap: 0.25rem;
     padding: 2rem 0 1.5rem;
+    text-align: {{ section.settings.heading_alignment }};
   }
 
   .studio3-skin-types-header__title {
@@ -199,6 +200,17 @@
       "id": "subtitle",
       "label": "Subtítulo",
       "default": "Encontre os ativos e as formulações certos para cada tipo de pele."
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alinhamento do texto",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "left"
     },
     {
       "type": "color_scheme",

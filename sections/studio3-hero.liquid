@@ -30,11 +30,11 @@
     inset: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: {% if section.settings.content_alignment == 'left' %}flex-start{% elsif section.settings.content_alignment == 'right' %}flex-end{% else %}center{% endif %};
     justify-content: center;
     gap: 1rem;
     padding: 3rem 2rem;
-    text-align: center;
+    text-align: {{ section.settings.content_alignment }};
   }
 
   .studio3-hero__heading {
@@ -175,6 +175,17 @@
       "id": "button_label",
       "label": "Texto do botão (opcional)",
       "info": "Exibido como botão decorativo — usa o mesmo link do banner."
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Alinhamento do texto sobreposto",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "center"
     },
     {
       "type": "color_scheme",

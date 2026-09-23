@@ -16,7 +16,8 @@
     subtitle: section.settings.subtitle,
     featured_product: section.settings.featured_product,
     cta_text: section.settings.cta_text,
-    cta_url: section.settings.cta_url
+    cta_url: section.settings.cta_url,
+    heading_alignment: section.settings.heading_alignment
   -%}
 </div>
 
@@ -37,6 +38,17 @@
       "type": "textarea",
       "id": "subtitle",
       "label": "Subtítulo"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alinhamento do texto",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "center"
     },
     {
       "type": "product",

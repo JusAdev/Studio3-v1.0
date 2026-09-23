@@ -16,7 +16,7 @@
     font-weight: 400;
     letter-spacing: 0.112rem;
     color: var(--studio3-color-ink);
-    text-align: center;
+    text-align: {{ section.settings.heading_alignment }};
     margin: 0 0 3.2rem;
   }
 
@@ -111,6 +111,17 @@
       "id": "heading",
       "label": "Título",
       "default": "Política de troca"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alinhamento do texto",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "center"
     },
     {
       "type": "color_scheme",

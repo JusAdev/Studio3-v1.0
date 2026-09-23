@@ -17,7 +17,8 @@
     banner_image: section.settings.banner_image,
     banner_url: section.settings.banner_url,
     cta_text: section.settings.cta_text,
-    cta_url: section.settings.cta_url
+    cta_url: section.settings.cta_url,
+    heading_alignment: section.settings.heading_alignment
   -%}
 </div>
 
@@ -38,6 +39,17 @@
       "type": "textarea",
       "id": "subtitle",
       "label": "Subtítulo"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alinhamento do texto",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "center"
     },
     {
       "type": "image_picker",

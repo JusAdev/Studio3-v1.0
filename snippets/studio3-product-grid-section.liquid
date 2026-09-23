@@ -16,6 +16,7 @@
   - cta_text: {String} (opcional)
   - cta_url: {String} (opcional)
   - columns_desktop: {Number} (opcional, default 4)
+  - heading_alignment: {String} (opcional) — 'left'/'center'/'right', default 'center'
 
   Usage:
   {% render 'studio3-product-grid-section',
@@ -40,7 +41,7 @@
   assets/studio3-product-grid-section.css.
 {% endcomment %}
 <div class="studio3-grid-section page-width{% if template.name == 'product' %} studio3-grid-section--pdp{% endif %}">
-  <div class="studio3-grid-section__header">
+  <div class="studio3-grid-section__header" style="text-align: {{ heading_alignment | default: 'center' }};">
     <h2 class="studio3-grid-section__title">{{ heading | escape }}</h2>
     {%- if subtitle != blank -%}
       <p class="studio3-grid-section__subtitle">{{ subtitle | escape }}</p>

@@ -26,6 +26,15 @@
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'studio3-categories-nav.js' | asset_url }}" defer="defer"></script>
 {%- style -%}
+  #studio3-categories-nav-{{ section.id }} {
+    --studio3-cat-icon-bg: {{ section.settings.chip_bg_color }};
+    --studio3-cat-icon-border: {{ section.settings.chip_border_color }};
+    --studio3-cat-icon-text: {{ section.settings.chip_text_color }};
+    --studio3-cat-icon-icon: {{ section.settings.chip_icon_color }};
+    --studio3-cat-icon-bg-hover: {{ section.settings.chip_bg_color_hover }};
+    --studio3-cat-icon-border-hover: {{ section.settings.chip_border_color_hover }};
+  }
+
   .studio3-categories-nav-slider {
     position: relative;
     display: block;
@@ -80,22 +89,17 @@
     align-items: center;
     gap: 0.8rem;
     padding: 0.9rem 1.6rem 0.9rem 1.2rem;
-    /* Opacidade aumentada (0.25 -> ~0.6) só aqui — var(--studio3-border-subtle)
-       (a mesma cor base, rgb 223/223/228) fica quase invisível pra este
-       componente especificamente; manter a alteração local em vez de mudar o
-       token compartilhado, que também é usado em divisores de outras seções já
-       aprovadas com aquela opacidade mais sutil. */
-    border: 1px solid rgba(223, 223, 228, 0.6);
+    border: 1px solid var(--studio3-cat-icon-border);
     border-radius: 999px;
-    background: rgb(var(--color-background));
+    background: var(--studio3-cat-icon-bg);
     text-decoration: none;
     transition: border-color 0.2s ease, background-color 0.2s ease;
     -webkit-tap-highlight-color: transparent;
   }
 
   .studio3-cat-icon:hover {
-    border-color: var(--studio3-color-cobalt);
-    background-color: var(--studio3-color-cobalt-light);
+    border-color: var(--studio3-cat-icon-border-hover);
+    background-color: var(--studio3-cat-icon-bg-hover);
   }
 
   .studio3-cat-icon__img,
@@ -116,14 +120,14 @@
     stroke-width: 1.7;
     stroke-linecap: round;
     stroke-linejoin: round;
-    color: var(--studio3-color-ink-muted);
+    color: var(--studio3-cat-icon-icon);
   }
 
   .studio3-cat-icon__label {
     font-family: var(--font-body-family);
     font-size: 1.3rem;
     font-weight: 600;
-    color: var(--studio3-color-ink);
+    color: var(--studio3-cat-icon-text);
     letter-spacing: normal;
     white-space: nowrap;
   }
@@ -143,7 +147,11 @@
 
 <div id="studio3-categories-nav-{{ section.id }}" class="page-width">
   <nav aria-label="Categorias de produtos">
-    <studio3-categories-slider class="studio3-categories-nav-slider" data-speed="4">
+    <studio3-categories-slider
+      class="studio3-categories-nav-slider"
+      data-autoplay="{{ section.settings.autoplay }}"
+      data-speed="{{ section.settings.autoplay_speed }}"
+    >
       <ul
         id="Slider-{{ section.id }}"
         class="studio3-categories-nav slider slider--everywhere list-unstyled"
@@ -202,6 +210,66 @@
   "class": "section",
   "max_blocks": 16,
   "settings": [
+    {
+      "type": "header",
+      "content": "Navegação automática"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Avançar automaticamente",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Velocidade (segundos entre cada avanço)",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Cores"
+    },
+    {
+      "type": "color",
+      "id": "chip_bg_color",
+      "label": "Fundo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "chip_border_color",
+      "label": "Borda",
+      "default": "rgba(223, 223, 228, 0.6)"
+    },
+    {
+      "type": "color",
+      "id": "chip_text_color",
+      "label": "Texto",
+      "default": "#4C5154"
+    },
+    {
+      "type": "color",
+      "id": "chip_icon_color",
+      "label": "Ícone (só afeta ícones da biblioteca, não imagens personalizadas)",
+      "default": "#6B7479"
+    },
+    {
+      "type": "color",
+      "id": "chip_bg_color_hover",
+      "label": "Fundo (hover)",
+      "default": "#D6DEE3"
+    },
+    {
+      "type": "color",
+      "id": "chip_border_color_hover",
+      "label": "Borda (hover)",
+      "default": "#4F6478"
+    },
     {
       "type": "header",
       "content": "Espaçamento"

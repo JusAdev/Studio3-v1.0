@@ -16,6 +16,7 @@ class Studio3CategoriesSlider extends HTMLElement {
     this.nextButton = this.querySelector('[data-studio3-categories-next]');
     if (!this.track || !this.nextButton) return;
 
+    this.autoplayEnabled = this.dataset.autoplay !== 'false';
     this.autoplaySpeed = (Number(this.dataset.speed) || 4) * 1000;
     this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -25,15 +26,17 @@ class Studio3CategoriesSlider extends HTMLElement {
       this.play();
     });
 
-    this.addEventListener('mouseenter', () => this.pause());
-    this.addEventListener('mouseleave', () => this.play());
-    this.addEventListener('focusin', () => this.pause());
-    this.addEventListener('focusout', () => this.play());
-    this.reducedMotion.addEventListener('change', () => {
-      this.reducedMotion.matches ? this.pause() : this.play();
-    });
+    if (this.autoplayEnabled) {
+      this.addEventListener('mouseenter', () => this.pause());
+      this.addEventListener('mouseleave', () => this.play());
+      this.addEventListener('focusin', () => this.pause());
+      this.addEventListener('focusout', () => this.play());
+      this.reducedMotion.addEventListener('change', () => {
+        this.reducedMotion.matches ? this.pause() : this.play();
+      });
 
-    this.play();
+      this.play();
+    }
   }
 
   advance() {
@@ -56,7 +59,7 @@ class Studio3CategoriesSlider extends HTMLElement {
 
   play() {
     this.pause();
-    if (this.reducedMotion.matches) return;
+    if (!this.autoplayEnabled || this.reducedMotion.matches) return;
     this.autoplayTimer = setInterval(() => this.advance(), this.autoplaySpeed);
   }
 
