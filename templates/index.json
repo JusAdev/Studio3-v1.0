@@ -18,6 +18,7 @@
         "heading": "",
         "subtitle": "",
         "button_label": "",
+        "content_alignment": "center",
         "color_scheme": "scheme-1",
         "padding_top": 24,
         "padding_bottom": 24
@@ -29,7 +30,9 @@
         "cat-1": {
           "type": "category",
           "settings": {
+            "icon_source": "custom",
             "icon": "shopify://shop_images/mais-vendidos.png",
+            "icon_preset": "serum",
             "label": "Mais Vendidos",
             "link": "shopify://collections/all"
           }
@@ -37,7 +40,9 @@
         "cat-2": {
           "type": "category",
           "settings": {
+            "icon_source": "custom",
             "icon": "shopify://shop_images/ofertas-mes.png",
+            "icon_preset": "serum",
             "label": "Ofertas do mês",
             "link": "shopify://collections/all"
           }
@@ -45,7 +50,9 @@
         "cat-3": {
           "type": "category",
           "settings": {
+            "icon_source": "custom",
             "icon": "shopify://shop_images/sensoriais.png",
+            "icon_preset": "serum",
             "label": "Sensoriais",
             "link": "shopify://collections/all"
           }
@@ -53,7 +60,9 @@
         "cat-4": {
           "type": "category",
           "settings": {
+            "icon_source": "custom",
             "icon": "shopify://shop_images/alta-tecnologia.png",
+            "icon_preset": "serum",
             "label": "Alta Tecnologia",
             "link": "shopify://collections/all"
           }
@@ -61,7 +70,9 @@
         "cat-5": {
           "type": "category",
           "settings": {
+            "icon_source": "custom",
             "icon": "shopify://shop_images/mascaras.png",
+            "icon_preset": "serum",
             "label": "Máscaras",
             "link": "shopify://collections/mascaras"
           }
@@ -69,7 +80,9 @@
         "cat-6": {
           "type": "category",
           "settings": {
+            "icon_source": "custom",
             "icon": "shopify://shop_images/seruns.png",
+            "icon_preset": "serum",
             "label": "Séruns",
             "link": "shopify://collections/seruns"
           }
@@ -77,7 +90,9 @@
         "cat-7": {
           "type": "category",
           "settings": {
+            "icon_source": "custom",
             "icon": "shopify://shop_images/sabonetes.png",
+            "icon_preset": "serum",
             "label": "Sabonetes",
             "link": "shopify://collections/limpeza"
           }
@@ -85,7 +100,9 @@
         "cat-8": {
           "type": "category",
           "settings": {
+            "icon_source": "custom",
             "icon": "shopify://shop_images/protocolos.png",
+            "icon_preset": "serum",
             "label": "Protocolos",
             "link": "shopify://collections/kits"
           }
@@ -93,7 +110,9 @@
         "cat-9": {
           "type": "category",
           "settings": {
+            "icon_source": "custom",
             "icon": "shopify://shop_images/top-skincare.png",
+            "icon_preset": "serum",
             "label": "Top Skincare",
             "link": "shopify://collections/all"
           }
@@ -101,7 +120,9 @@
         "cat-10": {
           "type": "category",
           "settings": {
+            "icon_source": "custom",
             "icon": "shopify://shop_images/vitamina-c.png",
+            "icon_preset": "serum",
             "label": "Vitamina C",
             "link": "shopify://collections/vitamina-c"
           }
@@ -120,6 +141,14 @@
         "cat-10"
       ],
       "settings": {
+        "autoplay": true,
+        "autoplay_speed": 4,
+        "chip_bg_color": "#ffffff",
+        "chip_border_color": "#dfdfe499",
+        "chip_text_color": "#4c5154",
+        "chip_icon_color": "#6b7479",
+        "chip_bg_color_hover": "#d6dee3",
+        "chip_border_color_hover": "#4f6478",
         "padding_top": 28,
         "padding_bottom": 28
       }
@@ -130,25 +159,25 @@
         "p1": {
           "type": "product",
           "settings": {
-            "product": "calmskin"
+            "product": "age-matte-nano-serum-matificante-50ml-761218291"
           }
         },
         "p2": {
           "type": "product",
           "settings": {
-            "product": "floraty"
+            "product": "biowhite-nano-locao-clareadora-60ml-761218609"
           }
         },
         "p3": {
           "type": "product",
           "settings": {
-            "product": "skin-molecular"
+            "product": "black-secret-clareador-concentrado-60ml-761218632"
           }
         },
         "p4": {
           "type": "product",
           "settings": {
-            "product": "firm-flaccid"
+            "product": "black-secret-solucao-pre-peeling-desengordurante-120ml"
           }
         }
       },
@@ -161,6 +190,52 @@
       "settings": {
         "heading": "Os queridinhos das esteticistas",
         "subtitle": "Os dermocosméticos profissionais mais vendidos da Tulípia, formulados para protocolos de estética e skincare.",
+        "heading_alignment": "center",
+        "featured_product": "",
+        "cta_text": "Ver todos os Queridinhos",
+        "cta_url": "shopify://collections/all",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "studio3_bestsellers_yUHgCx": {
+      "type": "studio3-bestsellers",
+      "blocks": {
+        "product_tTVaiM": {
+          "type": "product",
+          "settings": {
+            "product": "calmskin"
+          }
+        },
+        "product_KWVphr": {
+          "type": "product",
+          "settings": {
+            "product": "floraty"
+          }
+        },
+        "product_JGc8yk": {
+          "type": "product",
+          "settings": {
+            "product": "skin-molecular"
+          }
+        },
+        "product_FMYLPB": {
+          "type": "product",
+          "settings": {
+            "product": "firm-flaccid"
+          }
+        }
+      },
+      "block_order": [
+        "product_tTVaiM",
+        "product_KWVphr",
+        "product_JGc8yk",
+        "product_FMYLPB"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "Os queridinhos das esteticistas",
+        "subtitle": "Os dermocosméticos profissionais mais vendidos da Tulípia, formulados para protocolos de estética e skincare.",
+        "heading_alignment": "center",
         "featured_product": "",
         "cta_text": "Ver todos os Queridinhos",
         "cta_url": "shopify://collections/all",
@@ -216,6 +291,7 @@
       "settings": {
         "heading": "Últimos Lançamentos",
         "subtitle": "As formulações mais recentes da Tulípia, prontas para entrar no seu protocolo.",
+        "heading_alignment": "center",
         "banner_image": "shopify://shop_images/banner-suplementos-v1_mod02.png",
         "banner_url": "shopify://collections/all",
         "cta_text": "Ver todos os Lançamentos",
@@ -333,6 +409,7 @@
       "settings": {
         "title": "Favoritos das Experts",
         "subtitle": "Os dermocosméticos que as profissionais da estética mais indicam nos seus protocolos.",
+        "heading_alignment": "left",
         "card_cta_label": "Ver produtos",
         "color_scheme": "scheme-1",
         "padding_top": 36,
@@ -402,6 +479,7 @@
       "settings": {
         "heading": "Tipos de Peles",
         "subtitle": "Encontre os ativos e as formulações certos para cada tipo de pele.",
+        "heading_alignment": "left",
         "color_scheme": "scheme-1",
         "label_bg_color": "#ffffffd9",
         "label_text_color": "#4c5154",
@@ -502,6 +580,7 @@
       "settings": {
         "heading": "Dermocosméticos Profissionais",
         "subtitle": "Dermocosméticos escolhidos por esteticistas, biomédicos e fisioterapeutas em todo o Brasil",
+        "heading_alignment": "center",
         "banner_image": "shopify://shop_images/banner-cat-marezi-v1.jpg",
         "banner_url": "shopify://collections/all",
         "cta_text": "",
@@ -514,9 +593,11 @@
       "settings": {
         "heading": "Blog",
         "subtitle": "Conteúdos exclusivos, assuntos do momento, novidades, protocolos especializados e as maiores tendências do universo da estética",
+        "heading_alignment": "left",
         "blog": "news",
         "posts_to_show": 4,
         "cta_text": "Ver todos os Blogs",
+        "updated_label": "Atualizado",
         "color_scheme": "scheme-7"
       }
     }
@@ -525,6 +606,7 @@
     "hero",
     "categories-nav",
     "bestsellers",
+    "studio3_bestsellers_yUHgCx",
     "promo-banner",
     "new-arrivals",
     "editorial-mosaic",
