@@ -577,6 +577,108 @@
         "p11",
         "p12"
       ],
+      "disabled": true,
+      "settings": {
+        "heading": "Dermocosméticos Profissionais",
+        "subtitle": "Dermocosméticos escolhidos por esteticistas, biomédicos e fisioterapeutas em todo o Brasil",
+        "heading_alignment": "center",
+        "banner_image": "shopify://shop_images/banner-cat-marezi-v1.jpg",
+        "banner_url": "shopify://collections/all",
+        "cta_text": "",
+        "cta_url": "",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "studio3_catalog_showcase_DELX3V": {
+      "type": "studio3-catalog-showcase",
+      "blocks": {
+        "product_cnjm7p": {
+          "type": "product",
+          "settings": {
+            "product": "firm-flaccid-1"
+          }
+        },
+        "product_WfW7xc": {
+          "type": "product",
+          "settings": {
+            "product": "hidrasol-fps-60"
+          }
+        },
+        "product_6qTrH4": {
+          "type": "product",
+          "settings": {
+            "product": "floraty-1"
+          }
+        },
+        "product_4eb47B": {
+          "type": "product",
+          "settings": {
+            "product": "dermo-estetic"
+          }
+        },
+        "product_Y3Kxcn": {
+          "type": "product",
+          "settings": {
+            "product": "minerals-24k"
+          }
+        },
+        "product_FAA47B": {
+          "type": "product",
+          "settings": {
+            "product": "primavera-mask"
+          }
+        },
+        "product_jbicmG": {
+          "type": "product",
+          "settings": {
+            "product": "hidrasol-fps-30"
+          }
+        },
+        "product_9td3EY": {
+          "type": "product",
+          "settings": {
+            "product": "marezi"
+          }
+        },
+        "product_BinGhY": {
+          "type": "product",
+          "settings": {
+            "product": "calmskin"
+          }
+        },
+        "product_FBBTd8": {
+          "type": "product",
+          "settings": {
+            "product": "skin-molecular"
+          }
+        },
+        "product_xxgheL": {
+          "type": "product",
+          "settings": {
+            "product": "niacine"
+          }
+        },
+        "product_iKQtrV": {
+          "type": "product",
+          "settings": {
+            "product": "rotina-proskin-ultra-hidratante"
+          }
+        }
+      },
+      "block_order": [
+        "product_cnjm7p",
+        "product_WfW7xc",
+        "product_6qTrH4",
+        "product_4eb47B",
+        "product_Y3Kxcn",
+        "product_FAA47B",
+        "product_jbicmG",
+        "product_9td3EY",
+        "product_BinGhY",
+        "product_FBBTd8",
+        "product_xxgheL",
+        "product_iKQtrV"
+      ],
       "settings": {
         "heading": "Dermocosméticos Profissionais",
         "subtitle": "Dermocosméticos escolhidos por esteticistas, biomédicos e fisioterapeutas em todo o Brasil",
@@ -613,6 +715,7 @@
     "experts",
     "skin-types",
     "catalog-showcase",
+    "studio3_catalog_showcase_DELX3V",
     "blog"
   ]
 }
