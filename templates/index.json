@@ -592,92 +592,92 @@
     "studio3_catalog_showcase_DELX3V": {
       "type": "studio3-catalog-showcase",
       "blocks": {
-        "product_cnjm7p": {
-          "type": "product",
-          "settings": {
-            "product": "firm-flaccid-1"
-          }
-        },
-        "product_WfW7xc": {
-          "type": "product",
-          "settings": {
-            "product": "hidrasol-fps-60"
-          }
-        },
-        "product_6qTrH4": {
-          "type": "product",
-          "settings": {
-            "product": "floraty-1"
-          }
-        },
-        "product_4eb47B": {
-          "type": "product",
-          "settings": {
-            "product": "dermo-estetic"
-          }
-        },
-        "product_Y3Kxcn": {
-          "type": "product",
-          "settings": {
-            "product": "minerals-24k"
-          }
-        },
         "product_FAA47B": {
           "type": "product",
           "settings": {
-            "product": "primavera-mask"
-          }
-        },
-        "product_jbicmG": {
-          "type": "product",
-          "settings": {
-            "product": "hidrasol-fps-30"
-          }
-        },
-        "product_9td3EY": {
-          "type": "product",
-          "settings": {
-            "product": "marezi"
-          }
-        },
-        "product_BinGhY": {
-          "type": "product",
-          "settings": {
-            "product": "calmskin"
+            "product": "kit-sweet-lips-gloss-esfoliante-761231600"
           }
         },
         "product_FBBTd8": {
           "type": "product",
           "settings": {
-            "product": "skin-molecular"
+            "product": "kit-sweet-lips-gloss-esfoliante-e-espuma-labial-baby-lips-hidragloss-levesque-tutti-frutti-761231647"
           }
         },
         "product_xxgheL": {
           "type": "product",
           "settings": {
-            "product": "niacine"
+            "product": "levesque-espuma-labial-hidratante-rejuvenescedora-baby-lips-745667477"
           }
         },
         "product_iKQtrV": {
           "type": "product",
           "settings": {
-            "product": "rotina-proskin-ultra-hidratante"
+            "product": "esfoliante-rejuvenescimento-labial-baby-lips-tuti-fruti-levesque-745667626"
+          }
+        },
+        "product_jbicmG": {
+          "type": "product",
+          "settings": {
+            "product": "stellar-mask-mascara-matificante-tulipia-761230750"
+          }
+        },
+        "product_BinGhY": {
+          "type": "product",
+          "settings": {
+            "product": "kit-sweet-lips-chokola-tulipia-gloss-esfoliante-mascara-761231586"
+          }
+        },
+        "product_9td3EY": {
+          "type": "product",
+          "settings": {
+            "product": "dermo-estetic-mascara-nutri-calm-200mg-763785227"
+          }
+        },
+        "product_Y3Kxcn": {
+          "type": "product",
+          "settings": {
+            "product": "mascara-rejuvenescedora-stellar-mask-tulipia-761230701"
+          }
+        },
+        "product_cnjm7p": {
+          "type": "product",
+          "settings": {
+            "product": "marezi-nano-sabonete-hidratante-110ml"
+          }
+        },
+        "product_WfW7xc": {
+          "type": "product",
+          "settings": {
+            "product": "hidrasol-fotoprotetor-facial-fps-60-ppd-20-50g-761227866"
+          }
+        },
+        "product_6qTrH4": {
+          "type": "product",
+          "settings": {
+            "product": "firm-flaccid-nano-fluido-remineralizante-300ml"
+          }
+        },
+        "product_4eb47B": {
+          "type": "product",
+          "settings": {
+            "product": "age-matte-nano-serum-matificante-50ml-761218291"
           }
         }
       },
       "block_order": [
+        "product_FAA47B",
+        "product_FBBTd8",
+        "product_xxgheL",
+        "product_iKQtrV",
+        "product_jbicmG",
+        "product_BinGhY",
+        "product_9td3EY",
+        "product_Y3Kxcn",
         "product_cnjm7p",
         "product_WfW7xc",
         "product_6qTrH4",
-        "product_4eb47B",
-        "product_Y3Kxcn",
-        "product_FAA47B",
-        "product_jbicmG",
-        "product_9td3EY",
-        "product_BinGhY",
-        "product_FBBTd8",
-        "product_xxgheL",
-        "product_iKQtrV"
+        "product_4eb47B"
       ],
       "settings": {
         "heading": "Dermocosméticos Profissionais",
