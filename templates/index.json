@@ -11,6 +11,7 @@
   "sections": {
     "hero": {
       "type": "studio3-hero",
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/banner-principal-v1_mod01_0015df03-6e83-4cd8-88dc-48a7b6c79d25.png",
         "mobile_image": "shopify://shop_images/banner-mobile-v1_mod00.png",
@@ -39,10 +40,66 @@
             "content_alignment": "center",
             "color_scheme": ""
           }
+        },
+        "slide_e8xbqh": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Hero-2-Tulipia.png",
+            "mobile_image": "shopify://shop_images/Hero-2-Tulipia-mobile_mod00.png",
+            "link": "",
+            "heading": "",
+            "subtitle": "",
+            "button_label": "",
+            "content_alignment": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_4YjU4T": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Hero-5-MOM_mod00.png",
+            "mobile_image": "shopify://shop_images/Hero-5-MOM-mobile_mod00.png",
+            "link": "",
+            "heading": "",
+            "subtitle": "",
+            "button_label": "",
+            "content_alignment": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_HaLCrk": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Hero-4-niacine_mod00.png",
+            "mobile_image": "shopify://shop_images/Hero-4-niacine-mobile_mod00.png",
+            "link": "",
+            "heading": "",
+            "subtitle": "",
+            "button_label": "",
+            "content_alignment": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_djPX86": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Hero-3-smartgr_mod00.png",
+            "mobile_image": "shopify://shop_images/Hero-3-smartgr-mobile_mod00.png",
+            "link": "",
+            "heading": "",
+            "subtitle": "",
+            "button_label": "",
+            "content_alignment": "center",
+            "color_scheme": ""
+          }
         }
       },
       "block_order": [
-        "slide_86TFgK"
+        "slide_86TFgK",
+        "slide_e8xbqh",
+        "slide_4YjU4T",
+        "slide_HaLCrk",
+        "slide_djPX86"
       ],
       "name": "Studio3 Hero Multi",
       "settings": {
