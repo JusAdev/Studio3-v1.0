@@ -295,7 +295,15 @@
       </div>
 
       {%- if section.blocks.size > 1 -%}
-        <div class="studio3-hero-multi__indicator slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' %} caption{% endif %}">
+        {%- comment -%}
+          A classe "slider-buttons" aqui é funcional, não visual: o construtor da
+          SlideshowComponent nativa (assets/global.js) faz
+          `this.querySelector('.slider-buttons')` e retorna cedo (sem configurar
+          autoplay nem o clique nos dots) se não encontrar nenhum elemento com essa
+          classe em algum lugar do componente — mesmo com o layout tendo mudado
+          (setas nas laterais, dots abaixo), o marcador precisa continuar existindo.
+        {%- endcomment -%}
+        <div class="studio3-hero-multi__indicator slider-buttons slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' %} caption{% endif %}">
           {%- if section.settings.slider_visual == 'counter' -%}
             <span class="slider-counter--current">1</span>
             <span aria-hidden="true"> / </span>

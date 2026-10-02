@@ -1,8 +1,9 @@
 {% comment %}
   Seção "Os queridinhos das esteticistas" — vitrine da home com cabeçalho, um
   produto em destaque (card maior, 2 colunas/2 linhas) e uma grade regular de
-  até 4 produtos, seguida de um link "ver todos". Referência:
-  Home-layout.html, linhas 490-722.
+  produtos (sem limite de blocos — o CSS Grid já empilha automaticamente em
+  novas linhas conforme mais produtos são adicionados), seguida de um link
+  "ver todos". Referência: Home-layout.html, linhas 490-722.
 
   Todo o markup/CSS do padrão cabeçalho + grid + CTA vem de
   snippets/studio3-product-grid-section.liquid (não duplicar aqui — só passar
@@ -26,7 +27,6 @@
   "name": "Studio3 - Queridinhos",
   "tag": "section",
   "class": "section",
-  "max_blocks": 4,
   "settings": [
     {
       "type": "text",
