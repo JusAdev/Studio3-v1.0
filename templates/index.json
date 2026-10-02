@@ -104,7 +104,7 @@
       "name": "Studio3 Hero Multi",
       "settings": {
         "auto_rotate": true,
-        "change_slides_speed": 5,
+        "change_slides_speed": 3,
         "slider_visual": "dots",
         "padding_top": 24,
         "padding_bottom": 24
