@@ -226,6 +226,7 @@
         "cat-9",
         "cat-10"
       ],
+      "disabled": true,
       "settings": {
         "autoplay": true,
         "autoplay_speed": 4,
@@ -492,6 +493,7 @@
         "e5",
         "e6"
       ],
+      "disabled": true,
       "settings": {
         "title": "Favoritos das Experts",
         "subtitle": "Os dermocosméticos que as profissionais da estética mais indicam nos seus protocolos.",
@@ -562,6 +564,7 @@
         "s5",
         "s6"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Tipos de Peles",
         "subtitle": "Encontre os ativos e as formulações certos para cada tipo de pele.",
