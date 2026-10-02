@@ -82,26 +82,67 @@
     height: auto;
   }
 
-  /* Setas + indicador flutuando sobre a base do banner (não embaixo dele, como a
-     seção nativa "Slideshow" faz por padrão) — mantém o visual compacto da Hero
-     original, igual em qualquer esquema de cor já que o fundo é sempre branco
-     translúcido. */
-  .studio3-hero-multi .slider-buttons {
+  /* Pedido do cliente: setas nas LATERAIS do banner (sobre a imagem, uma de cada
+     lado) e os dots/contador ABAIXO do banner (fora da imagem, não sobrepostos) —
+     não o padrão nativo do Dawn (que agrupa setas+indicador num só bloco). */
+  .studio3-hero-multi__viewport {
+    position: relative;
+  }
+
+  .studio3-hero-multi__nav {
     position: absolute;
-    left: 50%;
-    bottom: 1.2rem;
-    transform: translateX(-50%);
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 2;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
     background: rgba(255, 255, 255, 0.85);
-    border-radius: 999px;
-    padding: 0.2rem 0.4rem;
+    color: var(--studio3-color-ink);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
   }
 
-  .studio3-hero-multi .slider-button {
-    color: var(--studio3-color-ink);
+  .studio3-hero-multi__nav:hover {
+    background: #fff;
+  }
+
+  .studio3-hero-multi__nav--prev {
+    left: 1.2rem;
+  }
+
+  .studio3-hero-multi__nav--next {
+    right: 1.2rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .studio3-hero-multi__nav {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
+
+    .studio3-hero-multi__nav--prev {
+      left: 0.6rem;
+    }
+
+    .studio3-hero-multi__nav--next {
+      right: 0.6rem;
+    }
+  }
+
+  .studio3-hero-multi__indicator {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.2rem;
+  }
+
+  .studio3-hero-multi__indicator .slideshow__control-wrapper {
+    gap: 0.6rem;
   }
 
   #studio3-hero-multi-{{ section.id }} {
@@ -129,58 +170,28 @@
       aria-roledescription="{{ 'sections.slideshow.carousel' | t }}"
       aria-label="Carrossel de banners"
     >
-      {%- if section.settings.auto_rotate and section.blocks.size > 1 -%}
-        <div class="slider-buttons">
+      <div class="studio3-hero-multi__viewport">
+        {%- if section.blocks.size > 1 -%}
           <button
             type="button"
-            class="slider-button slider-button--prev"
+            class="studio3-hero-multi__nav studio3-hero-multi__nav--prev slider-button slider-button--prev"
             name="previous"
             aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
             aria-controls="Slider-{{ section.id }}"
           >
             <span class="svg-wrapper">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
           </button>
-          <div class="slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' %} caption{% endif %}">
-            {%- if section.settings.slider_visual == 'counter' -%}
-              <span class="slider-counter--current">1</span>
-              <span aria-hidden="true"> / </span>
-              <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
-              <span class="slider-counter--total">{{ section.blocks.size }}</span>
-            {%- else -%}
-              <div class="slideshow__control-wrapper">
-                {%- for block in section.blocks -%}
-                  <button
-                    class="slider-counter__link slider-counter__link--dots link"
-                    aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
-                    aria-controls="Slider-{{ section.id }}"
-                  >
-                    <span class="dot"></span>
-                  </button>
-                {%- endfor -%}
-              </div>
-            {%- endif -%}
-          </div>
-          <button
-            type="button"
-            class="slider-button slider-button--next"
-            name="next"
-            aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
-            aria-controls="Slider-{{ section.id }}"
-          >
-            <span class="svg-wrapper">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
-          </button>
-        </div>
-      {%- endif -%}
+        {%- endif -%}
 
-      <div
-        class="studio3-hero-multi__track grid grid--1-col slider slider--everywhere"
-        id="Slider-{{ section.id }}"
-        aria-live="polite"
-        aria-atomic="true"
-        data-autoplay="{{ section.settings.auto_rotate }}"
-        data-speed="{{ section.settings.change_slides_speed }}"
-      >
-        {%- for block in section.blocks -%}
+        <div
+          class="studio3-hero-multi__track grid grid--1-col slider slider--everywhere"
+          id="Slider-{{ section.id }}"
+          aria-live="polite"
+          aria-atomic="true"
+          data-autoplay="{{ section.settings.auto_rotate }}"
+          data-speed="{{ section.settings.change_slides_speed }}"
+        >
+          {%- for block in section.blocks -%}
           {%- liquid
             assign has_content = false
             if block.settings.heading != blank or block.settings.subtitle != blank or block.settings.button_label != blank
@@ -267,49 +278,42 @@
               </div>
             {%- endif -%}
           </div>
-        {%- endfor -%}
-      </div>
+          {%- endfor -%}
+        </div>
 
-      {%- if section.blocks.size > 1 and section.settings.auto_rotate == false -%}
-        <div class="slider-buttons">
+        {%- if section.blocks.size > 1 -%}
           <button
             type="button"
-            class="slider-button slider-button--prev"
-            name="previous"
-            aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
-            aria-controls="Slider-{{ section.id }}"
-          >
-            <span class="svg-wrapper">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
-          </button>
-          <div class="slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' %} caption{% endif %}">
-            {%- if section.settings.slider_visual == 'counter' -%}
-              <span class="slider-counter--current">1</span>
-              <span aria-hidden="true"> / </span>
-              <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
-              <span class="slider-counter--total">{{ section.blocks.size }}</span>
-            {%- else -%}
-              <div class="slideshow__control-wrapper">
-                {%- for block in section.blocks -%}
-                  <button
-                    class="slider-counter__link slider-counter__link--dots link"
-                    aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
-                    aria-controls="Slider-{{ section.id }}"
-                  >
-                    <span class="dot"></span>
-                  </button>
-                {%- endfor -%}
-              </div>
-            {%- endif -%}
-          </div>
-          <button
-            type="button"
-            class="slider-button slider-button--next"
+            class="studio3-hero-multi__nav studio3-hero-multi__nav--next slider-button slider-button--next"
             name="next"
             aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
             aria-controls="Slider-{{ section.id }}"
           >
             <span class="svg-wrapper">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
           </button>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 1 -%}
+        <div class="studio3-hero-multi__indicator slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' %} caption{% endif %}">
+          {%- if section.settings.slider_visual == 'counter' -%}
+            <span class="slider-counter--current">1</span>
+            <span aria-hidden="true"> / </span>
+            <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+            <span class="slider-counter--total">{{ section.blocks.size }}</span>
+          {%- else -%}
+            <div class="slideshow__control-wrapper">
+              {%- for block in section.blocks -%}
+                <button
+                  class="slider-counter__link slider-counter__link--dots link"
+                  aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                  aria-controls="Slider-{{ section.id }}"
+                >
+                  <span class="dot"></span>
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
         </div>
       {%- endif -%}
     </slideshow-component>
