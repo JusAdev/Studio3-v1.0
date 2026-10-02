@@ -386,6 +386,58 @@
         "color_scheme": "scheme-1"
       }
     },
+    "studio3_catalog_showcase_MeymbB": {
+      "type": "studio3-catalog-showcase",
+      "blocks": {
+        "product_LekC98": {
+          "type": "product",
+          "settings": {
+            "product": "gloss-labial-baby-lips-tutty-fruti-volume-labios-levesque-745667317"
+          }
+        },
+        "product_Ujey3Q": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
+        },
+        "product_YReVAx": {
+          "type": "product",
+          "settings": {
+            "product": "levesque-espuma-labial-hidratante-rejuvenescedora-baby-lips-745667477"
+          }
+        },
+        "product_kE7rFx": {
+          "type": "product",
+          "settings": {
+            "product": "esfoliante-rejuvenescimento-labial-baby-lips-tuti-fruti-levesque-745667626"
+          }
+        },
+        "product_LEmcKX": {
+          "type": "product",
+          "settings": {
+            "product": "kit-labial-baby-lips-gloss-esfoliante-e-espuma-tuti-frutti-levesque-745668777"
+          }
+        }
+      },
+      "block_order": [
+        "product_LekC98",
+        "product_Ujey3Q",
+        "product_YReVAx",
+        "product_kE7rFx",
+        "product_LEmcKX"
+      ],
+      "settings": {
+        "heading": "Dermocosméticos Profissionais",
+        "subtitle": "Dermocosméticos escolhidos por esteticistas, biomédicos e fisioterapeutas em todo o Brasil",
+        "heading_alignment": "center",
+        "banner_image": "shopify://shop_images/FX-D-baby_mod00.png",
+        "banner_url": "shopify://collections/all",
+        "cta_text": "",
+        "cta_url": "",
+        "color_scheme": "scheme-1"
+      }
+    },
     "editorial-mosaic": {
       "type": "studio3-editorial-mosaic",
       "blocks": {
@@ -429,7 +481,7 @@
         "color_scheme": "scheme-1",
         "button_bg_color": "#ffffffd9",
         "button_text_color": "#4c5154",
-        "padding_top": 36,
+        "padding_top": 100,
         "padding_bottom": 36
       }
     },
@@ -772,7 +824,6 @@
         "heading": "Dermocosméticos Profissionais",
         "subtitle": "Dermocosméticos escolhidos por esteticistas, biomédicos e fisioterapeutas em todo o Brasil",
         "heading_alignment": "center",
-        "banner_image": "shopify://shop_images/FX-D-baby_mod00.png",
         "banner_url": "shopify://collections/all",
         "cta_text": "",
         "cta_url": "",
@@ -802,6 +853,7 @@
     "studio3_bestsellers_yUHgCx",
     "promo-banner",
     "new-arrivals",
+    "studio3_catalog_showcase_MeymbB",
     "editorial-mosaic",
     "experts",
     "skin-types",
