@@ -391,7 +391,7 @@
         "tile-1": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/banner-proskin-v1.jpg",
+            "image": "shopify://shop_images/FX-A-HIDRA.png",
             "link": "shopify://collections/all",
             "button_label": "Ver Produto",
             "alt_text": "ProSkin Repair - Onde a pele reencontra sua força",
@@ -401,7 +401,7 @@
         "tile-2": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/banner-mini-dermo-v1.jpg",
+            "image": "shopify://shop_images/FX-B-LIMP.png",
             "link": "shopify://products/linha-dermo-estetic",
             "button_label": "Ver Produto",
             "alt_text": "Linha Dermo Estetic para Limpeza de pele",
@@ -411,7 +411,7 @@
         "tile-3": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/banner-ampolas-v1.jpg",
+            "image": "shopify://shop_images/FX-C-TRICO.png",
             "link": "shopify://collections/ampolas",
             "button_label": "Ver Produto",
             "alt_text": "Ampolas para uso de microagulhamento",
