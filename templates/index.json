@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -11,6 +20,35 @@
         "button_label": "",
         "content_alignment": "center",
         "color_scheme": "scheme-1",
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
+    },
+    "studio3_hero_multi_xFyG49": {
+      "type": "studio3-hero-multi",
+      "blocks": {
+        "slide_86TFgK": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Hero-1-VitaDerm_mod00.png",
+            "mobile_image": "shopify://shop_images/Hero-1-VitaDerm_mod00.png",
+            "link": "",
+            "heading": "",
+            "subtitle": "",
+            "button_label": "",
+            "content_alignment": "center",
+            "color_scheme": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_86TFgK"
+      ],
+      "name": "Studio3 Hero Multi",
+      "settings": {
+        "auto_rotate": true,
+        "change_slides_speed": 5,
+        "slider_visual": "dots",
         "padding_top": 24,
         "padding_bottom": 24
       }
@@ -697,6 +735,7 @@
   },
   "order": [
     "hero",
+    "studio3_hero_multi_xFyG49",
     "categories-nav",
     "bestsellers",
     "studio3_bestsellers_yUHgCx",
