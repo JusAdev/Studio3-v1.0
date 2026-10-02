@@ -145,6 +145,16 @@
     gap: 0.6rem;
   }
 
+  /* Botão funcional, não decorativo — ver comentário junto do markup abaixo
+     (precisa existir pra SlideshowComponent nativa não quebrar o autoplay),
+     mas nosso design não tem um controle de play/pause visível. Escondido
+     via regra escoparada (vence ".slider-button" do Dawn independente da
+     ordem de carregamento do CSS) em vez de só ".visually-hidden" — o
+     ".slider-button" nativo redefine width/height na mesma especificidade. */
+  .studio3-hero-multi .slideshow__autoplay {
+    display: none;
+  }
+
   #studio3-hero-multi-{{ section.id }} {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
@@ -170,6 +180,23 @@
       aria-roledescription="{{ 'sections.slideshow.carousel' | t }}"
       aria-label="Carrossel de banners"
     >
+      {%- if section.blocks.size > 1 and section.settings.auto_rotate -%}
+        {%- comment -%}
+          Botão oculto, não decorativo: o construtor da SlideshowComponent nativa
+          (assets/global.js, método setAutoPlay) só chama `this.play()` direto
+          quando encontra ".slideshow__autoplay" — sem ele, cai no branch que lê
+          `this.reducedMotion.matches`, variável que só existe se a seção também
+          tiver um ".announcement-bar-slider" (não é o nosso caso), e quebra com
+          "Cannot read properties of undefined" ANTES de chamar play() — é por
+          isso que o autoplay nunca rodava, mesmo com "auto_rotate" ativado. Como
+          o design aqui não previu um controle de play/pause visível, o botão
+          existe só pra satisfazer esse caminho do código nativo.
+        {%- endcomment -%}
+        <button type="button" class="slideshow__autoplay slider-button" aria-hidden="true" tabindex="-1">
+          <span class="svg-wrapper">{{- 'icon-pause.svg' | inline_asset_content -}}</span>
+          <span class="svg-wrapper">{{- 'icon-play.svg' | inline_asset_content -}}</span>
+        </button>
+      {%- endif -%}
       <div class="studio3-hero-multi__viewport">
         {%- if section.blocks.size > 1 -%}
           <button
