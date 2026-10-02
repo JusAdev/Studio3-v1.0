@@ -781,6 +781,7 @@
     },
     "blog": {
       "type": "studio3-blog",
+      "disabled": true,
       "settings": {
         "heading": "Blog",
         "subtitle": "Conteúdos exclusivos, assuntos do momento, novidades, protocolos especializados e as maiores tendências do universo da estética",
