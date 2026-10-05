@@ -65,8 +65,9 @@
         "payment_discover": true,
         "payment_aura": true,
         "payment_jbc": true,
-        "show_policy": true,
-        "cnpj_address": "<p>CNPJ: 02.944.683/0001-60 · Rua 15, 1969 — Setor Marista, Goiânia/GO</p>",
+        "show_policy": false,
+        "cnpj_address": "<p>Rua Doutor Mário Vicente - Vila Dom Pedro I - São Paulo<br/>© 2026 STD3 - VENDAS & NEGOCIOS LTDA CNPJ: 30.975.418/0001-85<br/><br/></p>",
+        "cnpj_alignment": "center",
         "margin_top": 0,
         "padding_top": 36,
         "padding_bottom": 36
