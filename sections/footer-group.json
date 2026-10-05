@@ -30,7 +30,7 @@
         "profissionais": {
           "type": "link_list",
           "settings": {
-            "heading": "Para Profissionais",
+            "heading": "Políticas",
             "menu": "footer-profissionais"
           }
         },
@@ -38,11 +38,16 @@
           "type": "text",
           "settings": {
             "heading": "Fale Conosco",
-            "subtext": "<p>Matriz — Goiânia/GO<br>(62) 3223-7695</p><p>Filial — Presidente Prudente/SP<br>(18) 3909-3801</p>"
+            "subtext": "<p>Telefone:<br/>(11) 94867-4922</p><p>contato@studio3cosmeticos.com.br</p>"
           }
         }
       },
-      "block_order": ["brand", "institucional", "profissionais", "contato"],
+      "block_order": [
+        "brand",
+        "institucional",
+        "profissionais",
+        "contato"
+      ],
       "settings": {
         "color_scheme": "scheme-dad009bc-9a4a-426f-a9a2-90d3398eb50e",
         "newsletter_enable": false,
