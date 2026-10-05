@@ -465,7 +465,7 @@
     </div>
     {%- if section.settings.cnpj_address != blank -%}
       <div class="footer__content-bottom-wrapper page-width footer__content-bottom-wrapper--center">
-        <div class="studio3-footer__cnpj studio3-footer__cnpj--{{ section.settings.cnpj_alignment }} rte caption" style="padding-top: {{ section.settings.cnpj_padding_top }}px; padding-bottom: {{ section.settings.cnpj_padding_bottom }}px;">{{ section.settings.cnpj_address }}</div>
+        <div class="studio3-footer__cnpj studio3-footer__cnpj--{{ section.settings.cnpj_alignment }} rte caption">{{ section.settings.cnpj_address }}</div>
       </div>
     {%- endif -%}
   </div>
@@ -710,26 +710,6 @@
         { "value": "right", "label": "Direita" }
       ],
       "default": "center"
-    },
-    {
-      "type": "range",
-      "id": "cnpj_padding_top",
-      "label": "Espaço acima do CNPJ e endereço",
-      "min": 0,
-      "max": 100,
-      "step": 2,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "cnpj_padding_bottom",
-      "label": "Espaço abaixo do CNPJ e endereço",
-      "min": 0,
-      "max": 100,
-      "step": 2,
-      "unit": "px",
-      "default": 0
     },
     {
       "type": "header",
