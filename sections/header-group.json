@@ -45,9 +45,14 @@
         "padding_top": 16,
         "padding_bottom": 16
       }
+    },
+    "studio3_whatsapp": {
+      "type": "studio3-whatsapp-button",
+      "settings": {}
     }
   },
   "order": [
-    "header"
+    "header",
+    "studio3_whatsapp"
   ]
 }
