@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.header.name",
   "type": "header",
@@ -26,21 +35,32 @@
           }
         }
       },
-      "block_order": ["promo-profissional", "promo-homecare"],
+      "block_order": [
+        "promo-profissional",
+        "promo-homecare"
+      ],
       "settings": {
         "shipping_threshold": 500,
         "shipping_text_incomplete": "Faltam [valor] para o frete grátis",
         "shipping_text_complete": "Você ganhou frete grátis!",
-        "color_scheme": "scheme-1",
-        "menu_color_scheme": "scheme-1",
+        "shipping_bg_incomplete": "#d6dee3",
+        "shipping_text_color_incomplete": "#1b3e69",
+        "shipping_bg_complete": "#e2eddf",
+        "shipping_text_color_complete": "#1d9001",
+        "shipping_progress_start_color": "#7bacdc",
+        "shipping_progress_middle_color": "#3783cc",
+        "shipping_progress_end_color": "#1b3e69",
+        "shipping_progress_complete_color": "#2d8019",
         "logo_position": "middle-left",
+        "mobile_logo_position": "center",
         "menu": "main-menu",
         "menu_type_desktop": "mega",
         "sticky_header_type": "always",
         "show_line_separator": false,
+        "color_scheme": "scheme-1",
+        "menu_color_scheme": "scheme-1",
         "enable_country_selector": false,
         "enable_language_selector": false,
-        "mobile_logo_position": "center",
         "margin_bottom": 0,
         "padding_top": 16,
         "padding_bottom": 16
@@ -48,7 +68,15 @@
     },
     "studio3_whatsapp": {
       "type": "studio3-whatsapp-button",
-      "settings": {}
+      "settings": {
+        "phone": "5511948674922",
+        "message": "Olá! Gostaria de mais informações.",
+        "label": "Fale conosco pelo WhatsApp",
+        "position": "right",
+        "color": "#25d366",
+        "offset_desktop": 24,
+        "offset_mobile": 24
+      }
     }
   },
   "order": [
