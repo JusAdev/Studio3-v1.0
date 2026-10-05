@@ -31,7 +31,7 @@
           "type": "link_list",
           "settings": {
             "heading": "Políticas",
-            "menu": "footer-profissionais"
+            "menu": "menu-pol-ticas"
           }
         },
         "contato": {
