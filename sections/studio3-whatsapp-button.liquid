@@ -1,0 +1,141 @@
+{%- liquid
+  assign digits = section.settings.phone | strip | replace: ' ', '' | replace: '+', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' | replace: '.', ''
+  assign message_param = section.settings.message | url_encode | replace: '+', '%20'
+-%}
+
+{%- if digits != blank -%}
+  <a
+    href="https://wa.me/{{ digits }}{% if message_param != blank %}?text={{ message_param }}{% endif %}"
+    class="studio3-whatsapp studio3-whatsapp--{{ section.settings.position }}"
+    target="_blank"
+    rel="noopener"
+    aria-label="{{ section.settings.label | escape }}"
+  >
+    <svg
+      class="studio3-whatsapp__icon"
+      viewBox="0 0 24 24"
+      width="28"
+      height="28"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M12 2a10 10 0 0 0-8.66 15L2 22l5.2-1.36A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    </svg>
+  </a>
+{%- endif -%}
+
+{%- style -%}
+  .studio3-whatsapp {
+    position: fixed;
+    bottom: {{ section.settings.offset_mobile }}px;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5.6rem;
+    height: 5.6rem;
+    border-radius: 50%;
+    background: {{ section.settings.color }};
+    color: #fff;
+    box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.18);
+    text-decoration: none;
+  }
+
+  .studio3-whatsapp--right {
+    right: 1.6rem;
+  }
+
+  .studio3-whatsapp--left {
+    left: 1.6rem;
+  }
+
+  .studio3-whatsapp:hover {
+    opacity: 0.92;
+  }
+
+  .studio3-whatsapp:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .studio3-whatsapp {
+      bottom: {{ section.settings.offset_desktop }}px;
+      width: 6rem;
+      height: 6rem;
+    }
+
+    .studio3-whatsapp--right {
+      right: 2.4rem;
+    }
+
+    .studio3-whatsapp--left {
+      left: 2.4rem;
+    }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Studio3 - WhatsApp",
+  "tag": "div",
+  "class": "studio3-whatsapp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Número do WhatsApp",
+      "info": "Com DDI e DDD, só números. Ex.: 5562999999999. Deixe em branco para não exibir o botão.",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Mensagem inicial",
+      "default": "Olá! Gostaria de mais informações."
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Texto para leitores de tela",
+      "default": "Fale conosco pelo WhatsApp"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Posição",
+      "options": [
+        { "value": "right", "label": "Direita" },
+        { "value": "left", "label": "Esquerda" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Cor do botão",
+      "default": "#25d366"
+    },
+    {
+      "type": "range",
+      "id": "offset_desktop",
+      "label": "Distância da borda inferior (desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "offset_mobile",
+      "label": "Distância da borda inferior (celular)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    }
+  ]
+}
+{% endschema %}
