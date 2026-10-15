@@ -114,12 +114,31 @@
               aria-current="page"
             {% endif %}
           >
-            <span class="{% if link.current %}header__active-menu-item {% endif %}{% if link.title == 'Oferta do mês' %}studio3-nav-gradient-text{% endif %}">
+            <span class="{% if link.current %}header__active-menu-item{% endif %}">
               {{- link.title | escape -}}
             </span>
           </a>
         {%- endif -%}
       </li>
     {%- endfor -%}
+
+    {%- comment -%}
+      Item "Oferta do mês" não vem mais do linklist "main-menu" — ficava
+      amarrado ao título exato do link ("Oferta do mês"), o que quebrava
+      silenciosamente se alguém reordenasse ou renomeasse o item no Admin.
+      Agora é um elemento próprio, com texto/link/ativação pelos settings
+      da seção (ver schema), independente de qualquer menu de navegação.
+    {%- endcomment -%}
+    {%- if section.settings.oferta_enabled and section.settings.oferta_url != blank -%}
+      <li>
+        <a
+          id="HeaderMenu-studio3-oferta"
+          href="{{ section.settings.oferta_url }}"
+          class="header__menu-item list-menu__item link link--text focus-inset"
+        >
+          <span class="studio3-nav-gradient-text">{{ section.settings.oferta_text | escape }}</span>
+        </a>
+      </li>
+    {%- endif -%}
   </ul>
 </nav>

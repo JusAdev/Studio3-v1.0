@@ -137,6 +137,18 @@
                   {%- endif -%}
                 </li>
               {%- endfor -%}
+
+              {%- if section.settings.oferta_enabled and section.settings.oferta_url != blank -%}
+                <li>
+                  <a
+                    id="HeaderDrawer-studio3-oferta"
+                    href="{{ section.settings.oferta_url }}"
+                    class="menu-drawer__menu-item list-menu__item link link--text focus-inset"
+                  >
+                    {{ section.settings.oferta_text | escape }}
+                  </a>
+                </li>
+              {%- endif -%}
             </ul>
           </nav>
           {%- if shop.customer_accounts_enabled -%}
@@ -154,12 +166,18 @@
                 </li>
               {%- else -%}
                 <li>
-                  <a href="{{ routes.account_login_url }}" class="menu-drawer__menu-item list-menu__item link link--text focus-inset">
+                  <a
+                    href="{% if section.settings.custom_login_enabled %}{{ pages['cadastro'].url | default: routes.account_login_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+                    class="menu-drawer__menu-item list-menu__item link link--text focus-inset"
+                  >
                     {{ 'studio3.header.login' | t }}
                   </a>
                 </li>
                 <li>
-                  <a href="{{ pages['cadastro'].url | default: routes.account_register_url }}" class="menu-drawer__menu-item list-menu__item link link--text focus-inset">
+                  <a
+                    href="{% if section.settings.custom_login_enabled %}{{ pages['cadastro'].url | default: routes.account_register_url }}{% else %}{{ routes.account_register_url }}{% endif %}"
+                    class="menu-drawer__menu-item list-menu__item link link--text focus-inset"
+                  >
                     {{ 'studio3.header.register' | t }}
                   </a>
                 </li>
