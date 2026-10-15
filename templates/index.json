@@ -72,7 +72,7 @@
           "settings": {
             "image": "shopify://shop_images/Hero-4-niacine_mod00.png",
             "mobile_image": "shopify://shop_images/Hero-4-niacine-mobile_mod00.png",
-            "link": "",
+            "link": "shopify://products/niacine",
             "heading": "",
             "subtitle": "",
             "button_label": "",
