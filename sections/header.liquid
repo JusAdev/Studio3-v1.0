@@ -720,6 +720,77 @@
   "settings": [
     {
       "type": "header",
+      "content": "Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "t:sections.header.settings.menu.label"
+    },
+    {
+      "type": "select",
+      "id": "menu_type_desktop",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "t:sections.header.settings.menu_type_desktop.options__1.label"
+        },
+        {
+          "value": "mega",
+          "label": "t:sections.header.settings.menu_type_desktop.options__2.label"
+        },
+        {
+          "value": "drawer",
+          "label": "t:sections.header.settings.menu_type_desktop.options__3.label"
+        }
+      ],
+      "default": "dropdown",
+      "label": "t:sections.header.settings.menu_type_desktop.label"
+    },
+    {
+      "type": "select",
+      "id": "sticky_header_type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.header.settings.sticky_header_type.options__1.label"
+        },
+        {
+          "value": "on-scroll-up",
+          "label": "t:sections.header.settings.sticky_header_type.options__2.label"
+        },
+        {
+          "value": "always",
+          "label": "t:sections.header.settings.sticky_header_type.options__3.label"
+        },
+        {
+          "value": "reduce-logo-size",
+          "label": "t:sections.header.settings.sticky_header_type.options__4.label"
+        }
+      ],
+      "default": "on-scroll-up",
+      "label": "t:sections.header.settings.sticky_header_type.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "default": true,
+      "label": "t:sections.header.settings.show_line_separator.label"
+    },
+    {
+      "type": "header",
+      "content": "Login"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_login_enabled",
+      "label": "Ativar login personalizado para profissionais",
+      "info": "Ativado, o ícone de login (deslogado) vai para nossa página de cadastro/login. Desativado, usa o login e cadastro nativos da Shopify.",
+      "default": true
+    },
+    {
+      "type": "header",
       "content": "Selo de frete grátis"
     },
     {
@@ -792,6 +863,32 @@
       "default": "#2D8019"
     },
     {
+      "type": "header",
+      "content": "Oferta do mês"
+    },
+    {
+      "type": "checkbox",
+      "id": "oferta_enabled",
+      "label": "Ativar item \"Oferta do mês\" no menu",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "oferta_text",
+      "label": "Texto do item",
+      "default": "Oferta do mês"
+    },
+    {
+      "type": "url",
+      "id": "oferta_url",
+      "label": "Link de redirecionamento",
+      "info": "Sem link definido, o item não aparece, mesmo ativado."
+    },
+    {
+      "type": "header",
+      "content": "Logomarca"
+    },
+    {
       "type": "select",
       "id": "logo_position",
       "options": [
@@ -833,62 +930,6 @@
       "label": "t:sections.header.settings.mobile_logo_position.label"
     },
     {
-      "type": "link_list",
-      "id": "menu",
-      "default": "main-menu",
-      "label": "t:sections.header.settings.menu.label"
-    },
-    {
-      "type": "select",
-      "id": "menu_type_desktop",
-      "options": [
-        {
-          "value": "dropdown",
-          "label": "t:sections.header.settings.menu_type_desktop.options__1.label"
-        },
-        {
-          "value": "mega",
-          "label": "t:sections.header.settings.menu_type_desktop.options__2.label"
-        },
-        {
-          "value": "drawer",
-          "label": "t:sections.header.settings.menu_type_desktop.options__3.label"
-        }
-      ],
-      "default": "dropdown",
-      "label": "t:sections.header.settings.menu_type_desktop.label"
-    },
-    {
-      "type": "select",
-      "id": "sticky_header_type",
-      "options": [
-        {
-          "value": "none",
-          "label": "t:sections.header.settings.sticky_header_type.options__1.label"
-        },
-        {
-          "value": "on-scroll-up",
-          "label": "t:sections.header.settings.sticky_header_type.options__2.label"
-        },
-        {
-          "value": "always",
-          "label": "t:sections.header.settings.sticky_header_type.options__3.label"
-        },
-        {
-          "value": "reduce-logo-size",
-          "label": "t:sections.header.settings.sticky_header_type.options__4.label"
-        }
-      ],
-      "default": "on-scroll-up",
-      "label": "t:sections.header.settings.sticky_header_type.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_line_separator",
-      "default": true,
-      "label": "t:sections.header.settings.show_line_separator.label"
-    },
-    {
       "type": "header",
       "content": "t:sections.header.settings.header__1.content"
     },
@@ -925,39 +966,6 @@
     {
       "type": "paragraph",
       "content": "t:sections.header.settings.customer_account_menu.content"
-    },
-    {
-      "type": "header",
-      "content": "Oferta do mês"
-    },
-    {
-      "type": "checkbox",
-      "id": "oferta_enabled",
-      "label": "Ativar item \"Oferta do mês\" no menu",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "oferta_text",
-      "label": "Texto do item",
-      "default": "Oferta do mês"
-    },
-    {
-      "type": "url",
-      "id": "oferta_url",
-      "label": "Link de redirecionamento",
-      "info": "Sem link definido, o item não aparece, mesmo ativado."
-    },
-    {
-      "type": "header",
-      "content": "Login"
-    },
-    {
-      "type": "checkbox",
-      "id": "custom_login_enabled",
-      "label": "Ativar login personalizado para profissionais",
-      "info": "Ativado, o ícone de login (deslogado) vai para nossa página de cadastro/login. Desativado, usa o login e cadastro nativos da Shopify.",
-      "default": true
     },
     {
       "type": "header",
