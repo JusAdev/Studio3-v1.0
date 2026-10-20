@@ -334,7 +334,7 @@
       "disabled": true,
       "settings": {
         "image": "shopify://shop_images/faixa-promo-immortalite-desk-desktop_1x_59d1e9e7-23c9-43f3-9774-16cce0ca892d.jpg",
-        "link": "shopify://collections/all",
+        "link": "shopify://products/serum-immortalite-c-nano-clareador-50ml-761222981",
         "alt_text": "Sérum de Vitamina C com textura leve e rápida absorção",
         "hide_on_mobile": true,
         "padding_top": 24,
@@ -380,7 +380,7 @@
         "subtitle": "As formulações mais recentes da Tulípia, prontas para entrar no seu protocolo.",
         "heading_alignment": "center",
         "banner_image": "shopify://shop_images/Hero-2-Tulipia.png",
-        "banner_url": "shopify://collections/all",
+        "banner_url": "shopify://products/exogenetic-pdrn-creme-facial-30g-tratamento-biotecnologico-761224119",
         "cta_text": "Ver todos os Lançamentos",
         "cta_url": "shopify://collections/all",
         "color_scheme": "scheme-1"
@@ -432,7 +432,7 @@
         "subtitle": "Dermocosméticos escolhidos por esteticistas, biomédicos e fisioterapeutas em todo o Brasil",
         "heading_alignment": "center",
         "banner_image": "shopify://shop_images/FX-D-baby_mod00.png",
-        "banner_url": "shopify://collections/all",
+        "banner_url": "shopify://products/kit-labial-baby-lips-gloss-esfoliante-e-espuma-tuti-frutti-levesque-745668777",
         "cta_text": "",
         "cta_url": "",
         "color_scheme": "scheme-1"
@@ -445,7 +445,7 @@
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/FX-A-HIDRA.png",
-            "link": "shopify://collections/all",
+            "link": "shopify://products/rotina-proskin-ultra-hidratante",
             "button_label": "Ver Produto",
             "alt_text": "ProSkin Repair - Onde a pele reencontra sua força",
             "wide": true
