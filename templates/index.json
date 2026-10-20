@@ -344,6 +344,12 @@
     "new-arrivals": {
       "type": "studio3-new-arrivals",
       "blocks": {
+        "product_UbRrAT": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
+        },
         "p1": {
           "type": "product",
           "settings": {
@@ -359,7 +365,7 @@
         "p3": {
           "type": "product",
           "settings": {
-            "product": "niacine-pad-multifuncional"
+            "product": "niacine"
           }
         },
         "p4": {
@@ -370,6 +376,7 @@
         }
       },
       "block_order": [
+        "product_UbRrAT",
         "p1",
         "p2",
         "p3",
