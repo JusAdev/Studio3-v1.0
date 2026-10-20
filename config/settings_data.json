@@ -13,6 +13,7 @@
     "logo_dark_bg": "shopify://shop_images/Studio3-logo-white-boxed.png",
     "logo_width": 150,
     "logo_width_mobile": 130,
+    "favicon": "shopify://shop_images/studio3-favicon.png",
     "type_header_font": "assistant_n4",
     "heading_scale": 100,
     "type_body_font": "assistant_n4",
@@ -215,7 +216,7 @@
       },
       "scheme-7": {
         "settings": {
-          "background": "#4F6478",
+          "background": "#4f6478",
           "background_gradient": "",
           "text": "#ffffff",
           "button": "#ffffff",
