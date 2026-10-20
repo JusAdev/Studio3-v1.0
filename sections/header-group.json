@@ -19,7 +19,7 @@
           "settings": {
             "menu_item_title": "Profissional",
             "image": "shopify://shop_images/banner-mobile-v1_mod00.png",
-            "link": "shopify://collections/all",
+            "link": "shopify://collections/kits",
             "label": "Ofertas para profissionais",
             "see_all_label": "Ver todos os produtos profissionais"
           }
